@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ready-to-Wear Uniforms | Jorjetteangel Atelier</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="e-comerce.css" />
+    <style>
+      .shop-shell {
+        max-width: 1160px;
+        margin: 0 auto;
+      }
+      .shop-image {
+        height: 184px;
+        background: #f6f4ef;
+      }
+      .shop-image img {
+        mix-blend-mode: multiply;
+      }
+      .filter-list button {
+        transition: color 150ms ease;
+      }
+      .filter-list button:hover,
+      .filter-list button[aria-pressed="true"] {
+        color: #111;
+      }
+      #category-filters {
+        gap: 0.65rem;
+      }
+      @media (max-width: 767px) {
+        .shop-shell {
+          padding: 0 24px;
+        }
+        .shop-image {
+          height: 220px;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-white text-[#171513]">
+    <header class="border-b border-[#e5e1da] bg-[#faf9f7]">
+      <div
+        class="shop-shell relative flex h-[148px] items-center justify-between px-0 max-md:h-[132px] max-md:px-6"
+      >
+        <a
+          class="absolute left-1/2 top-[17px] -translate-x-1/2 whitespace-nowrap font-editorial text-[28px] font-medium leading-none tracking-[0.25em] text-[#0C0907] uppercase md:text-[34px] md:tracking-[0.3em]"
+          href="#"
+        >
+          JORJETTEANGEL
+        </a>
+        <p
+          class="absolute left-1/2 top-[67px] -translate-x-1/2 whitespace-nowrap text-[9px] tracking-[0.42em] text-[#6d665e] [word-spacing:0.18em] max-md:top-[61px]"
+        >
+          ATELIER BESPOKE
+        </p>
+        <nav
+          class="absolute left-1/2 top-[96px] flex -translate-x-1/2 items-center gap-7 text-[11px] text-[#746d66] max-md:top-[86px] max-md:gap-4"
+        >
+          <a href="E-commerce.html#home" class="hover:text-black">Home</a>
+          <a href="#products" class="text-black">Shop</a>
+          <a
+            aria-label="Open shopping bag"
+            class="relative text-black"
+            href="E-commerce.html#bag"
+          >
+            Bag
+            <span class="ml-1 text-[10px]"
+              >(<span data-cart-count>0</span>)</span
+            >
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main
+      class="shop-shell grid grid-cols-[150px_1fr] gap-8 py-12 max-md:block max-md:py-8"
+      id="products"
+    >
+      <aside class="text-[11px] text-[#625b54] max-md:mb-10">
+        <h1 class="mb-4 text-xl font-normal tracking-wide text-[#171513]">
+          Filter by
+        </h1>
+        <div class="border-t border-[#ded9d1]">
+          <div
+            class="flex items-center justify-between border-b border-[#ded9d1] py-4 text-[#171513]"
+          >
+            <span>Category</span><span aria-hidden="true">−</span>
+          </div>
+          <div
+            class="filter-list flex flex-col gap-2 py-4"
+            id="category-filters"
+          ></div>
+        </div>
+        <div class="flex justify-between border-t border-[#ded9d1] py-4">
+          <span>Price</span><span>＋</span>
+        </div>
+        <div class="flex justify-between border-t border-[#ded9d1] py-4">
+          <span>Size</span><span>＋</span>
+        </div>
+        <div class="flex justify-between border-y border-[#ded9d1] py-4">
+          <span>Color</span><span>＋</span>
+        </div>
+      </aside>
+
+      <section>
+        <div
+          class="mb-8 flex items-end justify-between border-b border-[#ded9d1] pb-4"
+        >
+          <div>
+            <p
+              class="mb-2 text-[10px] uppercase tracking-[0.25em] text-[#8b8279]"
+            >
+              The uniform edit
+            </p>
+            <h2
+              class="font-editorial text-3xl font-normal max-md:text-2xl"
+              id="category-title"
+            >
+              Ready-to-Wear Uniforms
+            </h2>
+          </div>
+          <p class="text-[11px] text-[#8b8279]" id="product-count">
+            0 products
+          </p>
+        </div>
+
+        <div
+          class="grid grid-cols-4 gap-x-5 gap-y-12 max-md:grid-cols-2 max-md:gap-x-4 max-md:gap-y-9"
+          id="catalog-grid"
+        ></div>
+      </section>
+    </main>
+    <script src="../array-algorithms.js"></script>
+    <script src="../app-session.js"></script>
+    <script src="cart.js"></script>
+    <script src="ready-to-wear.js"></script>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atelier Admin | Archived Catalog</title>
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body data-page="archived-catalog">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <div class="admin-brand">JORJETTEANGEL</div>
+        <div class="admin-subbrand">ATELIER ADMIN</div>
+        <nav class="admin-nav" aria-label="Admin navigation">
+          <a href="E-commerce-admin.html">Dashboard</a>
+          <a href="ready-to-wear-admin.html">Catalog list</a>
+          <a class="active" href="archived-catalog-admin.html"
+            >Archived catalog</a
+          >
+          <a href="E-commerce-admin.html#audit-trail">Audit trail</a>
+          <a href="../ready-to-wear.html">View storefront</a>
+        </nav>
+        <p class="admin-sidebar-note">
+          Archived products are kept here until they are restored to the active
+          catalog.
+        </p>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-topbar">
+          <div>
+            <div class="admin-kicker">Ready-to-wear / archive management</div>
+            <h1>Archived catalog</h1>
+          </div>
+          <a class="admin-link" href="ready-to-wear-admin.html"
+            >&larr; Active catalog</a
+          >
+        </header>
+
+        <section class="admin-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Archived products</h2>
+              <p class="status" id="archived-catalog-count">0 items</p>
+            </div>
+            <select
+              class="select"
+              id="archived-category-filter"
+              aria-label="Filter archived products by category"
+            ></select>
+          </div>
+          <div style="overflow-x: auto">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="archived-catalog-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="admin-panel audit-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Archived categories</h2>
+              <p class="status" id="archived-category-count">0 items</p>
+            </div>
+          </div>
+          <div style="overflow-x: auto">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="archived-category-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../array-algorithms.js"></script>
+    <script src="../app-session.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>

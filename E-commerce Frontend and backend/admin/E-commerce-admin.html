@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atelier Admin | Dashboard</title>
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body data-page="dashboard">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <div class="admin-brand">JORJETTEANGEL</div>
+        <div class="admin-subbrand">ATELIER ADMIN</div>
+        <nav class="admin-nav" aria-label="Admin navigation">
+          <a class="active" href="E-commerce-admin.html">Dashboard</a>
+          <a href="ready-to-wear-admin.html">Catalog list</a>
+          <a href="#customer-accounts">Customer accounts</a>
+          <a href="#incoming-orders">Incoming orders</a>
+          <a href="archived-catalog-admin.html">Archived catalog</a>
+          <a href="#audit-trail">Audit trail</a>
+          <a href="../E-commerce.html">View storefront</a>
+        </nav>
+        <p class="admin-sidebar-note">
+          Manage your ready-to-wear collections, categories, and product
+          listings from one place.
+        </p>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-topbar">
+          <div>
+            <div class="admin-kicker">Customer frontend / admin view</div>
+            <h1>Atelier dashboard</h1>
+          </div>
+          <a class="admin-link" href="ready-to-wear-admin.html"
+            >Open catalog list &rarr;</a
+          >
+        </header>
+
+        <section class="stats" aria-label="Store overview">
+          <div class="stat">
+            <div class="stat-label">Catalog items</div>
+            <div class="stat-value" id="product-count">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Categories</div>
+            <div class="stat-value" id="category-count">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Active listings</div>
+            <div class="stat-value" id="active-count">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Customer accounts</div>
+            <div class="stat-value" id="customer-count">0</div>
+          </div>
+        </section>
+
+        <section class="admin-grid">
+          <div class="admin-panel">
+            <div class="panel-heading">
+              <h2>Categories</h2>
+              <a class="admin-link" href="ready-to-wear-admin.html"
+                >Manage products</a
+              >
+            </div>
+            <form class="inline-form" id="category-form">
+              <input
+                class="field"
+                id="category-name"
+                placeholder="New category name"
+                required
+              />
+              <input id="category-id" type="hidden" />
+              <button class="button" type="submit">Save</button>
+              <button
+                class="button button-secondary hidden"
+                id="category-cancel"
+                type="button"
+              >
+                Cancel
+              </button>
+            </form>
+            <p class="status">
+              Deleting a category is blocked while products still use it.
+            </p>
+            <ul class="category-list" id="category-list"></ul>
+          </div>
+          <div class="admin-panel">
+            <div class="panel-heading"><h2>Quick actions</h2></div>
+            <p class="status">
+              Create and maintain the product catalog shown on the ready-to-wear
+              storefront page.
+            </p>
+            <a class="button" href="ready-to-wear-admin.html"
+              >Add or update catalog</a
+            >
+          </div>
+        </section>
+        <section
+          class="admin-panel customer-accounts-panel"
+          id="customer-accounts"
+        >
+          <div class="panel-heading">
+            <div>
+              <h2>Customer accounts</h2>
+              <p class="status">
+                Registered customer details are view-only and cannot be edited
+                here.
+              </p>
+            </div>
+          </div>
+          <div class="customer-table-scroll">
+            <table class="admin-table customer-table">
+              <caption class="sr-only">Registered customer accounts</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Email address</th>
+                  <th scope="col">Mobile number</th>
+                  <th scope="col">Shopping preference</th>
+                </tr>
+              </thead>
+              <tbody id="customer-accounts-body"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="admin-panel incoming-orders-panel" id="incoming-orders">
+          <div class="panel-heading">
+            <div>
+              <h2>Incoming orders</h2>
+              <p class="status" id="incoming-orders-count">
+                Orders placed through the storefront
+              </p>
+            </div>
+          </div>
+          <div class="customer-table-scroll">
+            <table class="admin-table incoming-orders-table">
+              <caption class="sr-only">Orders received from the storefront</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Order / date</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Items</th>
+                  <th scope="col">Delivery address</th>
+                  <th scope="col">Payment</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody id="incoming-orders-body"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="admin-panel audit-panel" id="audit-trail">
+          <div class="panel-heading">
+            <div>
+              <h2>Audit trail</h2>
+              <p class="status">Recent category and catalog changes</p>
+            </div>
+          </div>
+          <ol class="audit-list" id="audit-list"></ol>
+        </section>
+      </main>
+    </div>
+    <script src="../array-algorithms.js"></script>
+    <script src="../app-session.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>
