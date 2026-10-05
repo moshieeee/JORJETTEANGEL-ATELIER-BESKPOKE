@@ -1,0 +1,553 @@
+<!doctype html>
+<html class="h-full bg-slate-100" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="../Backend/backend-backend.js"></script>
+    <script src="modules-warehouse-route-guard.js"></script>
+    <title>Finished Goods Inventory | Jortangel ERP</title>
+    <link href="modules-finished-goods-inventory.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "Inter",
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "Roboto",
+                "sans-serif",
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <link href="modules-finished-goods-inventory-admin.css" rel="stylesheet" />
+    <link href="modules-system-design.css" rel="stylesheet" />
+    <script>
+      if (new URLSearchParams(window.location.search).has("embedded")) {
+        document.documentElement.classList.add("embedded-module");
+      }
+    </script>
+    <style>
+      html.embedded-module,
+      html.embedded-module body {
+        min-height: 100%;
+      }
+
+      html.embedded-module .finished-goods-standalone-header {
+        display: none;
+      }
+
+      html.embedded-module body {
+        background: #faf9f7;
+      }
+
+      html.embedded-module main {
+        min-height: 0;
+      }
+
+      html.embedded-module .inventory-module {
+        min-height: 0;
+      }
+    </style>
+  </head>
+  <body class="min-h-full bg-[#f8faff] font-sans antialiased text-slate-800">
+    <header
+      class="finished-goods-standalone-header flex min-h-14 items-center border-b border-slate-200 bg-white px-4 shadow-sm md:px-6"
+    >
+      <a
+        href="base.html#users"
+        class="text-sm font-medium text-blue-700 hover:text-blue-900"
+        >&larr; Back to ERP</a
+      >
+    </header>
+    <main class="min-h-[calc(100vh-3.5rem)] p-4 md:p-6">
+      <!-- BEGIN: Finished Goods Inventory View -->
+      <div
+        id="inventory-view"
+        class="inventory-module mx-auto flex min-h-full max-w-7xl flex-col gap-5"
+        data-purpose="finished-goods-inventory-module"
+      >
+        <!-- Header Section -->
+        <div
+          class="flex shrink-0 flex-col gap-1 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div>
+            <h1 class="text-2xl font-semibold tracking-tight text-slate-900">
+              Finished Goods Inventory
+            </h1>
+          </div>
+        </div>
+
+        <!-- 3 Top Summary KPI Cards -->
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <!-- Total Inventory Value Card -->
+          <div
+            class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+          >
+            <div
+              class="text-xs font-semibold uppercase tracking-wide text-slate-500"
+            >
+              Total Inventory Value
+            </div>
+            <div
+              id="inv-kpi-total-val"
+              class="mt-2 text-2xl font-semibold tracking-tight text-slate-900"
+            >
+              ₱0.00
+            </div>
+          </div>
+
+          <!-- Stockouts This Month Card -->
+          <div
+            class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+          >
+            <div class="flex items-center justify-between">
+              <div
+                class="text-xs font-semibold uppercase tracking-wide text-slate-500"
+              >
+                Sold-Out Item This Month
+              </div>
+              <button
+                id="inv-kpi-stockout-view"
+                class="inline-flex items-center border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                type="button"
+              >
+                View
+              </button>
+            </div>
+            <div
+              id="inv-kpi-stockout-count"
+              class="mt-2 text-2xl font-semibold tracking-tight text-slate-900"
+            >
+              0 items
+            </div>
+            <div class="mt-3 flex gap-1">
+              <span class="h-1.5 w-8 rounded-full bg-slate-200"></span>
+              <span class="h-1.5 w-8 rounded-full bg-slate-200"></span>
+            </div>
+          </div>
+
+          <!-- Low Stock Items Card -->
+          <div
+            class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+          >
+            <div class="flex items-center justify-between">
+              <div
+                class="text-xs font-semibold uppercase tracking-wide text-slate-500"
+              >
+                Low Stock Items
+              </div>
+              <button
+                id="inv-kpi-lowstock-view"
+                class="inline-flex items-center border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                type="button"
+              >
+                View
+              </button>
+            </div>
+            <div
+              id="inv-kpi-lowstock-count"
+              class="mt-2 text-2xl font-semibold tracking-tight text-slate-900"
+            >
+              0 products
+            </div>
+            <div class="mt-3 flex gap-1.5">
+              <span class="h-1.5 w-7 rounded-full bg-amber-400"></span>
+              <span class="h-1.5 w-7 rounded-full bg-amber-400"></span>
+              <span class="h-1.5 w-7 rounded-full bg-amber-200"></span>
+              <span class="h-1.5 w-7 rounded-full bg-slate-200"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inventory Table Container -->
+        <div
+          class="flex min-h-0 flex-1 flex-col rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
+        >
+          <!-- Controls Bar -->
+          <div
+            class="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between"
+          >
+            <!-- Left: Search & Entries -->
+            <div class="flex flex-1 flex-wrap items-center gap-2.5">
+              <div class="relative min-w-[190px]">
+                <div
+                  class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"
+                >
+                  <svg
+                    class="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  id="inv-search-input"
+                  type="search"
+                  placeholder="Search products..."
+                  class="w-full rounded-lg border-slate-300 bg-white pl-9 pr-3 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+
+              <select
+                id="inv-category-filter"
+                aria-label="Filter by category"
+                class="rounded-lg border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              >
+                <option value="all">All Categories</option>
+              </select>
+
+              <select
+                id="inv-entries-select"
+                class="rounded-lg border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              >
+                <option value="10">Show 10 entries</option>
+                <option value="25">Show 25 entries</option>
+                <option value="50">Show 50 entries</option>
+                <option value="100">Show 100 entries</option>
+                <option value="all">Show All</option>
+              </select>
+            </div>
+
+            <!-- Right: Action Button -->
+            <div class="flex shrink-0 items-center">
+              <button
+                id="inv-btn-add"
+                type="button"
+                class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+                <span>Add Stock</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Inventory Table -->
+          <div
+            class="min-h-[300px] min-w-0 flex-1 overflow-x-auto rounded-xl border border-slate-200 bg-white"
+          >
+            <table
+              id="inventory-table"
+              class="w-full min-w-[1000px] border-collapse text-left text-sm"
+            >
+              <thead
+                class="sticky top-0 z-10 bg-slate-100 text-xs uppercase tracking-wide text-slate-600"
+              >
+                <tr>
+                  <th scope="col" class="px-4 py-3 font-semibold">SKU</th>
+                  <th scope="col" class="px-4 py-3 font-semibold text-center">
+                    IMAGE
+                  </th>
+                  <th scope="col" class="px-4 py-3 font-semibold">PRODUCT</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">SIZE</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">CATEGORY</th>
+                  <th scope="col" class="px-4 py-3 font-semibold text-right">
+                    IN STOCK
+                  </th>
+                  <th scope="col" class="px-4 py-3 font-semibold text-right">
+                    SELLING PRICE (₱)
+                  </th>
+                  <th scope="col" class="px-4 py-3 font-semibold text-right">
+                    INVENTORY VALUE (₱)
+                  </th>
+                  <th scope="col" class="px-4 py-3 font-semibold text-center">
+                    LAST STOCKED
+                  </th>
+                  <th scope="col" class="px-4 py-3 font-semibold text-center">
+                    STATUS
+                  </th>
+                  <th scope="col" class="px-4 py-3 font-semibold text-center">
+                    ACTION
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                id="inventory-table-body"
+                class="divide-y divide-slate-100"
+              ></tbody>
+            </table>
+            <div
+              id="empty-inventory"
+              class="hidden py-12 text-center text-sm text-slate-500"
+            >
+              <svg
+                class="mx-auto h-10 w-10 text-slate-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                />
+              </svg>
+              <p class="mt-2 font-medium">
+                No finished goods match your search or filter.
+              </p>
+            </div>
+          </div>
+
+          <!-- Pagination Footer -->
+          <div
+            class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-sm text-slate-600"
+          >
+            <div id="inv-pagination-info">Showing 1 to 10 of 0 entries</div>
+            <div id="inv-pagination-controls" class="flex items-center gap-1.5">
+              <!-- Generated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END: Finished Goods Inventory View -->
+    </main>
+    <!-- BEGIN: Finished Goods Inventory Modals -->
+    <!-- 1. Add / Edit Product Modal -->
+    <div
+      id="inv-modal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs"
+    >
+      <div class="inventory-product-card w-full max-w-lg bg-white p-[26px] shadow-2xl">
+        <div
+          class="inventory-product-heading flex items-center justify-between"
+        >
+          <h3 id="inv-modal-title">
+            Add Stock to Finished Goods
+          </h3>
+          <button
+            id="inv-modal-close"
+            type="button"
+            class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+          >
+            <svg
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <form id="inv-product-form">
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div>
+              <label
+                for="inv-input-category"
+                class="inventory-field-label"
+                >Category</label
+              >
+              <select
+                id="inv-input-category"
+                required
+                class="w-full rounded-lg border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              >
+                <option value="">Select a category</option>
+              </select>
+            </div>
+            <div>
+              <label
+                for="inv-input-type"
+                class="inventory-field-label"
+                >Item Classification</label
+              >
+              <select
+                id="inv-input-type"
+                required
+                class="w-full rounded-lg border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              >
+                <option value="RTW">RTW (Ready to Wear Stock)</option>
+                <option value="Custom">Custom (Waiting for Dispatch)</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label
+              for="inv-input-product"
+              class="inventory-field-label"
+              >Product</label
+            >
+            <select
+              id="inv-input-product"
+              required
+              disabled
+              class="w-full rounded-lg border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            >
+              <option value="">Select a category first</option>
+            </select>
+          </div>
+          <div id="inv-single-size-field">
+            <label
+              for="inv-input-size"
+              class="inventory-field-label"
+              >Size</label
+            >
+            <input
+              id="inv-input-size"
+              type="text"
+              placeholder="e.g. M, L, 32"
+              required
+              class="w-full rounded-lg border-slate-300 px-3 py-2.5 text-sm shadow-sm placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500"
+            />
+          </div>
+          <div id="inv-rtw-size-stock" class="hidden">
+            <span class="inventory-field-label">Initial Stock by Size</span>
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div>
+                <label class="inventory-field-label" for="inv-stock-size-s">S</label>
+                <input id="inv-stock-size-s" type="number" min="0" step="1" value="0" required />
+              </div>
+              <div>
+                <label class="inventory-field-label" for="inv-stock-size-m">M</label>
+                <input id="inv-stock-size-m" type="number" min="0" step="1" value="0" required />
+              </div>
+              <div>
+                <label class="inventory-field-label" for="inv-stock-size-l">L</label>
+                <input id="inv-stock-size-l" type="number" min="0" step="1" value="0" required />
+              </div>
+              <div>
+                <label class="inventory-field-label" for="inv-stock-size-xl">XL</label>
+                <input id="inv-stock-size-xl" type="number" min="0" step="1" value="0" required />
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div id="inv-single-stock-field">
+              <label
+                for="inv-input-stock"
+                class="inventory-field-label"
+                >Initial Stock</label
+              >
+              <input
+                id="inv-input-stock"
+                type="number"
+                min="0"
+                step="1"
+                value="0"
+              />
+            </div>
+            <div>
+              <label
+                for="inv-input-threshold"
+                class="inventory-field-label"
+                >Low Stock Alert</label
+              >
+              <input
+                id="inv-input-threshold"
+                type="number"
+                min="0"
+                step="1"
+                required
+                value="10"
+                class="w-full rounded-lg border-slate-300 px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+          <div class="inventory-product-actions flex gap-2">
+            <button
+              id="inv-btn-submit"
+              type="submit"
+              class="inventory-save-button flex-1"
+            >
+              Add Stock
+            </button>
+            <button
+              id="inv-btn-cancel"
+              type="button"
+              class="inventory-cancel-button"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- 2. Product Details Modal -->
+    <div
+      id="inv-detail-modal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs"
+    >
+      <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+        <div
+          class="mb-4 flex items-center justify-between border-b border-slate-100 pb-3"
+        >
+          <h3
+            id="inv-detail-title"
+            class="text-lg font-semibold text-slate-900"
+          >
+            Product Details
+          </h3>
+          <button
+            id="inv-detail-close"
+            type="button"
+            class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+          >
+            <svg
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div id="inv-detail-content" class="space-y-4"></div>
+        <div class="mt-6 flex justify-end">
+          <button
+            id="inv-detail-btn-done"
+            type="button"
+            class="rounded-lg bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-200"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- END: Finished Goods Inventory Modals -->
+    <div
+      id="toast"
+      class="pointer-events-none fixed right-4 top-4 z-50 hidden max-w-sm rounded-lg border px-4 py-3 text-sm font-medium shadow-lg"
+      role="status"
+      aria-live="polite"
+    ></div>
+    <script src="modules-finished-goods-inventory.js"></script>
+  </body>
+</html>

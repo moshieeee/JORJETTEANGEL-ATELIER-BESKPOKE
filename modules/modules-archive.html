@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atelier Admin | Archive</title>
+    <link rel="stylesheet" href="modules-archive.css" />
+    <link rel="stylesheet" href="modules-system-design.css" />
+    <script>
+      if (new URLSearchParams(window.location.search).has("embedded")) {
+        document.documentElement.classList.add("embedded-module");
+      }
+    </script>
+    <script src="../Backend/backend-backend.js"></script>
+    <script src="modules-warehouse-route-guard.js"></script>
+  </head>
+  <body>
+    <main class="archive-page">
+      <section class="archive-card" aria-labelledby="archive-title">
+        <header class="archive-header">
+          <div>
+            <h1 id="archive-title">Archived Data</h1>
+          </div>
+        </header>
+
+        <div class="archive-tabs" role="tablist" aria-label="Archived data type">
+          <button class="archive-tab active" id="tab-disabled" type="button" role="tab" aria-selected="true" data-archive-type="disabled">
+            Disabled Accounts
+          </button>
+          <button class="archive-tab" id="tab-staff-accounts" type="button" role="tab" aria-selected="false" data-archive-type="staffAccounts">
+            Staff Accounts
+          </button>
+          <button class="archive-tab" id="tab-customer-accounts" type="button" role="tab" aria-selected="false" data-archive-type="customerAccounts">
+            Customer Accounts
+          </button>
+          <button class="archive-tab" id="tab-products" type="button" role="tab" aria-selected="false" data-archive-type="products">
+            Products
+          </button>
+          <button class="archive-tab" id="tab-suppliers" type="button" role="tab" aria-selected="false" data-archive-type="suppliers">
+            Suppliers
+          </button>
+          <button class="archive-tab" id="tab-orders" type="button" role="tab" aria-selected="false" data-archive-type="orders">
+            Aged Orders
+          </button>
+          <button class="archive-tab" id="tab-system" type="button" role="tab" aria-selected="false" data-archive-type="system">
+            Other Archived Data
+          </button>
+        </div>
+
+        <form class="archive-search" id="archive-search-form">
+          <label class="sr-only" for="archive-search-input">Search archived data</label>
+          <input
+            id="archive-search-input"
+            type="search"
+            placeholder="Search by ID or name..."
+            autocomplete="off"
+          />
+          <button type="submit">Search</button>
+        </form>
+
+        <p class="archive-count" id="archive-count" aria-live="polite"></p>
+        <p class="archive-error" id="archive-error" role="alert" hidden></p>
+
+        <div class="archive-table-wrap">
+          <table class="archive-table">
+            <thead id="archive-table-head"></thead>
+            <tbody id="archive-table-body"></tbody>
+          </table>
+          <p class="archive-empty" id="archive-empty" hidden></p>
+        </div>
+
+        <section
+          class="archive-category-section"
+          id="archived-categories-section"
+          aria-labelledby="archived-categories-title"
+          hidden
+        >
+          <header class="archive-category-header">
+            <h2 id="archived-categories-title">Archived product categories</h2>
+            <p class="archive-count" id="archived-categories-count" aria-live="polite"></p>
+          </header>
+          <div class="archive-table-wrap">
+            <table class="archive-table">
+              <thead>
+                <tr>
+                  <th scope="col">Category ID</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Date Archived</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="archived-categories-body"></tbody>
+            </table>
+            <p class="archive-empty" id="archived-categories-empty" hidden></p>
+          </div>
+        </section>
+      </section>
+
+      <dialog class="archive-detail-dialog" id="archive-detail-dialog" aria-labelledby="archive-detail-title">
+        <header>
+          <div>
+            <p class="archive-eyebrow">Aged order</p>
+            <h2 id="archive-detail-title">Order details</h2>
+          </div>
+          <button class="archive-close" id="close-archive-detail" type="button" aria-label="Close details">×</button>
+        </header>
+        <div class="archive-detail-body" id="archive-detail-body"></div>
+      </dialog>
+    </main>
+    <script src="modules-system-archive.js"></script>
+    <script src="modules-archive.js"></script>
+  </body>
+</html>

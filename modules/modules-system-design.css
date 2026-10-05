@@ -1,0 +1,442 @@
+:root {
+  --system-ink: #171513;
+  --system-muted: #756d65;
+  --system-line: #ded9d1;
+  --system-paper: #faf9f7;
+  --system-white: #fff;
+  --system-accent: #1f3159;
+  --system-green-bg: #edf5ed;
+  --system-green-ink: #42633e;
+  --system-green-line: #c8d9c5;
+  --system-yellow-bg: #faf4e6;
+  --system-yellow-ink: #806321;
+  --system-yellow-line: #e7d6a9;
+  --system-red-bg: #fbefed;
+  --system-red-ink: #9e3f32;
+  --system-red-line: #e6c4be;
+}
+
+body,
+html {
+  background-color: var(--system-paper);
+  color: var(--system-ink);
+  font-family: Inter, Arial, sans-serif;
+}
+
+aside,
+[class*="sidebar"] {
+  background-color: #171513;
+}
+
+[class*="card"],
+[class*="panel"],
+.summary-card,
+.metric-card,
+.stat,
+.admin-panel {
+  border-color: var(--system-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.summary-card,
+.metric-card,
+.stat,
+.analytics-panel,
+.content-panel,
+.po-panel,
+.profile-panel,
+.accounts-panel,
+.account-status-panel,
+.orders-panel,
+.archive-card {
+  background-color: var(--system-white);
+}
+
+html.embedded-module,
+html.embedded-module body,
+html.embedded-module main,
+html.embedded-module .main-content {
+  background-color: var(--system-paper) !important;
+  color: var(--system-ink);
+}
+
+html.embedded-module [class*="card"],
+html.embedded-module [class*="panel"],
+html.embedded-module .content-panel,
+html.embedded-module .summary-card,
+html.embedded-module .metric-card,
+html.embedded-module .archive-card {
+  border-color: var(--system-line) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html.embedded-module [class*="card"]:not([class*="status"]),
+html.embedded-module [class*="panel"]:not([class*="status"]),
+html.embedded-module .content-panel,
+html.embedded-module .summary-card,
+html.embedded-module .metric-card,
+html.embedded-module .archive-card {
+  background-color: var(--system-white) !important;
+}
+
+html.embedded-module input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+html.embedded-module select,
+html.embedded-module textarea,
+html.embedded-module .search-box,
+html.embedded-module .orders-search {
+  background-color: var(--system-white) !important;
+  border-color: var(--system-line) !important;
+  color: var(--system-ink) !important;
+}
+
+html.embedded-module input::placeholder,
+html.embedded-module textarea::placeholder,
+html.embedded-module .empty-message,
+html.embedded-module .empty-state,
+html.embedded-module .text-slate-400,
+html.embedded-module .text-slate-500,
+html.embedded-module .text-slate-600,
+html.embedded-module .text-gray-400,
+html.embedded-module .text-gray-500,
+html.embedded-module .text-gray-600 {
+  color: var(--system-muted) !important;
+}
+
+html.embedded-module thead,
+html.embedded-module th {
+  background-color: var(--system-paper) !important;
+  border-color: var(--system-line) !important;
+  color: var(--system-muted) !important;
+}
+
+html.embedded-module td,
+html.embedded-module tbody tr {
+  border-color: var(--system-line) !important;
+  color: var(--system-ink);
+}
+
+html.embedded-module tbody tr:hover,
+html.embedded-module [class*="hover:bg-slate-"]:hover,
+html.embedded-module [class*="hover:bg-gray-"]:hover {
+  background-color: var(--system-paper) !important;
+}
+
+html.embedded-module [class*="bg-blue-50"],
+html.embedded-module [class*="bg-blue-100"],
+html.embedded-module [class*="bg-indigo-50"],
+html.embedded-module [class*="bg-indigo-100"],
+html.embedded-module [class*="bg-sky-50"],
+html.embedded-module [class*="bg-sky-100"],
+html.embedded-module [class*="bg-cyan-50"],
+html.embedded-module [class*="bg-cyan-100"],
+html.embedded-module [class*="bg-violet-50"],
+html.embedded-module [class*="bg-violet-100"],
+html.embedded-module [class*="bg-purple-50"],
+html.embedded-module [class*="bg-purple-100"],
+html.embedded-module [class*="bg-teal-50"],
+html.embedded-module [class*="bg-teal-100"],
+html.embedded-module [class*="bg-slate-50"],
+html.embedded-module [class*="bg-slate-100"],
+html.embedded-module [class*="bg-slate-200"],
+html.embedded-module [class*="bg-gray-50"],
+html.embedded-module [class*="bg-gray-100"],
+html.embedded-module [class*="bg-[#f4f7fb]"],
+html.embedded-module .module-tab.is-active,
+html.embedded-module .po-tab.is-active {
+  background-color: var(--system-paper) !important;
+}
+
+html.embedded-module .module-tab.is-active,
+html.embedded-module .po-tab.is-active {
+  border-color: var(--system-line) !important;
+  border-bottom-color: var(--system-ink) !important;
+  color: var(--system-ink) !important;
+}
+
+html.embedded-module button[class*="bg-slate-800"],
+html.embedded-module button[class*="bg-slate-900"],
+html.embedded-module a[class*="bg-slate-800"],
+html.embedded-module a[class*="bg-slate-900"] {
+  background-color: var(--system-ink) !important;
+  border-color: var(--system-ink) !important;
+  color: var(--system-white) !important;
+}
+
+html.embedded-module button[class*="hover:bg-slate-700"]:hover,
+html.embedded-module a[class*="hover:bg-slate-700"]:hover {
+  background-color: #37322e !important;
+  border-color: #37322e !important;
+}
+
+html.embedded-module button[class*="bg-blue-"],
+html.embedded-module button[class*="bg-indigo-"],
+html.embedded-module button[class*="bg-sky-"],
+html.embedded-module button[class*="bg-cyan-"],
+html.embedded-module button[class*="bg-violet-"],
+html.embedded-module button[class*="bg-purple-"],
+html.embedded-module button[class*="bg-teal-"],
+html.embedded-module a[class*="bg-blue-"],
+html.embedded-module a[class*="bg-indigo-"],
+html.embedded-module a[class*="bg-sky-"],
+html.embedded-module a[class*="bg-cyan-"],
+html.embedded-module a[class*="bg-violet-"],
+html.embedded-module a[class*="bg-purple-"],
+html.embedded-module a[class*="bg-teal-"] {
+  background-color: var(--system-ink) !important;
+  border-color: var(--system-ink) !important;
+  color: var(--system-white) !important;
+}
+
+html.embedded-module [class*="border-blue-"],
+html.embedded-module [class*="border-indigo-"],
+html.embedded-module [class*="border-sky-"],
+html.embedded-module [class*="border-cyan-"],
+html.embedded-module [class*="border-violet-"],
+html.embedded-module [class*="border-purple-"],
+html.embedded-module [class*="border-teal-"],
+html.embedded-module [class*="border-slate-"],
+html.embedded-module [class*="border-gray-"] {
+  border-color: var(--system-line) !important;
+}
+
+html.embedded-module [class*="text-blue-"],
+html.embedded-module [class*="text-indigo-"],
+html.embedded-module [class*="text-sky-"],
+html.embedded-module [class*="text-cyan-"],
+html.embedded-module [class*="text-violet-"],
+html.embedded-module [class*="text-purple-"],
+html.embedded-module [class*="text-teal-"],
+html.embedded-module [class*="text-slate-400"],
+html.embedded-module [class*="text-slate-500"],
+html.embedded-module [class*="text-gray-400"],
+html.embedded-module [class*="text-gray-500"] {
+  color: var(--system-muted) !important;
+}
+
+html.embedded-module [class*="text-slate-600"],
+html.embedded-module [class*="text-slate-700"],
+html.embedded-module [class*="text-slate-800"],
+html.embedded-module [class*="text-slate-900"],
+html.embedded-module [class*="text-gray-600"],
+html.embedded-module [class*="text-gray-700"],
+html.embedded-module [class*="text-gray-800"],
+html.embedded-module [class*="text-gray-900"] {
+  color: var(--system-ink) !important;
+}
+
+html.embedded-module [class*="focus:ring-blue-"]:focus,
+html.embedded-module [class*="focus:ring-indigo-"]:focus,
+html.embedded-module [class*="focus:ring-sky-"]:focus {
+  --tw-ring-color: var(--system-muted) !important;
+}
+
+html.embedded-module input:focus,
+html.embedded-module select:focus,
+html.embedded-module textarea:focus {
+  border-color: var(--system-muted) !important;
+  --tw-ring-color: var(--system-muted) !important;
+}
+
+[class*="status-badge"],
+.status-badge,
+.status-label,
+.status.pending,
+.status.production,
+.status.completed,
+.status.ready,
+.paid,
+.unpaid,
+.is-active,
+.is-inactive,
+.is-pending {
+  border: 1px solid transparent;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+.status-active,
+.is-active,
+.is-active.status-badge,
+.status-approved,
+.status-received,
+.status-delivered,
+.status-released,
+.status-ready,
+.status-completed,
+.status.completed,
+.status.ready,
+.paid,
+.status-green,
+.status-success,
+.status-healthy {
+  border-color: var(--system-green-line);
+  background: var(--system-green-bg);
+  color: var(--system-green-ink);
+}
+
+.status-pending,
+.status.pending,
+.is-pending,
+.status-sent,
+.status-dispatched,
+.status-production,
+.status.production,
+.status-warning,
+.status-partial,
+.status-yellow,
+.status-in-progress,
+.status-processing,
+.order-status-badge.pending {
+  border-color: var(--system-yellow-line);
+  background: var(--system-yellow-bg);
+  color: var(--system-yellow-ink);
+}
+
+.status-inactive,
+.status-banned,
+.is-inactive,
+.status-rejected,
+.status-cancelled,
+.status-canceled,
+.status-discrepancy,
+.status-failed,
+.status-unpaid,
+.unpaid,
+.status-red,
+.status-danger,
+.status-error,
+.status-overdue {
+  border-color: var(--system-red-line);
+  background: var(--system-red-bg);
+  color: var(--system-red-ink);
+}
+
+.order-status-badge.complete {
+  border-color: var(--system-green-line);
+  background: var(--system-green-bg);
+  color: var(--system-green-ink);
+}
+
+.status-badge.is-active {
+  border-color: var(--system-green-line);
+  background: var(--system-green-bg);
+  color: var(--system-green-ink);
+}
+
+.status-badge.is-inactive,
+.status-badge.is-banned {
+  border-color: var(--system-red-line);
+  background: var(--system-red-bg);
+  color: var(--system-red-ink);
+}
+
+.status-badge.is-pending {
+  border-color: var(--system-yellow-line);
+  background: var(--system-yellow-bg);
+  color: var(--system-yellow-ink);
+}
+
+html.embedded-module .status.production,
+html.embedded-module .status.pending {
+  border-color: var(--system-yellow-line);
+  background: var(--system-yellow-bg);
+  color: var(--system-yellow-ink);
+}
+
+html.embedded-module .status.ready,
+html.embedded-module .status.completed {
+  border-color: var(--system-green-line);
+  background: var(--system-green-bg);
+  color: var(--system-green-ink);
+}
+
+html.embedded-module .status-badge.status-ready {
+  border-color: var(--system-green-line);
+  background: var(--system-green-bg);
+  color: var(--system-green-ink);
+}
+
+html.embedded-module .status-badge.status-dispatched {
+  border-color: var(--system-yellow-line);
+  background: var(--system-yellow-bg);
+  color: var(--system-yellow-ink);
+}
+
+html.embedded-module .status-badge.status-delivered,
+html.embedded-module .status-badge.status-released {
+  border-color: var(--system-green-line);
+  background: var(--system-green-bg);
+  color: var(--system-green-ink);
+}
+
+html.embedded-module .status-badge.status-active,
+html.embedded-module .status-badge.status-approved,
+html.embedded-module .status-badge.status-complete,
+html.embedded-module .status-badge.status-completed,
+html.embedded-module .status-badge.status-received {
+  border-color: var(--system-green-line);
+  background: var(--system-green-bg);
+  color: var(--system-green-ink);
+}
+
+html.embedded-module .status-badge.status-dispatched,
+html.embedded-module .status-badge.status-in-progress,
+html.embedded-module .status-badge.status-partial,
+html.embedded-module .status-badge.status-pending,
+html.embedded-module .status-badge.status-production,
+html.embedded-module .status-badge.status-requested,
+html.embedded-module .status-badge.status-sent {
+  border-color: var(--system-yellow-line);
+  background: var(--system-yellow-bg);
+  color: var(--system-yellow-ink);
+}
+
+html.embedded-module .status-badge.status-banned,
+html.embedded-module .status-badge.status-cancelled,
+html.embedded-module .status-badge.status-canceled,
+html.embedded-module .status-badge.status-discrepancy,
+html.embedded-module .status-badge.status-failed,
+html.embedded-module .status-badge.status-inactive,
+html.embedded-module .status-badge.status-overdue,
+html.embedded-module .status-badge.status-rejected,
+html.embedded-module .status-badge.status-unpaid {
+  border-color: var(--system-red-line);
+  background: var(--system-red-bg);
+  color: var(--system-red-ink);
+}
+
+.action-btn.archive,
+.row-action-archive,
+.archive-confirm-btn,
+.archive-action {
+  border-color: var(--system-yellow-line);
+  background: var(--system-yellow-bg);
+  color: var(--system-yellow-ink);
+}
+
+.action-btn.archive:hover,
+.row-action-archive:hover,
+.archive-confirm-btn:hover,
+.archive-action:hover {
+  border-color: #d7c184;
+  background: #f5edda;
+  color: #6d5418;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--system-accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 700px) {
+  [class*="card"],
+  [class*="panel"] {
+    border-radius: 0;
+  }
+}

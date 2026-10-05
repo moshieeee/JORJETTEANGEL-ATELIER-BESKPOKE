@@ -1,0 +1,1272 @@
+<!doctype html>
+<html class="h-full bg-slate-100" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="../Backend/backend-backend.js"></script>
+    <script src="modules-warehouse-route-guard.js"></script>
+    <br />
+    <title>Fabric and BOM Management | Jortangel ERP</title>
+    <!-- Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              erp: {
+                sidebar: "#070d1e",
+                sidebarHover: "#0e1730",
+                sidebarBorder: "#142044",
+                accentBlue: "#2563eb",
+                canvasBg: "#f4f6fb",
+              },
+            },
+            fontFamily: {
+              sans: [
+                "Inter",
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "Roboto",
+                "sans-serif",
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="modules-fabric-and-bom-management.css" />
+    <link rel="stylesheet" href="modules-system-design.css" />
+    <script>
+      if (new URLSearchParams(window.location.search).has("embedded")) {
+        document.documentElement.classList.add("embedded-module");
+      }
+    </script>
+    <style>
+      html.embedded-module,
+      html.embedded-module body {
+        min-height: 100%;
+      }
+
+      html.embedded-module body {
+        overflow: hidden;
+      }
+
+      html.embedded-module [data-purpose="erp-navigation-sidebar"] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="h-full font-sans antialiased text-slate-800 overflow-hidden">
+    <!-- BEGIN: ApplicationLayout -->
+    <div
+      class="flex h-screen w-screen overflow-hidden bg-[#f4f7fb]"
+      data-purpose="app-shell"
+    >
+      <!-- BEGIN: Sidebar -->
+      <aside
+        class="w-64 flex-shrink-0 flex flex-col bg-[#070d1e] text-slate-300 border-r border-[#142044] select-none z-20"
+        data-purpose="erp-navigation-sidebar"
+      >
+        <!-- Logo and Brand Header -->
+        <div
+          class="px-5 py-4 flex items-center gap-3 border-b border-[#142044]/70 bg-[#070d1e]/90"
+          data-purpose="sidebar-brand"
+        >
+          <div
+            class="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-600 via-indigo-600 to-sky-500 flex items-center justify-center shadow-lg shadow-blue-500/20 text-white font-bold text-lg ring-1 ring-white/20"
+          >
+            JG
+          </div>
+          <div class="flex flex-col min-w-0">
+            <div
+              class="text-sm font-semibold text-white tracking-tight truncate leading-tight"
+            >
+              JORTANGEL ONLINE SHOP
+            </div>
+            <div
+              class="text-[11px] text-slate-300/80 font-medium truncate leading-tight"
+            >
+              Garments &amp; Mfg. ERP
+            </div>
+            <div class="mt-0.5"></div>
+          </div>
+        </div>
+        <!-- Navigation Links Container -->
+        <nav
+          class="flex-1 overflow-y-auto px-2.5 py-3 space-y-4 custom-scroll"
+          data-purpose="nav-sections-list"
+          aria-label="Modules"
+        >
+          <div
+            class="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500"
+          >
+            Modules
+          </div>
+          <a
+            href="../../dashboard/Base%20code/base.html"
+            class="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-slate-300 transition hover:bg-[#0e1730] hover:text-white"
+          >
+            <span
+              class="grid h-7 w-7 flex-shrink-0 place-items-center rounded bg-white/5 text-[10px] font-bold text-slate-400"
+              >DB</span
+            >
+            <span>Dashboard</span>
+          </a>
+          <a
+            href="#bom-view"
+            class="flex items-center gap-3 rounded-md border-l-2 border-sky-400 bg-[#0e1730] px-3 py-2.5 text-sm font-medium text-white"
+            aria-current="page"
+          >
+            <span
+              class="grid h-7 w-7 flex-shrink-0 place-items-center rounded bg-sky-400/15 text-[10px] font-bold text-sky-300"
+              >BOM</span
+            >
+            <span>BOM</span>
+          </a>
+          <a
+            href="#fabmaterials-view"
+            class="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-slate-300 transition hover:bg-[#0e1730] hover:text-white"
+          >
+            <span
+              class="grid h-7 w-7 flex-shrink-0 place-items-center rounded bg-white/5 text-[10px] font-bold text-slate-400"
+              >FM</span
+            >
+            <span>Fabrics &amp; Materials</span>
+          </a>
+          <a
+            href="../../Bulk%20Order%20Pipeline/Base%20code/base.html"
+            class="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-slate-300 transition hover:bg-[#0e1730] hover:text-white"
+          >
+            <span
+              class="grid h-7 w-7 flex-shrink-0 place-items-center rounded bg-white/5 text-[10px] font-bold text-slate-400"
+              >BO</span
+            >
+            <span>Bulk Order Pipeline</span>
+          </a>
+          <a
+            href="../../Measurement%20Management%202/Base%20code/base.html"
+            class="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-slate-300 transition hover:bg-[#0e1730] hover:text-white"
+          >
+            <span
+              class="grid h-7 w-7 flex-shrink-0 place-items-center rounded bg-white/5 text-[10px] font-bold text-slate-400"
+              >MM</span
+            >
+            <span>Measurement Management</span>
+          </a>
+          <div
+            class="mt-3 border-t border-[#142044] px-3 pb-2 pt-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500"
+          >
+            Axel Modules
+          </div>
+          <a
+            href="../../../axel/JortangelShop-main/Modules/Axel/Modules/salesPaymentManagement.html"
+            class="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-slate-300 transition hover:bg-[#0e1730] hover:text-white"
+          >
+            <span
+              class="grid h-7 w-7 flex-shrink-0 place-items-center rounded bg-white/5 text-[10px] font-bold text-slate-400"
+              >SP</span
+            >
+            <span>Sales &amp; Payment</span>
+          </a>
+          <a
+            href="../../../axel/JortangelShop-main/Modules/Axel/Modules/productionManagement.html"
+            class="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-slate-300 transition hover:bg-[#0e1730] hover:text-white"
+          >
+            <span
+              class="grid h-7 w-7 flex-shrink-0 place-items-center rounded bg-white/5 text-[10px] font-bold text-slate-400"
+              >PR</span
+            >
+            <span>Production Management</span>
+          </a>
+          <a
+            href="../../../axel/JortangelShop-main/Modules/Axel/Modules/supplierManagement.html"
+            class="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-slate-300 transition hover:bg-[#0e1730] hover:text-white"
+          >
+            <span
+              class="grid h-7 w-7 flex-shrink-0 place-items-center rounded bg-white/5 text-[10px] font-bold text-slate-400"
+              >SM</span
+            >
+            <span>Supplier Management</span>
+          </a>
+          <a
+            href="../../../axel/JortangelShop-main/Modules/Axel/Modules/purchasingRestocking.html"
+            class="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-slate-300 transition hover:bg-[#0e1730] hover:text-white"
+          >
+            <span
+              class="grid h-7 w-7 flex-shrink-0 place-items-center rounded bg-white/5 text-[10px] font-bold text-slate-400"
+              >PU</span
+            >
+            <span>Purchasing &amp; Restocking</span>
+          </a>
+        </nav>
+        <!-- Sidebar Status Footer -->
+      </aside>
+      <!-- END: Sidebar -->
+      <!-- BEGIN: MainContentWrapper -->
+      <div
+        class="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-50"
+        data-purpose="main-layout-container"
+      >
+        <!-- BEGIN: HeaderBar -->
+        <header
+          class="h-16 bg-white px-6 flex items-center shadow-sm z-10"
+          data-purpose="top-header-bar"
+        >
+          <div>
+            <h1 class="text-xl font-semibold text-slate-900">
+              Fabrics &amp; BOM Management
+            </h1>
+          </div>
+        </header>
+        <!-- END: HeaderBar -->
+        <!-- BEGIN: WorkspaceArea -->
+        <main
+          class="flex-1 overflow-y-auto p-6 md:p-8 bg-white"
+          data-purpose="module-workspace-canvas"
+        >
+          <div class="management-content mx-auto max-w-7xl">
+            <div class="module-page-heading">
+              <h1>Fabrics &amp; BOM Management</h1>
+            </div>
+            <section class="summary-grid" aria-label="Inventory summary">
+              <div class="summary-metric">
+                <span>Total Raw Materials</span>
+                <strong id="raw-material-count">0</strong>
+              </div>
+              <div class="summary-metric summary-metric-alert">
+                <span>Low Stock Alerts</span>
+                <div class="summary-metric-value">
+                  <strong id="low-stock-summary">0</strong>
+                  <button id="fab-view-low-stock" class="summary-view-button" type="button">
+                    View
+                  </button>
+                </div>
+              </div>
+              <div class="summary-metric">
+                <span>BOM To-do</span>
+                <div class="summary-metric-value">
+                  <strong id="bom-todo-summary-count">0</strong>
+                  <button id="bom-view-todo" class="summary-view-button" type="button">
+                    View
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <div
+              class="module-tabs"
+              role="tablist"
+              aria-label="Management views"
+            >
+              <button
+                id="materials-tab"
+                class="module-tab is-active"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="fabmaterials-view"
+                data-tab-target="materials"
+              >
+                Raw Materials
+              </button>
+              <button
+                id="recipes-tab"
+                class="module-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="bom-recipes-view"
+                data-tab-target="recipes"
+              >
+                BOM Standard Size Specification
+              </button>
+              <button
+                id="bom-custom-tab"
+                class="module-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="bom-custom-recipes-view"
+                data-tab-target="custom-recipes"
+              >
+                BOM Custom Order Specification
+              </button>
+            </div>
+
+            <section
+              id="bom-recipes-view"
+              class="module-tab-panel hidden"
+              role="tabpanel"
+              aria-labelledby="recipes-tab"
+              data-tab-panel="recipes"
+            >
+              <div class="inventory-surface">
+                <div class="inventory-toolbar">
+                  <div class="toolbar-search">
+                    <label class="sr-only" for="bom-search-input"
+                      >Search BOM recipes</label
+                    >
+                    <input
+                      id="bom-search-input"
+                      type="search"
+                      placeholder="Search by product ID or garment name..."
+                    />
+                  </div>
+                  <button id="bom-btn-add" class="primary-action" type="button">
+                    + Create Standard BOM
+                  </button>
+                </div>
+                <div class="table-scroll">
+                  <table class="management-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Garment (Size)</th>
+                        <th scope="col">BOM Requirements</th>
+                        <th scope="col" class="numeric-cell">
+                          Est. Cost (&#8369;)
+                        </th>
+                        <th scope="col" class="action-cell">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="bom-table-body"></tbody>
+                  </table>
+                  <p id="bom-empty-state" class="empty-state hidden">
+                    No standard-size BOM specifications match your search.
+                  </p>
+                </div>
+                <div id="bom-showing-info" class="table-footnote"></div>
+              </div>
+            </section>
+
+            <section
+              id="bom-custom-recipes-view"
+              class="module-tab-panel hidden"
+              role="tabpanel"
+              aria-labelledby="bom-custom-tab"
+              data-tab-panel="custom-recipes"
+            >
+              <div class="inventory-surface">
+                <div class="inventory-toolbar">
+                  <div class="toolbar-search">
+                    <label class="sr-only" for="bom-custom-search-input"
+                      >Search custom orders</label
+                    >
+                    <input
+                      id="bom-custom-search-input"
+                      type="search"
+                      placeholder="Search by order ID, product, or measurement..."
+                    />
+                  </div>
+                </div>
+                <div class="table-scroll">
+                  <table class="management-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Customer Measurements</th>
+                        <th scope="col" class="action-cell">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="bom-custom-table-body"></tbody>
+                  </table>
+                  <p id="bom-custom-empty" class="empty-state hidden">
+                    No made-to-order items with customer measurements match your search.
+                  </p>
+                </div>
+                <div id="bom-custom-showing-info" class="table-footnote"></div>
+              </div>
+            </section>
+          </div>
+
+          <div
+            id="legacy-bom-measurements"
+            class="hidden max-w-7xl mx-auto bg-white p-6"
+          >
+            <div class="mb-6 flex items-center justify-between">
+              <div>
+                <h2 class="text-xl font-semibold text-slate-800">
+                  Catalog Items
+                </h2>
+                <p class="text-sm text-slate-500">
+                  Select an item to enter measurements.
+                </p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <button
+                type="button"
+                class="catalog-item rounded-xl border border-slate-200 bg-white p-4 text-left transition hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                data-name="Small Polo"
+              >
+                <div class="text-sm font-medium text-slate-700">Small Polo</div>
+                <div class="mt-3 h-24 rounded-lg bg-slate-100"></div>
+              </button>
+
+              <button
+                type="button"
+                class="catalog-item rounded-xl border border-slate-200 bg-white p-4 text-left transition hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                data-name="Small Barong"
+              >
+                <div class="text-sm font-medium text-slate-700">
+                  Small Barong
+                </div>
+                <div class="mt-3 h-24 rounded-lg bg-slate-100"></div>
+              </button>
+
+              <button
+                type="button"
+                class="catalog-item rounded-xl border border-slate-200 bg-white p-4 text-left transition hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                data-name="Medium Polo"
+              >
+                <div class="text-sm font-medium text-slate-700">
+                  Medium Polo
+                </div>
+                <div class="mt-3 h-24 rounded-lg bg-slate-100"></div>
+              </button>
+
+              <button
+                type="button"
+                class="catalog-item rounded-xl border border-slate-200 bg-white p-4 text-left transition hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                data-name="Medium Barong"
+              >
+                <div class="text-sm font-medium text-slate-700">
+                  Medium Barong
+                </div>
+                <div class="mt-3 h-24 rounded-lg bg-slate-100"></div>
+              </button>
+
+              <button
+                type="button"
+                class="catalog-item rounded-xl border border-slate-200 bg-white p-4 text-left transition hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                data-name="Large Polo"
+              >
+                <div class="text-sm font-medium text-slate-700">Large Polo</div>
+                <div class="mt-3 h-24 rounded-lg bg-slate-100"></div>
+              </button>
+
+              <button
+                type="button"
+                class="catalog-item rounded-xl border border-slate-200 bg-white p-4 text-left transition hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                data-name="Large Barong"
+              >
+                <div class="text-sm font-medium text-slate-700">
+                  Large Barong
+                </div>
+                <div class="mt-3 h-24 rounded-lg bg-slate-100"></div>
+              </button>
+            </div>
+
+            <div
+              id="measurements-panel"
+              class="mt-6 hidden rounded-xl border border-slate-200 bg-white p-5"
+            >
+              <div
+                class="mb-4 flex items-center justify-between flex-wrap gap-2"
+              >
+                <div>
+                  <p
+                    class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400"
+                  >
+                    Selected item
+                  </p>
+                  <h3
+                    id="selected-item-name"
+                    class="text-lg font-semibold text-slate-800"
+                  >
+                    Classic Polo
+                  </h3>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <label class="block">
+                  <span class="mb-1.5 block text-sm font-medium text-slate-700"
+                    >Recipe 1</span
+                  >
+                  <input
+                    type="number"
+                    id="chest"
+                    class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                    placeholder="Inches"
+                  />
+                </label>
+
+                <label class="block">
+                  <span class="mb-1.5 block text-sm font-medium text-slate-700"
+                    >Recipe 2</span
+                  >
+                  <input
+                    type="number"
+                    id="shoulder"
+                    class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                    placeholder="Inches"
+                  />
+                </label>
+
+                <label class="block">
+                  <span class="mb-1.5 block text-sm font-medium text-slate-700"
+                    >Recipe 3</span
+                  >
+                  <input
+                    type="number"
+                    id="length"
+                    class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                    placeholder="Inches"
+                  />
+                </label>
+              </div>
+
+              <div class="mt-5 flex justify-end gap-3">
+                <button
+                  type="button"
+                  id="edit-measurement"
+                  class="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  id="save-measurement"
+                  class="rounded-lg bg-slate-800 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- BEGIN: Fabrics & Materials Inventory View -->
+          <div
+            id="fabmaterials-view"
+            class="module-tab-panel fabmaterials-module mx-auto flex min-h-full max-w-7xl flex-col gap-5"
+            role="tabpanel"
+            aria-labelledby="materials-tab"
+            data-tab-panel="materials"
+            data-purpose="fabrics-materials-inventory-module"
+          >
+            <!-- Header Section -->
+            <div
+              class="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div>
+                <div class="flex items-center gap-3">
+                  <h1
+                    class="text-2xl font-semibold tracking-tight text-slate-900"
+                  >
+                    Fabrics &amp; Materials Inventory
+                  </h1>
+                </div>
+              </div>
+            </div>
+
+            <!-- Summary KPI Cards -->
+            <div class="legacy-fab-kpis grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <!-- Stockouts This Month Card -->
+              <div
+                class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+              >
+                <div class="flex items-center justify-between">
+                  <div
+                    class="text-xs font-semibold uppercase tracking-wide text-slate-500"
+                  >
+                    Stockouts This Month
+                  </div>
+                  <span
+                    id="fab-kpi-stockout-badge"
+                    class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800"
+                    >Alerts: 0</span
+                  >
+                </div>
+                <div
+                  id="fab-kpi-stockout-count"
+                  class="mt-2 text-2xl font-semibold tracking-tight text-slate-900"
+                >
+                  0 items
+                </div>
+                <div class="mt-3 flex gap-1">
+                  <span class="h-1.5 w-8 rounded-full bg-slate-200"></span>
+                  <span class="h-1.5 w-8 rounded-full bg-slate-200"></span>
+                </div>
+              </div>
+
+              <!-- Low Stock Materials Card -->
+              <div
+                class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+              >
+                <div class="flex items-center justify-between">
+                  <div
+                    class="text-xs font-semibold uppercase tracking-wide text-slate-500"
+                  >
+                    Low Stock Materials
+                  </div>
+                  <span
+                    id="fab-kpi-lowstock-badge"
+                    class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800"
+                    >Alerts: 0</span
+                  >
+                </div>
+                <div
+                  id="fab-kpi-lowstock-count"
+                  class="mt-2 text-2xl font-semibold tracking-tight text-slate-900"
+                >
+                  0 materials
+                </div>
+                <div class="mt-3 flex gap-1.5">
+                  <span class="h-1.5 w-7 rounded-full bg-amber-400"></span>
+                  <span class="h-1.5 w-7 rounded-full bg-amber-400"></span>
+                  <span class="h-1.5 w-7 rounded-full bg-amber-200"></span>
+                  <span class="h-1.5 w-7 rounded-full bg-slate-200"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Inventory Table Container -->
+            <div
+              class="flex min-h-0 flex-1 flex-col rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
+            >
+              <!-- Controls Bar -->
+              <div
+                class="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"
+              >
+                <!-- Left: Search, Category Filter & Entries -->
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <div class="relative min-w-[240px]">
+                    <div
+                      class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"
+                    >
+                      <svg
+                        class="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      id="fab-search-input"
+                      type="search"
+                      placeholder="Search by SKU, material name, or category..."
+                      class="w-full rounded-lg border-slate-300 bg-white pl-9 pr-3 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <select
+                    id="fab-category-filter"
+                    class="rounded-lg border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  >
+                    <option value="all">All Categories</option>
+                    <option value="Fabrics">Fabrics</option>
+                    <option value="Threads">Threads</option>
+                    <option value="Buttons & Zippers">
+                      Buttons &amp; Zippers
+                    </option>
+                  </select>
+
+                  <select
+                    id="fab-entries-select"
+                    class="rounded-lg border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  >
+                    <option value="10">Show 10 entries</option>
+                    <option value="25">Show 25 entries</option>
+                    <option value="50">Show 50 entries</option>
+                    <option value="100">Show 100 entries</option>
+                    <option value="all">Show All</option>
+                  </select>
+                </div>
+
+                <!-- Right: Action Buttons & Counter -->
+                <div class="flex flex-wrap items-center gap-2">
+                  <span
+                    id="fab-showing-badge"
+                    class="rounded-lg bg-slate-100 px-3 py-2 text-xs font-medium text-slate-600"
+                    >Showing 0 materials</span
+                  >
+
+                  <button
+                    id="fab-btn-add"
+                    type="button"
+                    class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  >
+                    <svg
+                      class="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                    <span>Add Raw Material</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Materials Table -->
+              <div
+                class="min-h-[300px] min-w-0 flex-1 overflow-x-auto rounded-xl border border-slate-200 bg-white"
+              >
+                <table
+                  id="fab-table"
+                  class="w-full min-w-[800px] border-collapse text-left text-sm"
+                >
+                  <thead
+                    class="sticky top-0 z-10 bg-slate-100 text-xs uppercase tracking-wide text-slate-600"
+                  >
+                    <tr>
+                      <th scope="col" class="px-4 py-3 font-semibold">SKU</th>
+                      <th scope="col" class="px-4 py-3 font-semibold">
+                        MATERIAL
+                      </th>
+                      <th scope="col" class="px-4 py-3 font-semibold">
+                        SUPPLIER
+                      </th>
+                      <th scope="col" class="px-4 py-3 font-semibold">
+                        QTY &amp; UNIT
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3 font-semibold text-center"
+                      >
+                        STATUS
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3 font-semibold text-right"
+                      >
+                        COST (&#8369;)
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3 font-semibold text-center"
+                      >
+                        ACTION
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    id="fab-table-body"
+                    class="divide-y divide-slate-100"
+                  ></tbody>
+                </table>
+                <div
+                  id="empty-fab"
+                  class="hidden py-12 text-center text-sm text-slate-500"
+                >
+                  <svg
+                    class="mx-auto h-10 w-10 text-slate-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                    />
+                  </svg>
+                  <p class="mt-2 font-medium">
+                    No fabrics or materials match your search or filter.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Pagination Footer -->
+              <div
+                class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-sm text-slate-600"
+              >
+                <div id="fab-pagination-info">Showing 1 to 10 of 0 entries</div>
+                <div
+                  id="fab-pagination-controls"
+                  class="flex items-center gap-1.5"
+                >
+                  <!-- Generated by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END: Fabrics & Materials Inventory View -->
+        </main>
+        <!-- END: WorkspaceArea -->
+      </div>
+      <!-- END: MainContentWrapper -->
+    </div>
+    <!-- END: ApplicationLayout -->
+
+    <!-- BEGIN: Fabrics & Materials Modals -->
+    <!-- 1. Add / Edit Material Modal -->
+    <div
+      id="fab-modal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs"
+    >
+      <div class="fab-material-card w-full max-w-lg bg-white p-[26px] shadow-2xl">
+        <div
+          class="fab-material-heading flex items-center justify-between"
+        >
+          <h3 id="fab-modal-title">
+            Add Material
+          </h3>
+          <button
+            id="fab-modal-close"
+            type="button"
+            class="fab-modal-close-button"
+            aria-label="Close add material dialog"
+          >
+            <svg
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <form id="fab-material-form">
+          <input type="hidden" id="fab-edit-index" value="-1" />
+          <div>
+            <label
+              for="fab-input-code"
+              class="fab-field-label"
+              >Material SKU</label
+            >
+            <input
+              id="fab-input-code"
+              type="text"
+              required
+              readonly
+              placeholder="SKU-RAW-0001"
+              class="fab-field-control"
+            />
+          </div>
+          <div>
+            <label
+              for="fab-input-name"
+              class="fab-field-label"
+              >Item Name</label
+            >
+            <input
+              id="fab-input-name"
+              type="text"
+              required
+              class="fab-field-control"
+            />
+          </div>
+          <div>
+            <label
+              for="fab-input-cost"
+              class="fab-field-label"
+              >Unit Cost (&#8369;)</label
+            >
+            <input
+              id="fab-input-cost"
+              type="number"
+              min="0"
+              step="0.01"
+              required
+              value="0"
+              class="fab-field-control"
+            />
+          </div>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div>
+              <label
+                for="fab-input-category"
+                class="fab-field-label"
+                >Material Category</label
+              >
+              <select
+                id="fab-input-category"
+                required
+                class="fab-field-control"
+              >
+                <option value="Fabrics">Fabrics</option>
+                <option value="Threads">Threads</option>
+                <option value="Buttons & Zippers">Buttons &amp; Zippers</option>
+              </select>
+              <button
+                id="fab-btn-add-category"
+                class="fab-add-category-button"
+                type="button"
+              >
+                + Add Category
+              </button>
+            </div>
+            <div>
+              <label
+                for="fab-input-unit"
+                class="fab-field-label"
+                >Unit of Measurement</label
+              >
+              <select
+                id="fab-input-unit"
+                required
+                class="fab-field-control"
+              >
+                <option value="meters">Meters (m)</option>
+                <option value="spools">Spools</option>
+                <option value="pieces">Pieces (pcs)</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div>
+              <label
+                for="fab-input-stock"
+                class="fab-field-label"
+                >Initial Stock</label
+              >
+              <input
+                id="fab-input-stock"
+                type="number"
+                min="0"
+                step="any"
+                required
+                value="0"
+                class="fab-field-control"
+              />
+            </div>
+            <div>
+              <label
+                for="fab-input-threshold"
+                class="fab-field-label"
+                >Low Stock Alert Threshold</label
+              >
+              <input
+                id="fab-input-threshold"
+                type="number"
+                min="0"
+                step="any"
+                required
+                value="10"
+                class="fab-field-control"
+              />
+            </div>
+          </div>
+          <div>
+            <label for="fab-input-supplier" class="fab-field-label"
+              >Supplier</label
+            >
+            <select id="fab-input-supplier" class="fab-field-control">
+              <option value="">No supplier selected</option>
+            </select>
+          </div>
+          <div class="fab-modal-actions flex gap-2">
+            <button
+              id="fab-btn-submit"
+              type="submit"
+              class="fab-save-button flex-1"
+            >
+              Save Material
+            </button>
+            <button
+              id="fab-btn-cancel"
+              type="button"
+              class="fab-cancel-button"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="fab-category-modal"
+      class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="fab-category-modal-title"
+    >
+      <div
+        class="w-full max-w-md border border-slate-200 bg-white p-6 shadow-2xl"
+      >
+        <div class="mb-4 flex items-center justify-between">
+          <h3
+            id="fab-category-modal-title"
+            class="text-lg font-semibold text-slate-900"
+          >
+            Add Material Category
+          </h3>
+          <button
+            id="fab-category-modal-close"
+            type="button"
+            class="icon-button"
+            aria-label="Close add material category dialog"
+          >
+            &times;
+          </button>
+        </div>
+        <form id="fab-category-form">
+          <label class="field-label" for="fab-category-name">
+            Category name
+          </label>
+          <input
+            id="fab-category-name"
+            class="field-control"
+            type="text"
+            maxlength="60"
+            autocomplete="off"
+            placeholder="e.g. Linings & Interfacing"
+            required
+          />
+          <div class="mt-5 flex justify-end gap-2">
+            <button
+              id="fab-category-cancel"
+              class="secondary-action"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button class="primary-action" type="submit">Add Category</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="fab-low-stock-modal"
+      class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="fab-low-stock-title"
+    >
+      <div class="fab-low-stock-card w-full max-w-3xl bg-white p-6 shadow-2xl">
+        <div class="fab-low-stock-heading">
+          <div>
+            <h3 id="fab-low-stock-title">Low Stock Items</h3>
+            <p>
+              Materials at or below their stock threshold, including out-of-stock
+              items. Send low-stock materials to Purchasing &amp; Restocking.
+            </p>
+          </div>
+          <button
+            id="fab-low-stock-close"
+            class="fab-modal-close-button"
+            type="button"
+            aria-label="Close low stock alerts"
+          >
+            &times;
+          </button>
+        </div>
+        <div>
+          <ul id="fab-low-stock-list" class="fab-low-stock-list"></ul>
+          <p id="fab-low-stock-empty" class="empty-state hidden">
+            There are no low-stock items in inventory.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="bom-todo-modal"
+      class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="bom-todo-title"
+    >
+      <div class="bom-todo-section w-full max-w-4xl">
+        <div class="bom-todo-heading">
+          <div>
+            <h3 id="bom-todo-title">BOM To-do</h3>
+            <p>Standard product sizes that still need a recipe.</p>
+          </div>
+          <button
+            id="bom-todo-close"
+            class="fab-modal-close-button"
+            type="button"
+            aria-label="Close BOM to-do list"
+          >
+            &times;
+          </button>
+        </div>
+        <div class="table-scroll">
+          <table class="management-table">
+            <thead>
+              <tr>
+                <th scope="col">Product ID</th>
+                <th scope="col">Product (Size)</th>
+                <th scope="col" class="action-cell">Action</th>
+              </tr>
+            </thead>
+            <tbody id="bom-todo-table-body"></tbody>
+          </table>
+          <p id="bom-todo-empty" class="empty-state hidden">
+            All standard product sizes have BOM recipes.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="bom-modal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="bom-modal-title"
+    >
+      <div class="bom-dialog w-full max-w-2xl rounded-lg bg-white shadow-2xl">
+        <div
+          class="flex items-center justify-between border-b border-slate-200 px-5 py-4"
+        >
+          <div>
+            <h2
+              id="bom-modal-title"
+              class="text-lg font-semibold text-slate-900"
+            >
+              Create BOM Standard Size Specification
+            </h2>
+            <p class="mt-0.5 text-sm text-slate-500">
+              Specify the standard-size materials required for this product.
+            </p>
+          </div>
+          <button
+            id="bom-modal-close"
+            class="icon-button"
+            type="button"
+            aria-label="Close recipe dialog"
+            title="Close"
+          >
+            <svg
+              aria-hidden="true"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <form id="bom-form" class="space-y-5 p-5">
+          <input id="bom-edit-id" type="hidden" value="" />
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="bom-product" class="field-label"
+                >Target Product</label
+              >
+              <select id="bom-product" class="field-control" required>
+                <option value="">Select a product from Product Management</option>
+              </select>
+            </div>
+            <div>
+              <label for="bom-size" class="field-label">Target Size</label>
+              <select id="bom-size" class="field-control" required>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+                <option value="XL">XL</option>
+              </select>
+            </div>
+          </div>
+          <fieldset>
+            <legend class="field-label">Raw materials in this recipe</legend>
+            <div id="bom-material-rows" class="space-y-2"></div>
+            <button
+              id="bom-add-material"
+              class="secondary-action mt-3"
+              type="button"
+            >
+              + Add Another Material
+            </button>
+          </fieldset>
+          <div class="bom-cost-line" aria-live="polite">
+            <span>Calculated Material Cost</span>
+            <strong id="bom-calculated-cost">&#8369;0.00</strong>
+          </div>
+          <div class="flex justify-end gap-2 border-t border-slate-200 pt-4">
+            <button id="bom-cancel" class="secondary-action" type="button">
+              Cancel
+            </button>
+            <button class="primary-action" type="submit">
+              Save Standard Specification
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="bom-custom-modal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="bom-custom-modal-title"
+    >
+      <div class="bom-dialog w-full max-w-2xl rounded-lg bg-white shadow-2xl">
+        <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+          <div>
+            <h2 id="bom-custom-modal-title" class="text-lg font-semibold text-slate-900">
+              Modify Customer Measurements
+            </h2>
+            <p class="mt-0.5 text-sm text-slate-500">
+              Update the measurements submitted with this custom order item.
+            </p>
+          </div>
+          <button
+            id="bom-custom-modal-close"
+            class="icon-button"
+            type="button"
+            aria-label="Close measurement modification dialog"
+          >
+            &times;
+          </button>
+        </div>
+        <form id="bom-custom-form" class="space-y-5 p-5">
+          <p id="bom-custom-order-details" class="table-footnote"></p>
+          <fieldset>
+            <legend class="field-label">Customer-submitted measurements</legend>
+            <div id="bom-custom-size-fields" class="bom-custom-size-fields"></div>
+            <p id="bom-custom-size-empty" class="empty-state hidden">
+              This order item has no measurements available to modify.
+            </p>
+          </fieldset>
+          <div class="flex justify-end gap-2 border-t border-slate-200 pt-4">
+            <button id="bom-custom-cancel" class="secondary-action" type="button">
+              Cancel
+            </button>
+            <button class="primary-action" type="submit">
+              Save Measurements
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- END: Fabrics & Materials Modals -->
+    <div
+      id="toast"
+      class="pointer-events-none fixed right-4 top-4 z-50 hidden max-w-sm rounded-lg border px-4 py-3 text-sm font-medium shadow-lg"
+      role="status"
+      aria-live="polite"
+    ></div>
+    <script src="modules-system-archive.js"></script>
+    <script src="modules-fabric-and-bom-management.js"></script>
+  </body>
+</html>

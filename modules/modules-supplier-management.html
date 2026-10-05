@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../Backend/backend-backend.js"></script>
+    <script src="modules-warehouse-route-guard.js"></script>
+
+    <title>Supplier Management</title>
+
+    <link rel="stylesheet" href="modules-supplier-management.css" />
+    <link rel="stylesheet" href="modules-system-design.css" />
+    <script>
+      if (new URLSearchParams(window.location.search).has("embedded")) {
+        document.documentElement.classList.add("embedded-module");
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="app-shell">
+      <!-- SIDEBAR -->
+
+      <aside class="dsa-sidebar">
+        <a class="dsa-brand" href="../../../Base code/base.html">
+          <span class="dsa-brand-logo">JG</span>
+          <span class="dsa-brand-copy"
+            ><span class="dsa-brand-name">JORTANGEL ONLINE SHOP</span
+            ><span class="dsa-brand-subtitle"
+              >Garments &amp; Mfg. ERP</span
+            ></span
+          >
+        </a>
+        <div class="dsa-nav-heading">WORKSPACE</div>
+        <nav class="dsa-navigation" aria-label="Main navigation">
+          <a class="dsa-nav-link" href="../../../Base code/base.html"
+            >Overview</a
+          >
+        </nav>
+        <div class="dsa-nav-heading dsa-modules-heading">MODULES</div>
+        <nav class="dsa-navigation" aria-label="ERP modules">
+          <a class="dsa-nav-link" href="modules-sales-payment-management.html"
+            >Sales &amp; Payment</a
+          >
+          <a class="dsa-nav-link" href="modules-production-management.html"
+            >Production</a
+          >
+          <a
+            class="dsa-nav-link active"
+            href="modules-supplier-management.html"
+            aria-current="page"
+            >Supplier Management</a
+          >
+          <a class="dsa-nav-link" href="modules-purchasing-restocking.html"
+            >Purchasing &amp; Restocking</a
+          >
+        </nav>
+        <div class="dsa-nav-heading dsa-modules-heading">JORTANGEL MODULES</div>
+        <nav class="dsa-navigation" aria-label="Jortangel modules">
+          <a
+            class="dsa-nav-link"
+            href="../../../../../dashboard/Base%20code/base.html"
+            >Dashboard</a
+          >
+          <a
+            class="dsa-nav-link"
+            href="../../../../../BOM/Base%20code/base.html"
+            >BOM</a
+          >
+          <a
+            class="dsa-nav-link"
+            href="../../../../../Bulk%20Order%20Pipeline/Base%20code/base.html"
+            >Bulk Order Pipeline</a
+          >
+          <a
+            class="dsa-nav-link"
+            href="../../../../../Measurement%20Management%202/Base%20code/base.html"
+            >Measurement Management</a
+          >
+        </nav>
+        <div class="dsa-sidebar-footer">
+          <span class="dsa-status-dot"></span>System Online
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+
+      <div class="main-wrapper">
+        <!-- TOP HEADER -->
+
+        <header class="top-header">
+          <div>
+            <h1>Supplier Directory</h1>
+          </div>
+        </header>
+
+        <!-- WORKSPACE -->
+
+        <main class="workspace">
+          <div class="workspace-container">
+            <div
+              id="errorMessage"
+              class="error-banner"
+              role="alert"
+              hidden
+            ></div>
+
+            <section id="directoryView" class="directory-view">
+              <section class="summary-cards">
+                <div class="summary-card">
+                  <div>
+                    <p>Total Vendors</p>
+                    <h2 id="totalSuppliers">0</h2>
+                  </div>
+                </div>
+                <div class="summary-card">
+                  <div>
+                    <p>Active</p>
+                    <h2 id="activeSuppliers">0</h2>
+                  </div>
+                </div>
+                <div class="summary-card">
+                  <div>
+                    <p>Inactive</p>
+                    <h2 id="inactiveSuppliers">0</h2>
+                  </div>
+                </div>
+              </section>
+
+              <section class="content-panel">
+                <div class="panel-header">
+                  <div>
+                    <h2>Supplier Directory</h2>
+
+                    <p>
+                      Find vendors, review supplied materials, and manage
+                      profiles.
+                    </p>
+                  </div>
+
+                  <button class="primary-btn create-btn" id="openCreateButton">
+                    + Add New Supplier
+                  </button>
+                </div>
+
+                <!-- TOOLBAR -->
+
+                <div class="toolbar">
+                  <div class="search-box">
+                    <span> ⌕ </span>
+
+                    <input
+                      type="text"
+                      id="searchSupplier"
+                      placeholder="Search by vendor name, ID, or material..."
+                    />
+                  </div>
+                </div>
+
+                <!-- TABLE -->
+
+                <div class="table-container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Vendor ID</th>
+                        <th>Company Name</th>
+                        <th>Contact &amp; Email</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="supplierTableBody"></tbody>
+                  </table>
+
+                  <div id="emptyMessage" class="empty-message">
+                    No suppliers match this search.
+                  </div>
+                </div>
+                <p id="supplierCountLabel" class="directory-count"></p>
+              </section>
+            </section>
+
+            <section
+              id="supplierDetailsView"
+              class="supplier-details-view"
+              hidden
+            >
+              <button class="back-link" id="backToDirectory" type="button">
+                ← Back to Directory
+              </button>
+              <div class="supplier-profile-heading">
+                <div>
+                  <p class="eyebrow" id="detailSupplierId">SUP-VND-0001</p>
+                  <h2 id="detailSupplierName">Supplier Name</h2>
+                </div>
+                <div class="profile-actions">
+                  <span id="detailSupplierStatus" class="status-badge"
+                    >Active</span
+                  >
+                  <button
+                    class="secondary-btn"
+                    id="editDetailSupplier"
+                    type="button"
+                  >
+                    Edit Supplier
+                  </button>
+                </div>
+              </div>
+              <div class="supplier-profile-grid">
+                <section class="profile-panel">
+                  <h3>Company Information</h3>
+                  <dl class="supplier-facts">
+                    <div>
+                      <dt>Primary Contact</dt>
+                      <dd id="detailContactPerson">-</dd>
+                    </div>
+                    <div>
+                      <dt>Email</dt>
+                      <dd id="detailEmail">-</dd>
+                    </div>
+                    <div>
+                      <dt>Phone</dt>
+                      <dd id="detailPhone">-</dd>
+                    </div>
+                    <div>
+                      <dt>TIN / Tax ID</dt>
+                      <dd id="detailTaxId">-</dd>
+                    </div>
+                    <div class="fact-wide">
+                      <dt>Address</dt>
+                      <dd id="detailAddress">-</dd>
+                    </div>
+                  </dl>
+                  <h3 class="materials-heading">Materials We Buy From Them</h3>
+                  <div id="detailMaterials" class="material-tags"></div>
+                </section>
+                <section class="profile-panel purchase-panel">
+                  <div class="purchase-heading">
+                    <div>
+                      <h3>Restocking &amp; Purchase History</h3>
+                      <p>
+                        Purchase and receiving records are managed in the
+                        Purchase &amp; Restocking module.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="table-container">
+                    <table class="purchase-table">
+                      <thead>
+                        <tr>
+                          <th>Reference</th>
+                          <th>Date</th>
+                          <th>Items / Amount</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="purchaseOrderTableBody"></tbody>
+                    </table>
+                    <p id="emptyPurchaseOrders" class="empty-message">
+                      No purchase or receiving history is available for this
+                      supplier.
+                    </p>
+                  </div>
+                  <div class="profile-footer-actions">
+                    <button
+                      class="danger-btn"
+                      id="deleteDetailSupplier"
+                      type="button"
+                    >
+                      Archive Supplier
+                    </button>
+                  </div>
+                </section>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- CREATE SUPPLIER MODAL -->
+
+    <div class="modal-overlay" id="createModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <h2>Add Supplier</h2>
+
+            <p>Create a new supplier record.</p>
+          </div>
+
+          <button class="close-btn" id="closeCreateModal">×</button>
+        </div>
+
+        <div class="update-form">
+          <div class="form-group">
+            <label> Vendor Name </label>
+
+            <input
+              type="text"
+              id="createSupplierName"
+              placeholder="Enter supplier name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="createTaxId">TIN / Tax ID</label>
+            <input type="text" id="createTaxId" placeholder="123-456-789-000" />
+          </div>
+
+          <div class="form-group">
+            <label for="createContactPerson">Primary Contact</label>
+            <input
+              type="text"
+              id="createContactPerson"
+              placeholder="Juan Dela Cruz"
+            />
+          </div>
+
+          <div class="form-group">
+            <label> Contact Number </label>
+
+            <input
+              type="tel"
+              id="createContactNumber"
+              placeholder="+63 917 000 0000"
+            />
+          </div>
+
+          <div class="form-group">
+            <label> Address </label>
+
+            <input type="text" id="createAddress" placeholder="Enter address" />
+          </div>
+
+          <div class="form-group">
+            <label> Email </label>
+
+            <input type="text" id="createEmail" placeholder="Enter email" />
+          </div>
+
+          <div class="form-group">
+            <label> Materials Supplied </label>
+
+            <input
+              type="text"
+              id="createMaterials"
+              placeholder="Piña, Jusi, Cotton (comma separated)"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="createStatus">Status</label>
+            <select id="createStatus">
+              <option>Active</option>
+              <option>Inactive</option>
+            </select>
+          </div>
+
+          <div id="createMessage" class="form-message"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="secondary-btn" id="cancelCreateButton">Cancel</button>
+
+          <button class="primary-btn" id="saveCreateButton">
+            Add Supplier
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW SUPPLIER MODAL -->
+
+    <div class="modal-overlay" id="viewModal">
+      <div class="modal view-modal">
+        <div class="modal-header">
+          <div>
+            <h2>Supplier Record</h2>
+
+            <p>Complete supplier information.</p>
+          </div>
+
+          <button class="close-btn" id="closeViewModal">×</button>
+        </div>
+
+        <div class="view-grid">
+          <div class="view-item">
+            <span> Supplier ID </span>
+
+            <strong id="viewSupplierId"> - </strong>
+          </div>
+
+          <div class="view-item">
+            <span> Supplier Name </span>
+
+            <strong id="viewSupplierName"> - </strong>
+          </div>
+
+          <div class="view-item">
+            <span> Contact Number </span>
+
+            <strong id="viewContactNumber"> - </strong>
+          </div>
+
+          <div class="view-item">
+            <span> Email </span>
+
+            <strong id="viewEmail"> - </strong>
+          </div>
+
+          <div class="view-item full-width">
+            <span> Address </span>
+
+            <strong id="viewAddress"> - </strong>
+          </div>
+
+          <div class="view-item full-width">
+            <span> Materials Supplied </span>
+
+            <strong id="viewMaterials"> - </strong>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="secondary-btn" id="closeViewButton">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPDATE SUPPLIER MODAL -->
+
+    <div class="modal-overlay" id="updateModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <h2>Update Supplier</h2>
+
+            <p>Edit the supplier information.</p>
+          </div>
+
+          <button class="close-btn" id="closeUpdateModal">×</button>
+        </div>
+
+        <div class="update-form">
+          <div class="form-group">
+            <label> Supplier ID </label>
+
+            <input type="text" id="updateSupplierId" readonly />
+          </div>
+
+          <div class="form-group">
+            <label> Vendor Name </label>
+
+            <input
+              type="text"
+              id="updateSupplierName"
+              placeholder="Enter supplier name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="updateTaxId">TIN / Tax ID</label>
+            <input type="text" id="updateTaxId" placeholder="123-456-789-000" />
+          </div>
+
+          <div class="form-group">
+            <label for="updateContactPerson">Primary Contact</label>
+            <input
+              type="text"
+              id="updateContactPerson"
+              placeholder="Juan Dela Cruz"
+            />
+          </div>
+
+          <div class="form-group">
+            <label> Contact Number </label>
+
+            <input
+              type="tel"
+              id="updateContactNumber"
+              placeholder="+63 917 000 0000"
+            />
+          </div>
+
+          <div class="form-group">
+            <label> Address </label>
+
+            <input type="text" id="updateAddress" placeholder="Enter address" />
+          </div>
+
+          <div class="form-group">
+            <label> Email </label>
+
+            <input type="text" id="updateEmail" placeholder="Enter email" />
+          </div>
+
+          <div class="form-group">
+            <label> Materials Supplied </label>
+
+            <input
+              type="text"
+              id="updateMaterials"
+              placeholder="Piña, Jusi, Cotton (comma separated)"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="updateStatus">Status</label>
+            <select id="updateStatus">
+              <option>Active</option>
+              <option>Inactive</option>
+            </select>
+          </div>
+
+          <div id="updateMessage" class="form-message"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="secondary-btn" id="cancelUpdateButton">Cancel</button>
+
+          <button class="primary-btn" id="saveUpdateButton">Save Update</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHIVE CONFIRMATION -->
+
+    <div class="modal-overlay" id="deleteModal">
+      <div class="confirm-modal">
+        <div class="confirm-icon">!</div>
+
+        <h2>Archive Supplier?</h2>
+
+        <p>
+          This supplier will be hidden from the active directory. You can
+          restore it later from System &amp; Security &gt; Archive.
+        </p>
+
+        <div class="modal-footer">
+          <button class="secondary-btn" id="cancelDeleteButton">Cancel</button>
+
+          <button class="archive-confirm-btn" id="confirmDeleteButton">Archive</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="modules-system-archive.js"></script>
+    <script src="modules-supplier-management.js"></script>
+  </body>
+</html>

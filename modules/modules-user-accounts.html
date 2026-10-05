@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Atelier Admin | User and Accounts</title>
+    <link rel="stylesheet" href="modules-user-accounts.css" />
+    <link rel="stylesheet" href="modules-system-design.css" />
+    <script>
+      if (new URLSearchParams(window.location.search).has("embedded")) {
+        document.documentElement.classList.add("embedded-module");
+      }
+    </script>
+    <script src="../Backend/backend-backend.js"></script>
+    <script src="modules-warehouse-route-guard.js"></script>
+    <script src="modules-user-accounts.js" defer></script>
+  </head>
+  <body>
+    <main class="accounts-workspace">
+      <section class="accounts-panel" aria-labelledby="accounts-heading">
+        <header class="accounts-heading">
+          <div>
+            <h1 id="accounts-heading">User &amp; Accounts</h1>
+          </div>
+        </header>
+
+        <div class="account-actions">
+          <button class="button button-secondary" id="profileButton" type="button">
+            My Admin Profile
+          </button>
+          <button class="button button-primary" id="createStaffButton" type="button">
+            <span aria-hidden="true">＋</span> Create Staff Account
+          </button>
+        </div>
+
+        <div class="account-search">
+          <label class="visually-hidden" for="accountSearch">
+            Search account name, email, role, or account ID
+          </label>
+          <input
+            id="accountSearch"
+            type="search"
+            placeholder="Search by name, email, role, or account ID..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div id="accountsError" class="accounts-error" role="alert" hidden></div>
+
+        <div class="account-status-tabs" role="tablist" aria-label="Account status">
+          <button
+            class="account-status-tab is-selected"
+            id="activeAccountsTab"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="accountsStatusPanel"
+            data-account-status="active"
+          >
+            Active Accounts <span class="tab-count" id="activeAccountsCount">0</span>
+          </button>
+          <button
+            class="account-status-tab"
+            id="inactiveAccountsTab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="accountsStatusPanel"
+            data-account-status="inactive"
+            tabindex="-1"
+          >
+            Inactive Accounts <span class="tab-count" id="inactiveAccountsCount">0</span>
+          </button>
+        </div>
+
+        <div
+          class="account-status-panel"
+          id="accountsStatusPanel"
+          role="tabpanel"
+          aria-labelledby="activeAccountsTab"
+          tabindex="0"
+        >
+          <section class="account-list" aria-labelledby="staffAccountsHeading">
+            <header class="account-list-heading">
+              <div>
+                <p class="eyebrow">Team Directory</p>
+                <h2 id="staffAccountsHeading">Staff Accounts</h2>
+              </div>
+            </header>
+            <div class="accounts-table-scroll">
+              <table class="accounts-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Account ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Registered</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="accountsTableBody"></tbody>
+              </table>
+              <p id="accountsEmpty" class="accounts-empty" hidden>
+                No staff accounts match this search.
+              </p>
+            </div>
+          </section>
+
+          <section
+            class="account-list customer-account-list"
+            aria-labelledby="customerAccountsHeading"
+          >
+            <header class="account-list-heading">
+              <div>
+                <p class="eyebrow">Storefront Registrations</p>
+                <h2 id="customerAccountsHeading">Registered Customer Accounts</h2>
+                <p class="account-list-description">
+                  Customer registrations are listed separately from staff accounts.
+                </p>
+              </div>
+            </header>
+            <div class="accounts-table-scroll">
+              <table class="accounts-table customer-accounts-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Account ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Registered</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="customerAccountsTableBody"></tbody>
+              </table>
+              <p id="customerAccountsEmpty" class="accounts-empty" hidden>
+                No registered customer accounts match this search.
+              </p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="accounts-dialog account-view-dialog" id="accountViewDialog" aria-labelledby="accountViewTitle">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Account Details</p>
+          <h2 id="accountViewTitle">View Account</h2>
+        </div>
+        <button class="icon-button" id="closeAccountView" type="button" aria-label="Close account details">×</button>
+      </div>
+      <dl class="account-details" id="accountDetails"></dl>
+    </dialog>
+
+    <dialog class="accounts-dialog profile-dialog" id="profileDialog" aria-labelledby="profileTitle">
+      <form id="profileForm">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">Administrator</p>
+            <h2 id="profileTitle">Edit My Account Info</h2>
+            <p class="profile-id">Employee ID: <strong id="profileEmployeeId">Not available</strong></p>
+          </div>
+          <button
+            class="icon-button"
+            id="closeProfileDialog"
+            type="button"
+            aria-label="Close admin profile"
+          >×</button>
+        </div>
+
+        <fieldset class="staff-fieldset">
+          <legend>Account Details</legend>
+          <div class="form-grid">
+            <label class="form-field">
+              <span>First name</span>
+              <input id="profileFirstName" name="firstName" required maxlength="60" autocomplete="given-name" />
+            </label>
+            <label class="form-field">
+              <span>Last name</span>
+              <input id="profileLastName" name="lastName" required maxlength="60" autocomplete="family-name" />
+            </label>
+            <label class="form-field full-width">
+              <span>Admin email</span>
+              <input id="profileEmail" name="email" type="email" required maxlength="254" autocomplete="email" />
+            </label>
+            <label class="form-field full-width">
+              <span>Phone number</span>
+              <input id="profilePhone" name="phone" type="tel" maxlength="30" autocomplete="tel" />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="staff-fieldset security-fieldset">
+          <legend>Security</legend>
+          <label class="form-field">
+            <span>Current password <small>(required to save changes)</small></span>
+            <input id="profileCurrentPassword" name="currentPassword" type="password" required autocomplete="current-password" />
+          </label>
+          <label class="form-field">
+            <span>New password <small>(optional)</small></span>
+            <input id="profileNewPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8" />
+          </label>
+        </fieldset>
+
+        <p id="profileFormMessage" class="form-message" role="status" aria-live="polite"></p>
+        <div class="dialog-actions">
+          <button class="button button-secondary" id="discardProfileButton" type="button">
+            Discard Changes
+          </button>
+          <button class="button button-primary" id="saveProfileButton" type="submit">
+            Save My Profile
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="accounts-dialog" id="staffDialog" aria-labelledby="staffTitle">
+      <form id="staffForm">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">Account Administration</p>
+            <h2 id="staffTitle">Generate New Staff Credentials</h2>
+          </div>
+          <button
+            class="icon-button"
+            id="closeStaffDialog"
+            type="button"
+            aria-label="Close create staff account"
+          >×</button>
+        </div>
+        <div class="system-id">
+          <span>System ID</span>
+          <strong id="staffEmployeeId">Select a role</strong>
+          <span class="auto-generated">(Auto-generated)</span>
+        </div>
+
+        <fieldset class="staff-fieldset">
+          <legend>Employee Details</legend>
+          <div class="form-grid">
+            <label class="form-field">
+              <span>First name</span>
+              <input id="staffFirstName" name="firstName" required maxlength="60" autocomplete="given-name" />
+            </label>
+            <label class="form-field">
+              <span>Last name</span>
+              <input id="staffLastName" name="lastName" required maxlength="60" autocomplete="family-name" />
+            </label>
+            <label class="form-field full-width">
+              <span>Work email</span>
+              <input id="staffEmail" name="email" type="email" required maxlength="254" autocomplete="email" />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="staff-fieldset">
+          <legend>System Access &amp; Hierarchy</legend>
+          <label class="form-field">
+            <span>Account type</span>
+            <select id="staffRole" name="role" required>
+              <option value="">Select role...</option>
+              <option value="Admin">Master Admin (Full Access)</option>
+              <option value="Cashier">Cashier (Sales &amp; Finance Only)</option>
+              <option value="Warehouse">Warehouse (Supply Chain &amp; Inventory Only)</option>
+              <option value="Production">Atelier (Production Floor Only)</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <fieldset class="staff-fieldset security-fieldset">
+          <legend>Security</legend>
+          <label class="form-field">
+            <span>Temporary password</span>
+            <span class="temporary-password-row">
+              <input id="staffTemporaryPassword" type="text" readonly aria-describedby="temporaryPasswordNote" />
+              <button class="button button-secondary copy-password-button" id="copyTemporaryPassword" type="button">Copy</button>
+            </span>
+          </label>
+          <p class="field-help" id="temporaryPasswordNote">
+            The temporary password is shown here and stored only as a secure hash.
+            Staff can sign in to the backend with this work email and temporary password.
+          </p>
+        </fieldset>
+        <p id="staffFormMessage" class="form-message" role="status" aria-live="polite"></p>
+        <div class="dialog-actions">
+          <button class="button button-secondary" id="cancelStaffButton" type="button">
+            Cancel
+          </button>
+          <button class="button button-primary" id="saveStaffButton" type="submit">
+            Create Staff Account
+          </button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

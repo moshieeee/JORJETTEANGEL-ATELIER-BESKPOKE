@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JorjetteAngel Atelier</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        color: #211d19;
+        display: flex;
+        flex-direction: column;
+        font-family: Inter, "Segoe UI", sans-serif;
+      }
+
+      .app-footer {
+        align-items: center;
+        background: #211d19;
+        min-height: 3.5rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .app-footer nav {
+        align-items: center;
+        display: flex;
+        gap: 0.5rem;
+        width: 100%;
+      }
+
+      .app-footer strong {
+        color: #fff;
+        font-family: Georgia, serif;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        margin-right: auto;
+      }
+
+      .app-footer button {
+        background: transparent;
+        border: 1px solid #9f9487;
+        border-radius: 0.25rem;
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        padding: 0.45rem 0.75rem;
+      }
+
+      .app-footer button[aria-pressed="true"] {
+        background: #fff;
+        border-color: #fff;
+        color: #211d19;
+      }
+
+      main {
+        flex: 1;
+        min-height: 0;
+      }
+
+      main iframe {
+        border: 0;
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+
+      main iframe[hidden] {
+        display: none;
+      }
+    </style>
+    <script src="Backend/backend-backend.js"></script>
+  </head>
+  <body>
+    <main>
+      <iframe
+        id="storefront-frame"
+        title="JorjetteAngel storefront"
+        data-src="Front/frontend-e-commerce.html?embedded=1"
+      ></iframe>
+      <iframe
+        id="admin-frame"
+        title="JorjetteAngel admin"
+        data-src="Backend/backend-login.html?embedded=1"
+        hidden
+      ></iframe>
+    </main>
+    <footer class="app-footer">
+      <nav aria-label="Application">
+        <strong>JORJETTEANGEL ATELIER</strong>
+        <button type="button" data-app="storefront" aria-pressed="true">
+          Storefront
+        </button>
+        <button type="button" data-app="admin" aria-pressed="false">
+          Admin
+        </button>
+      </nav>
+    </footer>
+    <script>
+      (() => {
+        const apps = {
+          storefront: document.getElementById("storefront-frame"),
+          admin: document.getElementById("admin-frame"),
+        };
+        const buttons = document.querySelectorAll("[data-app]");
+
+        function showApp(appName, updateHistory) {
+          const selectedApp = apps[appName] ? appName : "storefront";
+          const activeFrame = apps[selectedApp];
+          if (!activeFrame.getAttribute("src")) {
+            activeFrame.src = activeFrame.dataset.src;
+          }
+          Object.entries(apps).forEach(([name, frame]) => {
+            frame.hidden = name !== selectedApp;
+          });
+          buttons.forEach((button) => {
+            button.setAttribute(
+              "aria-pressed",
+              String(button.dataset.app === selectedApp),
+            );
+          });
+          if (updateHistory) {
+            const url = new URL(window.location.href);
+            url.searchParams.set("app", selectedApp);
+            window.history.pushState(null, "", url);
+          }
+        }
+
+        buttons.forEach((button) => {
+          button.addEventListener("click", () => {
+            showApp(button.dataset.app, true);
+          });
+        });
+        window.addEventListener("popstate", () => {
+          showApp(new URLSearchParams(window.location.search).get("app"), false);
+        });
+        window.addEventListener("message", (event) => {
+          if (
+            (event.source === apps.storefront.contentWindow ||
+              event.source === apps.admin.contentWindow) &&
+            (event.data?.app === "admin" ||
+              event.data?.app === "storefront") &&
+            event.data?.type === "app-shell-switch"
+          ) {
+            showApp(event.data.app, true);
+          }
+        });
+
+        const initialApp = new URLSearchParams(window.location.search).get("app");
+        showApp(initialApp, false);
+      })();
+    </script>
+  </body>
+</html>

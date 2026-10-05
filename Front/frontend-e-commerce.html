@@ -1,0 +1,1724 @@
+<!doctype html>
+
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script>
+      if (
+        window.top === window &&
+        new URLSearchParams(window.location.search).get("embedded") !== "1"
+      ) {
+        window.location.replace("../index.html?app=storefront");
+      }
+    </script>
+    <title>
+      JORJETTEANGEL ATELIER BESPOKE | Masterful Tailoring, Timeless Elegance
+    </title>
+    <!-- Tailwind CSS CDN with plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts: Bodoni Moda, Cormorant Garamond & Inter -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="frontend-e-commerce.css" />
+  </head>
+  <body
+    class="min-h-screen flex flex-col bg-[#FAF9F7] text-[#1A1A1A] selection:bg-[#0C0907] selection:text-white"
+  >
+    <!-- BEGIN: Main Header Navigation -->
+    <header
+      class="sticky top-0 bg-[#FAF9F7]/95 backdrop-blur-md border-b border-[#E5DFD7] z-40 transition-all"
+    >
+      <div
+        class="relative max-w-[1440px] mx-auto px-8 h-24 flex items-center justify-between"
+      >
+        <!-- Center: Refined Editorial Wordmark -->
+        <div
+          class="absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center whitespace-nowrap text-center"
+        >
+          <a
+            class="font-editorial text-lg font-medium tracking-[0.1em] text-[#0C0907] uppercase sm:text-xl sm:tracking-[0.16em] md:text-3xl md:tracking-[0.24em]"
+            href="#"
+          >
+            JORJETTEANGEL
+          </a>
+          <span
+            class="mt-0.5 font-sans text-[8px] font-medium uppercase tracking-[0.25em] text-[#695C50] sm:text-[9px] sm:tracking-[0.32em] md:tracking-[0.38em]"
+          >
+            ATELIER BESPOKE
+          </span>
+        </div>
+        <!-- Right: Utility Actions -->
+        <div
+          class="z-20 ml-auto flex w-auto items-center justify-end space-x-3 text-[#1A1A1A] sm:space-x-4 md:space-x-6"
+        >
+          <button
+            aria-label="Search Collection"
+            class="p-1 hover:text-neutral-500 transition"
+            id="open-product-search"
+            type="button"
+          >
+            <svg
+              class="w-5 h-5 stroke-[1.4]"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </button>
+          <!-- Account Button opens modal -->
+          <button
+            aria-label="Client Account Portal"
+            class="p-1 hover:text-neutral-500 transition relative flex items-center gap-1.5 group"
+            id="open-account-modal"
+            title="Client Account &amp; Atelier Portal"
+            type="button"
+          >
+            <svg
+              class="w-5 h-5 stroke-[1.4]"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </button>
+          <!-- Bag / Cart -->
+          <a
+            aria-label="Shopping Bag"
+            class="p-1 hover:text-neutral-500 transition relative flex items-center"
+            href="#bag"
+          >
+            <svg
+              class="w-5 h-5 stroke-[1.4]"
+              fill="none"
+              stroke="currentColor"
+              viewbox="0 0 24 24"
+            >
+              <path
+                d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+            <span
+              class="absolute -top-1.5 -right-2 bg-[#0C0907] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold"
+              data-cart-count
+              >0</span
+            >
+          </a>
+        </div>
+      </div>
+    </header>
+    <!-- END: Main Header Navigation -->
+    <section
+      class="shop-campaign relative isolate flex min-h-[500px] items-end overflow-hidden bg-[#1A1A1A] md:min-h-[600px]"
+      data-spa-view="home"
+      aria-labelledby="shop-campaign-title"
+    >
+      <img
+        class="shop-campaign-image absolute inset-0 -z-20 h-full w-full object-cover object-center"
+        src="../UI/Images/landing-image.png"
+        alt="A tailored Jorjetteangel look in a sunlit city setting"
+      />
+      <div class="shop-campaign-shade absolute inset-0 -z-10"></div>
+      <div
+        class="mx-auto flex w-full max-w-[1320px] items-end px-6 pb-12 pt-24 md:px-10 md:pb-16"
+      >
+        <div class="max-w-2xl text-white">
+          <p
+            class="mb-4 text-[10px] uppercase tracking-[0.26em] text-[#EAE1DC]"
+          >
+            The Jorjetteangel Atelier Collection
+          </p>
+          <h1
+            id="shop-campaign-title"
+            class="font-editorial text-4xl font-normal leading-tight sm:text-5xl md:text-6xl"
+          >
+            Where bespoke craftsmanship<br /><span class="italic text-[#EAE1DC]"
+              >meets academic distinction.</span
+            >
+          </h1>
+          <p class="mt-5 max-w-lg text-[13px] leading-6 text-white/85">
+            Discover Ready-To-Wear Garments, School Uniforms, and
+            Made-to-Measure Pieces from Us.
+          </p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a
+              class="inline-flex items-center bg-[#FAF9F7] px-6 py-3 text-[10px] uppercase tracking-[0.16em] text-[#0C0907] transition hover:bg-[#EAE1DC]"
+              href="#catalog"
+              >View Our Collection</a
+            >
+          </div>
+        </div>
+      </div>
+      <span
+        class="absolute bottom-5 right-6 text-[9px] uppercase tracking-[0.2em] text-white/75 md:right-10"
+        >01 / Atelier collection</span
+      >
+    </section>
+    <section
+      class="shop-home-section px-6 py-14 md:px-10 md:py-20"
+      data-spa-view="home"
+      id="shop-home-products"
+    >
+      <div class="mx-auto max-w-[1320px]">
+        <div
+          class="mb-8 flex flex-col gap-6 border-b border-[#E5DFD7] pb-6 md:flex-row md:items-end md:justify-between"
+        >
+          <div>
+            <p
+              class="mb-2 text-[10px] uppercase tracking-[0.24em] text-[#695C50]"
+            >
+              Popular this week
+            </p>
+            <h2
+              class="font-editorial text-3xl font-normal text-[#0C0907] md:text-4xl"
+            >
+              Hot items
+            </h2>
+            <p class="mt-2 max-w-xl text-[13px] leading-6 text-[#695C50]">
+              Shop customer favorites from the Jorjetteangel collection.
+            </p>
+          </div>
+          <a
+            class="shrink-0 border-b border-[#0C0907] pb-1 text-[11px] uppercase tracking-[0.16em] text-[#0C0907] hover:text-[#695C50]"
+            href="#catalog"
+            >View all products</a
+          >
+        </div>
+        <div
+          class="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 md:gap-x-6 lg:grid-cols-4"
+          id="spa-home-products-grid"
+        ></div>
+      </div>
+    </section>
+    <!-- BEGIN: Bespoke Journey (Inspired by Common Suits '3 Steps to Your Bespoke Suit') -->
+    <section
+      class="py-20 px-8 bg-white border-b border-[#E5DFD7]"
+      data-spa-view="legacy"
+      id="bespoke-journey-legacy"
+    >
+      <div class="max-w-[1440px] mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <span
+            class="text-[10px] uppercase font-mono tracking-[0.3em] text-[#695C50] block mb-2"
+            >The Atelier Method</span
+          >
+          <h2
+            class="font-editorial text-3xl md:text-4xl text-[#0C0907] font-normal tracking-tight"
+          >
+            Three Steps to Your Bespoke Garment
+          </h2>
+          <div class="w-12 h-[1px] bg-[#695C50] mx-auto mt-4"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14">
+          <!-- Step 1 -->
+          <div
+            class="p-8 bg-[#FAF9F7] border border-[#E5DFD7] flex flex-col justify-between"
+          >
+            <div>
+              <span
+                class="font-editorial text-3xl font-light text-[#695C50] block mb-4"
+                >01</span
+              >
+              <h3
+                class="font-editorial text-xl font-medium text-[#0C0907] mb-3"
+              >
+                Book Consultation
+              </h3>
+              <p class="text-xs md:text-sm text-[#4D4540] leading-relaxed">
+                One-on-one session with our master tailor. Select from
+                hand-loomed piña-silk, high-twist Italian wools, and determine
+                custom lapels, embroidery motifs, and silhouette specifications.
+              </p>
+            </div>
+            <div
+              class="pt-6 mt-6 border-t border-[#E5DFD7] text-[11px] font-mono uppercase tracking-wider text-[#695C50]"
+            >
+              Session: 45 Minutes · Manila Atelier
+            </div>
+          </div>
+          <!-- Step 2 -->
+          <div
+            class="p-8 bg-[#FAF9F7] border border-[#E5DFD7] flex flex-col justify-between"
+          >
+            <div>
+              <span
+                class="font-editorial text-3xl font-light text-[#695C50] block mb-4"
+                >02</span
+              >
+              <h3
+                class="font-editorial text-xl font-medium text-[#0C0907] mb-3"
+              >
+                The Basted Fitting
+              </h3>
+              <p class="text-xs md:text-sm text-[#4D4540] leading-relaxed">
+                Experience our traditional basted fitting. The garment is
+                temporarily stitched with white basting thread so our cutters
+                can sculpt drape, armhole depth, and waist taper right onto your
+                form.
+              </p>
+            </div>
+            <div
+              class="pt-6 mt-6 border-t border-[#E5DFD7] text-[11px] font-mono uppercase tracking-wider text-[#695C50]"
+            >
+              Timeline: 5–7 Days Post-Consultation
+            </div>
+          </div>
+          <!-- Step 3 -->
+          <div
+            class="p-8 bg-[#FAF9F7] border border-[#E5DFD7] flex flex-col justify-between"
+          >
+            <div>
+              <span
+                class="font-editorial text-3xl font-light text-[#695C50] block mb-4"
+                >03</span
+              >
+              <h3
+                class="font-editorial text-xl font-medium text-[#0C0907] mb-3"
+              >
+                Pick Up or Dispatch
+              </h3>
+              <p class="text-xs md:text-sm text-[#4D4540] leading-relaxed">
+                Following meticulous hand-pressing, hand-stitched bar tacks, and
+                final quality inspection, your garment is ready for collection
+                in our salon or secure courier dispatch nationwide.
+              </p>
+            </div>
+            <div
+              class="pt-6 mt-6 border-t border-[#E5DFD7] text-[11px] font-mono uppercase tracking-wider text-[#695C50]"
+            >
+              Fit Guarantee: Complimentary Retouching
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= CARD: CUSTOMER ACCOUNT MODAL START ======= -->
+    <!-- BEGIN: Customer Account Creation / Client Portal Modal -->
+    <div
+      aria-modal="true"
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300"
+      id="account-modal-overlay"
+      role="dialog"
+      aria-labelledby="account-modal-title"
+    >
+      <div
+        class="bg-white max-w-xl w-full border border-[#E5DFD7] shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 max-h-[90vh] min-h-[540px] flex flex-col"
+        id="account-modal-container"
+      >
+        <!-- Modal Header -->
+        <div
+          class="bg-[#0C0907] text-white px-7 py-5 flex items-center justify-between border-b border-neutral-800"
+        >
+          <div>
+            <span
+              class="text-[9.5px] uppercase font-mono tracking-[0.28em] text-[#918779] block"
+              >JORJETTEANGEL ACCOUNT PORTAL</span
+            >
+            <h3
+              class="font-editorial text-2xl font-normal tracking-tight mt-0.5"
+              id="account-modal-title"
+            >
+              Sign up
+            </h3>
+          </div>
+          <button
+            aria-label="Close dialog"
+            class="text-neutral-400 hover:text-white text-2xl leading-none transition"
+            id="close-account-modal"
+            type="button"
+          >
+            ×
+          </button>
+        </div>
+        <!-- Modal Tabs -->
+        <div
+          class="flex border-b border-[#E5DFD7] bg-[#FAF9F7] text-xs font-semibold"
+        >
+          <button
+            class="flex-1 py-3.5 border-b-2 border-[#0C0907] bg-white text-[#0C0907] uppercase tracking-[0.16em]"
+            data-auth-mode="create"
+            id="modal-tab-create"
+            type="button"
+          >
+            Create Account
+          </button>
+          <button
+            class="flex-1 py-3.5 text-neutral-400 hover:text-black uppercase tracking-[0.16em]"
+            data-auth-mode="signin"
+            id="modal-tab-signin"
+            type="button"
+          >
+            Sign In
+          </button>
+        </div>
+
+        <!-- ======= SIGN IN TO EXISTING PROFILE CARD START ======= -->
+        <div
+          class="hidden p-7 overflow-y-auto space-y-5 min-h-[420px]"
+          id="modal-signin-panel"
+        >
+          <div class="space-y-4 min-h-[360px]">
+            <div>
+              <label
+                class="block text-[10.5px] font-semibold uppercase tracking-wider text-neutral-600 mb-1"
+                >Email Address</label
+              >
+              <input
+                id="signin-email"
+                class="w-full text-xs border border-[#E5DFD7] p-2.5 bg-white focus:border-black focus:ring-0"
+                required
+                type="email"
+              />
+            </div>
+            <div>
+              <label
+                class="block text-[10.5px] font-semibold uppercase tracking-wider text-neutral-600 mb-1"
+                >Password</label
+              >
+              <div class="password-field">
+                <input
+                  id="signin-password"
+                  class="w-full text-xs border border-[#E5DFD7] p-2.5 bg-white focus:border-black focus:ring-0"
+                  required
+                  type="password"
+                />
+                <button
+                  class="password-visibility-toggle"
+                  type="button"
+                  data-password-toggle="signin-password"
+                  aria-controls="signin-password"
+                  aria-label="Show password"
+                  aria-pressed="false"
+                >
+                  Show
+                </button>
+              </div>
+            </div>
+            <div
+              class="flex items-center justify-between text-[10.5px] text-neutral-500"
+            >
+              <label class="inline-flex items-center gap-2">
+                <input
+                  class="h-4 w-4 rounded-none border-[#E5DFD7] text-black focus:ring-0"
+                  id="remember-signin"
+                  type="checkbox"
+                />
+                <span>Remember me</span>
+              </label>
+              <a
+                class="text-[#0C0907] underline-offset-2 hover:underline"
+                href="#"
+              >
+                Forgot password?
+              </a>
+            </div>
+
+            <!-- Data Privacy Act RA 10173 Consent -->
+            <div class="border-t border-[#E5DFD7] pt-4 space-y-3">
+              <div class="flex items-start space-x-2.5">
+                <input
+                  class="mt-0.5 h-4 w-4 rounded-none border-[#E5DFD7] text-black focus:ring-0"
+                  id="signin-dpa-consent"
+                  required
+                  type="checkbox"
+                />
+                <label
+                  class="text-[11px] text-neutral-600 leading-snug font-sans"
+                  for="signin-dpa-consent"
+                >
+                  I agree to the Terms of Jorjette Angel to the collection and
+                  processing of my personal measurements and order profile in
+                  strict compliance with
+                  <strong
+                    >Republic Act No. 10173 (Philippine Data Privacy Act of
+                    2012)</strong
+                  >.
+                </label>
+              </div>
+              <button
+                id="signin-submit-btn"
+                class="w-full bg-[#0C0907] hover:bg-[#24201D] text-white text-xs font-semibold uppercase tracking-[0.22em] py-4 transition shadow-sm"
+                type="button"
+              >
+                Sign In
+              </button>
+              <p
+                class="min-h-5 text-[11px] text-[#756d65]"
+                id="signin-message"
+                role="status"
+                aria-live="polite"
+              ></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Scrollable Content -->
+        <div
+          class="p-7 overflow-y-auto space-y-5 min-h-[420px]"
+          id="modal-create-panel"
+        >
+          <!-- Name fields -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label
+                class="block text-[10.5px] font-semibold uppercase tracking-wider text-neutral-600 mb-1"
+                >First Name</label
+              >
+              <input
+                id="create-first-name"
+                class="w-full text-xs border border-[#E5DFD7] p-2.5 bg-white focus:border-black focus:ring-0"
+                required
+                type="text"
+              />
+            </div>
+            <div>
+              <label
+                class="block text-[10.5px] font-semibold uppercase tracking-wider text-neutral-600 mb-1"
+                >Last Name</label
+              >
+              <input
+                id="create-last-name"
+                class="w-full text-xs border border-[#E5DFD7] p-2.5 bg-white focus:border-black focus:ring-0"
+                required
+                type="text"
+              />
+            </div>
+          </div>
+          <!-- Contact fields -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label
+                class="block text-[10.5px] font-semibold uppercase tracking-wider text-neutral-600 mb-1"
+                >Mobile Number</label
+              >
+              <div class="flex">
+                <span
+                  class="inline-flex items-center px-3 text-xs border border-r-0 border-[#E5DFD7] bg-[#FAF9F7] text-neutral-600 font-mono"
+                  >+63</span
+                >
+                <input
+                  id="create-mobile"
+                  class="w-full text-xs border border-[#E5DFD7] p-2.5 bg-white focus:border-black focus:ring-0"
+                  type="tel"
+                  inputmode="numeric"
+                  maxlength="10"
+                  pattern="9[0-9]{9}"
+                  placeholder="9XXXXXXXXX"
+                  aria-label="Mobile number"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                class="block text-[10.5px] font-semibold uppercase tracking-wider text-neutral-600 mb-1"
+                >Email Address</label
+              >
+              <input
+                id="create-email"
+                class="w-full text-xs border border-[#E5DFD7] p-2.5 bg-white focus:border-black focus:ring-0"
+                type="email"
+                aria-label="Email address"
+                required
+              />
+            </div>
+          </div>
+          <!-- Password fields -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label
+                class="block text-[10.5px] font-semibold uppercase tracking-wider text-neutral-600 mb-1"
+                >Password</label
+              >
+              <div class="password-field">
+                <input
+                  id="create-password"
+                  class="w-full text-xs border border-[#E5DFD7] p-2.5 bg-white focus:border-black focus:ring-0"
+                  type="password"
+                  minlength="8"
+                  aria-label="Password"
+                  required
+                />
+                <button
+                  class="password-visibility-toggle"
+                  type="button"
+                  data-password-toggle="create-password"
+                  aria-controls="create-password"
+                  aria-label="Show password"
+                  aria-pressed="false"
+                >
+                  Show
+                </button>
+              </div>
+            </div>
+            <div>
+              <label
+                class="block text-[10.5px] font-semibold uppercase tracking-wider text-neutral-600 mb-1"
+                >Confirm Password</label
+              >
+              <div class="password-field">
+                <input
+                  id="confirm-password"
+                  class="w-full text-xs border border-[#E5DFD7] p-2.5 bg-white focus:border-black focus:ring-0"
+                  type="password"
+                  minlength="8"
+                  aria-label="Confirm password"
+                  required
+                />
+                <button
+                  class="password-visibility-toggle"
+                  type="button"
+                  data-password-toggle="confirm-password"
+                  aria-controls="confirm-password"
+                  aria-label="Show password"
+                  aria-pressed="false"
+                >
+                  Show
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Tailoring Profile Preference Selector -->
+          <div>
+            <label
+              class="block text-[10.5px] font-semibold uppercase tracking-wider text-neutral-600 mb-2"
+              >Primary Tailoring Interest</label
+            >
+            <div class="grid grid-cols-3 gap-2">
+              <label
+                class="flex items-center justify-center p-2.5 text-center border border-[#E5DFD7] text-xs cursor-pointer hover:border-black transition"
+              >
+                <input
+                  class="sr-only"
+                  name="preference"
+                  type="radio"
+                  value="rtw"
+                />
+                <span class="tracking-wide">Ready-to-Wear Items</span>
+              </label>
+              <label
+                class="flex items-center justify-center p-2.5 text-center border border-[#E5DFD7] text-xs cursor-pointer hover:border-black transition"
+              >
+                <input
+                  class="sr-only"
+                  name="preference"
+                  type="radio"
+                  value="bespoke"
+                />
+                <span class="tracking-wide">Bespoke Tailoring</span>
+              </label>
+              <label
+                class="flex items-center justify-center p-2.5 text-center border border-[#E5DFD7] text-xs cursor-pointer hover:border-black transition"
+              >
+                <input
+                  class="sr-only"
+                  name="preference"
+                  type="radio"
+                  value="corporate"
+                />
+                <span class="tracking-wide">Bulk Order</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Data Privacy Act RA 10173 Consent -->
+          <div class="border-t border-[#E5DFD7] pt-4 space-y-3">
+            <div class="flex items-start space-x-2.5">
+              <input
+                class="mt-0.5 h-4 w-4 rounded-none border-[#E5DFD7] text-black focus:ring-0"
+                id="modal-dpa-consent"
+                required=""
+                type="checkbox"
+              />
+              <label
+                class="text-[11px] text-neutral-600 leading-snug font-sans"
+                for="modal-dpa-consent"
+              >
+                I agree to the Terms of Jorjette Angel to the collection and
+                processing of my personal measurements and order profile in
+                strict compliance with
+                <strong
+                  >Republic Act No. 10173 (Philippine Data Privacy Act of
+                  2012)</strong
+                >.
+              </label>
+            </div>
+          </div>
+          <!-- Submit Button -->
+          <button
+            id="signup-submit-btn"
+            class="w-full bg-[#0C0907] hover:bg-[#24201D] text-white text-xs font-semibold uppercase tracking-[0.22em] py-4 transition shadow-sm"
+            type="button"
+          >
+            Sign Up
+          </button>
+          <p
+            class="min-h-5 text-[11px] text-[#756d65]"
+            id="signup-message"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </div>
+      </div>
+    </div>
+    <!-- END: Customer Account Creation Modal -->
+    <div
+      class="verification-overlay fixed inset-0 z-[60] hidden items-center justify-center p-4"
+      id="verification-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="verification-title"
+      aria-hidden="true"
+    >
+      <div class="verification-card relative w-full bg-white">
+        <button
+          class="verification-close"
+          id="close-verification"
+          type="button"
+          aria-label="Close verification"
+        >
+          &times;
+        </button>
+        <div class="verification-content">
+          <svg
+            class="verification-icon"
+            viewBox="0 0 96 76"
+            fill="none"
+            aria-hidden="true"
+          >
+            <rect
+              x="20"
+              y="10"
+              width="62"
+              height="52"
+              rx="4"
+              fill="#EAE1DC"
+              stroke="#695C50"
+              stroke-width="2"
+            />
+            <path
+              d="M22 15L51 37L80 15"
+              stroke="#695C50"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="17" cy="28" r="11" fill="#0C0907" />
+            <circle cx="17" cy="28" r="4" fill="#FAF9F7" />
+            <path
+              d="M16 38V55"
+              stroke="#0C0907"
+              stroke-width="5"
+              stroke-linecap="round"
+            />
+            <rect
+              x="49"
+              y="39"
+              width="42"
+              height="18"
+              rx="4"
+              fill="#FAF9F7"
+              stroke="#695C50"
+            />
+            <circle cx="59" cy="48" r="2" fill="#0C0907" />
+            <circle cx="66" cy="48" r="2" fill="#0C0907" />
+            <circle cx="73" cy="48" r="2" fill="#0C0907" />
+            <circle cx="80" cy="48" r="2" fill="#0C0907" />
+          </svg>
+          <h2 class="verification-title" id="verification-title">
+            Verify Your Email Address
+          </h2>
+          <p class="verification-description">
+            Enter the 6-digit verification code sent to
+            <strong id="verification-email"></strong> to complete your account
+            setup.
+          </p>
+          <label class="sr-only" for="verification-code-1"
+            >6-digit verification code</label
+          >
+          <div class="verification-digits" id="verification-code-inputs">
+            <input
+              id="verification-code-1"
+              type="text"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              maxlength="1"
+              pattern="[0-9]"
+              aria-label="Verification digit 1"
+              required
+            />
+            <input
+              id="verification-code-2"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              pattern="[0-9]"
+              aria-label="Verification digit 2"
+              required
+            />
+            <input
+              id="verification-code-3"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              pattern="[0-9]"
+              aria-label="Verification digit 3"
+              required
+            />
+            <input
+              id="verification-code-4"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              pattern="[0-9]"
+              aria-label="Verification digit 4"
+              required
+            />
+            <input
+              id="verification-code-5"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              pattern="[0-9]"
+              aria-label="Verification digit 5"
+              required
+            />
+            <input
+              id="verification-code-6"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              pattern="[0-9]"
+              aria-label="Verification digit 6"
+              required
+            />
+          </div>
+          <p
+            class="verification-message"
+            id="verification-message"
+            role="status"
+            aria-live="polite"
+          ></p>
+          <p class="verification-change-email">
+            Want to change your email address?
+            <button id="change-verification-email" type="button">
+              Change Here
+            </button>
+          </p>
+          <button
+            class="verification-submit"
+            id="verify-email-button"
+            type="button"
+          >
+            Verify Email
+          </button>
+          <button
+            class="verification-resend"
+            id="resend-verification"
+            type="button"
+          >
+            Resend Code
+          </button>
+        </div>
+      </div>
+    </div>
+    <section
+      class="welcome-landing hidden"
+      id="account-welcome"
+      aria-labelledby="account-welcome-title"
+      aria-hidden="true"
+    >
+      <div class="welcome-landing-content">
+        <p class="welcome-landing-eyebrow">JORJETTEANGEL · ATELIER BESPOKE</p>
+        <span class="welcome-landing-rule" aria-hidden="true"></span>
+        <h1 id="account-welcome-title">Welcome</h1>
+        <p class="welcome-landing-name" id="account-welcome-name"></p>
+        <p class="welcome-landing-copy">
+          Your account is ready. We’re delighted to welcome you to our platform.
+        </p>
+        <button
+          class="welcome-landing-button welcome-details-button"
+          id="welcome-account-details"
+          type="button"
+        >
+          View account details
+        </button>
+        <button
+          class="welcome-landing-button"
+          id="welcome-continue"
+          type="button"
+        >
+          Continue to the collection
+        </button>
+      </div>
+    </section>
+    <div
+      class="account-details-overlay hidden"
+      id="account-details-overlay"
+      aria-hidden="true"
+    >
+      <section
+        class="account-details-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="account-details-title"
+      >
+        <div class="account-details-header">
+          <div>
+            <p class="account-details-eyebrow">JORJETTEANGEL ACCOUNT PORTAL</p>
+            <h2 id="account-details-title">Your account</h2>
+          </div>
+          <button
+            class="account-details-close"
+            id="close-account-details"
+            type="button"
+            aria-label="Close account details"
+          >
+            &times;
+          </button>
+        </div>
+        <form class="account-password-form" id="account-profile-form">
+          <h3>Account details</h3>
+          <label for="account-profile-first-name">First name</label>
+          <input id="account-profile-first-name" type="text" required />
+          <label for="account-profile-last-name">Last name</label>
+          <input id="account-profile-last-name" type="text" required />
+          <label for="account-profile-email">Email address</label>
+          <input id="account-profile-email" type="email" required />
+          <label for="account-profile-mobile">Mobile number</label>
+          <div class="account-profile-mobile">
+            <span>+63</span>
+            <input
+              id="account-profile-mobile"
+              type="tel"
+              inputmode="numeric"
+              maxlength="10"
+              pattern="9[0-9]{9}"
+              required
+            />
+          </div>
+          <label for="account-profile-preference">Shopping preference</label>
+          <select id="account-profile-preference" required>
+            <option value="">Choose a preference</option>
+            <option value="rtw">Ready-to-Wear Items</option>
+            <option value="bespoke">Bespoke Tailoring</option>
+            <option value="corporate">Bulk Order</option>
+          </select>
+          <label for="account-profile-password"
+            >Confirm with account password</label
+          >
+          <div class="password-field">
+            <input
+              id="account-profile-password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+            <button
+              class="password-visibility-toggle"
+              type="button"
+              data-password-toggle="account-profile-password"
+              aria-controls="account-profile-password"
+              aria-label="Show password"
+              aria-pressed="false"
+            >
+              Show
+            </button>
+          </div>
+          <p id="account-profile-message" role="status" aria-live="polite"></p>
+          <button class="account-details-signout" type="submit">
+            Save account details
+          </button>
+        </form>
+        <form class="account-password-form" id="account-password-form">
+          <h3>Change password</h3>
+          <label for="account-current-password">Current password</label>
+          <div class="password-field">
+            <input
+              id="account-current-password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+            <button
+              class="password-visibility-toggle"
+              type="button"
+              data-password-toggle="account-current-password"
+              aria-controls="account-current-password"
+              aria-label="Show password"
+              aria-pressed="false"
+            >
+              Show
+            </button>
+          </div>
+          <label for="account-new-password">New password</label>
+          <div class="password-field">
+            <input
+              id="account-new-password"
+              type="password"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            />
+            <button
+              class="password-visibility-toggle"
+              type="button"
+              data-password-toggle="account-new-password"
+              aria-controls="account-new-password"
+              aria-label="Show password"
+              aria-pressed="false"
+            >
+              Show
+            </button>
+          </div>
+          <label for="account-confirm-password">Confirm new password</label>
+          <div class="password-field">
+            <input
+              id="account-confirm-password"
+              type="password"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            />
+            <button
+              class="password-visibility-toggle"
+              type="button"
+              data-password-toggle="account-confirm-password"
+              aria-controls="account-confirm-password"
+              aria-label="Show password"
+              aria-pressed="false"
+            >
+              Show
+            </button>
+          </div>
+          <p id="account-password-message" role="status" aria-live="polite"></p>
+          <button
+            class="account-details-signout"
+            id="change-password-submit"
+            type="submit"
+          >
+            Verify by email and change password
+          </button>
+        </form>
+        <button
+          class="account-details-signout"
+          id="account-sign-out"
+          type="button"
+        >
+          Sign out
+        </button>
+      </section>
+    </div>
+    <div
+      class="account-details-overlay hidden"
+      id="account-hub-overlay"
+      aria-hidden="true"
+    >
+      <section
+        class="account-details-card account-hub-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="account-hub-title"
+      >
+        <div class="account-details-header">
+          <div>
+            <p class="account-details-eyebrow">JORJETTEANGEL ACCOUNT PORTAL</p>
+            <h2 id="account-hub-title">Your account</h2>
+          </div>
+          <button
+            class="account-details-close"
+            id="close-account-hub"
+            type="button"
+            aria-label="Close account menu"
+          >
+            &times;
+          </button>
+        </div>
+        <div class="account-hub-content">
+          <p class="account-hub-greeting" id="account-hub-greeting"></p>
+          <button
+            class="account-hub-action"
+            id="open-account-orders"
+            type="button"
+          >
+            <span>View orders</span>
+            <span aria-hidden="true">&rarr;</span>
+          </button>
+          <button
+            class="account-hub-action"
+            id="open-account-details"
+            type="button"
+          >
+            <span>View account details</span>
+            <span aria-hidden="true">&rarr;</span>
+          </button>
+        </div>
+      </section>
+    </div>
+    <div
+      class="account-details-overlay hidden"
+      id="account-orders-overlay"
+      aria-hidden="true"
+    >
+      <section
+        class="account-details-card account-orders-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="account-orders-title"
+      >
+        <div class="account-details-header">
+          <div>
+            <p class="account-details-eyebrow">JORJETTEANGEL ACCOUNT PORTAL</p>
+            <h2 id="account-orders-title">Your orders</h2>
+          </div>
+          <button
+            class="account-details-close"
+            id="close-account-orders"
+            type="button"
+            aria-label="Close order history"
+          >
+            &times;
+          </button>
+        </div>
+        <div class="account-orders-list" id="account-orders-list"></div>
+      </section>
+    </div>
+    <section
+      class="hidden bg-[#FAF9F7] px-6 py-12 md:px-10 md:py-16"
+      data-spa-view="catalog"
+      id="spa-catalog"
+    >
+      <div class="mx-auto max-w-[1320px]">
+        <div
+          class="mb-8 flex flex-col gap-5 border-b border-[#E5DFD7] pb-6 md:flex-row md:items-end md:justify-between"
+        >
+          <div>
+            <p
+              class="mb-2 text-[10px] uppercase tracking-[0.25em] text-[#695C50]"
+            >
+              Jorjetteangel Atelier
+            </p>
+            <h1 class="font-editorial text-4xl font-normal text-[#0C0907]">
+              The collection
+            </h1>
+          </div>
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <label
+              class="flex items-center gap-3 text-[10px] uppercase tracking-[0.14em] text-[#695C50]"
+              >Collection
+              <select
+                class="min-w-48 border border-[#DED9D1] bg-white px-3 py-3 text-[12px] normal-case tracking-normal text-[#1A1A1A]"
+                id="spa-category-filter"
+                aria-label="Filter products by category"
+              ></select>
+            </label>
+            <label class="sr-only" for="spa-product-search"
+              >Search products</label
+            >
+            <input
+              class="w-full border border-[#DED9D1] bg-white px-3 py-3 text-[12px] text-[#1A1A1A] outline-none focus:border-[#0C0907] sm:w-56"
+              id="spa-product-search"
+              type="search"
+              placeholder="Search products"
+            />
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 md:gap-x-6 lg:grid-cols-4"
+          id="spa-catalog-grid"
+        ></div>
+      </div>
+    </section>
+
+    <section
+      class="hidden bg-[#FAF9F7] px-6 py-10 md:px-10 md:py-14"
+      data-spa-view="product"
+      id="spa-product-view"
+    >
+      <div class="mx-auto max-w-[1320px]">
+        <p class="mb-8 text-[10px] uppercase tracking-[0.15em] text-[#756d65]">
+          <a class="hover:text-[#0C0907]" href="#catalog">Shop</a
+          ><span class="px-2">/</span><span id="spa-product-breadcrumb"></span>
+        </p>
+        <div class="grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:gap-14">
+          <div
+            class="shop-detail-image flex min-h-[420px] items-center justify-center md:min-h-[640px]"
+            id="spa-product-image"
+          ></div>
+          <div class="flex flex-col justify-center py-4 md:py-10">
+            <p
+              class="mb-3 text-[10px] uppercase tracking-[0.2em] text-[#695C50]"
+              id="spa-product-category"
+            ></p>
+            <h1
+              class="font-editorial text-3xl font-normal leading-tight text-[#0C0907] md:text-4xl"
+              id="spa-product-name"
+            ></h1>
+            <p
+              class="mt-2 text-[10px] uppercase tracking-[0.12em] text-[#8b8279]"
+              id="spa-product-sku"
+            ></p>
+            <p
+              class="mt-6 text-[16px] text-[#0C0907]"
+              id="spa-product-price"
+            ></p>
+            <p
+              class="mt-5 max-w-md text-[13px] leading-6 text-[#695C50]"
+              id="spa-product-description"
+            ></p>
+            <fieldset class="mt-8">
+              <legend
+                class="text-[10px] uppercase tracking-[0.14em] text-[#4D4540]"
+              >
+                Select size
+              </legend>
+              <div
+                class="mt-3 flex flex-wrap gap-2"
+                id="spa-size-options"
+              ></div>
+            </fieldset>
+            <div class="mt-5 hidden" id="spa-custom-sizing-panel"></div>
+            <div class="mt-7">
+              <label
+                class="text-[10px] uppercase tracking-[0.14em] text-[#4D4540]"
+                for="spa-product-quantity"
+                >Quantity</label
+              >
+              <div
+                class="mt-2 flex w-[116px] items-center border border-[#bdb7b0] bg-white"
+              >
+                <button
+                  class="h-10 w-9"
+                  id="spa-quantity-minus"
+                  type="button"
+                  aria-label="Decrease quantity"
+                >
+                  &minus;</button
+                ><input
+                  class="quantity-input h-10 w-12 border-x border-[#bdb7b0] bg-white text-center text-[12px]"
+                  id="spa-product-quantity"
+                  min="1"
+                  type="number"
+                  value="1"
+                /><button
+                  class="h-10 w-9"
+                  id="spa-quantity-plus"
+                  type="button"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            <button
+              class="mt-7 w-full max-w-md bg-[#0C0907] px-6 py-4 text-[10px] uppercase tracking-[0.18em] text-white transition hover:bg-[#24201D]"
+              id="spa-add-to-cart"
+              type="button"
+            >
+              Add to bag
+            </button>
+            <p
+              class="mt-3 min-h-5 text-[11px] text-[#756d65]"
+              id="spa-cart-message"
+              role="status"
+            ></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      class="hidden bg-[#FAF9F7] px-6 py-12 md:px-10 md:py-16"
+      data-spa-view="checkout"
+      id="spa-checkout-view"
+    >
+      <div class="mx-auto max-w-[1120px]">
+        <p class="mb-3 text-[10px] uppercase tracking-[0.24em] text-[#695C50]">
+          Jorjetteangel Atelier
+        </p>
+        <h1 class="font-editorial text-4xl font-normal text-[#0C0907]">
+          Checkout
+        </h1>
+        <a class="mt-4 inline-block text-[12px] underline" href="#bag">
+          Return to bag
+        </a>
+        <div
+          class="mt-9 grid gap-10 lg:grid-cols-[1fr_0.8fr]"
+          id="checkout-content"
+        >
+          <form class="space-y-6" id="spa-checkout-form">
+            <section class="space-y-4">
+              <h2
+                class="border-b border-[#E5DFD7] pb-3 font-editorial text-2xl"
+              >
+                Delivery details
+              </h2>
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label
+                    class="mb-1 block text-[10px] uppercase tracking-[0.12em]"
+                    for="checkout-name"
+                    >Full name</label
+                  >
+                  <input
+                    class="w-full cursor-not-allowed border border-[#DED9D1] bg-[#F5F2EE] px-3 py-3 text-[12px]"
+                    id="checkout-name"
+                    autocomplete="name"
+                    readonly
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    class="mb-1 block text-[10px] uppercase tracking-[0.12em]"
+                    for="checkout-email"
+                    >Email address</label
+                  >
+                  <input
+                    class="w-full cursor-not-allowed border border-[#DED9D1] bg-[#F5F2EE] px-3 py-3 text-[12px]"
+                    id="checkout-email"
+                    type="email"
+                    autocomplete="email"
+                    readonly
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    class="mb-1 block text-[10px] uppercase tracking-[0.12em]"
+                    for="checkout-mobile"
+                    >Mobile number</label
+                  >
+                  <input
+                    class="w-full cursor-not-allowed border border-[#DED9D1] bg-[#F5F2EE] px-3 py-3 text-[12px]"
+                    id="checkout-mobile"
+                    type="tel"
+                    autocomplete="tel"
+                    readonly
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    class="mb-1 block text-[10px] uppercase tracking-[0.12em]"
+                    for="checkout-postal"
+                    >Postal code</label
+                  >
+                  <input
+                    class="w-full border border-[#DED9D1] bg-white px-3 py-3 text-[12px]"
+                    id="checkout-postal"
+                    inputmode="numeric"
+                    autocomplete="postal-code"
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  class="mb-1 block text-[10px] uppercase tracking-[0.12em]"
+                  for="checkout-address"
+                  >Street address</label
+                >
+                <input
+                  class="w-full border border-[#DED9D1] bg-white px-3 py-3 text-[12px]"
+                  id="checkout-address"
+                  autocomplete="street-address"
+                  required
+                />
+              </div>
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label
+                    class="mb-1 block text-[10px] uppercase tracking-[0.12em]"
+                    for="checkout-city"
+                    >City / municipality</label
+                  >
+                  <input
+                    class="w-full border border-[#DED9D1] bg-white px-3 py-3 text-[12px]"
+                    id="checkout-city"
+                    autocomplete="address-level2"
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    class="mb-1 block text-[10px] uppercase tracking-[0.12em]"
+                    for="checkout-province"
+                    >Province / region</label
+                  >
+                  <input
+                    class="w-full border border-[#DED9D1] bg-white px-3 py-3 text-[12px]"
+                    id="checkout-province"
+                    autocomplete="address-level1"
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  class="mb-1 block text-[10px] uppercase tracking-[0.12em]"
+                  for="checkout-notes"
+                  >Delivery notes
+                  <span class="normal-case tracking-normal text-[#756D65]"
+                    >(optional)</span
+                  ></label
+                >
+                <textarea
+                  class="w-full border border-[#DED9D1] bg-white px-3 py-3 text-[12px]"
+                  id="checkout-notes"
+                  rows="3"
+                ></textarea>
+              </div>
+            </section>
+            <section class="space-y-3">
+              <h2
+                class="border-b border-[#E5DFD7] pb-3 font-editorial text-2xl"
+              >
+                Payment
+              </h2>
+              <p class="border border-[#DED9D1] bg-white px-4 py-4 text-[12px]">
+                Cash on delivery
+              </p>
+            </section>
+            <p
+              class="min-h-5 text-[12px] text-[#756D65]"
+              id="checkout-message"
+              role="status"
+              aria-live="polite"
+            ></p>
+            <button
+              class="w-full bg-[#0C0907] px-6 py-4 text-[10px] uppercase tracking-[0.18em] text-white transition hover:bg-[#24201D]"
+              type="submit"
+            >
+              Place order
+            </button>
+          </form>
+          <aside class="h-fit border border-[#DED9D1] bg-white p-5">
+            <h2 class="mb-4 font-editorial text-2xl">Order summary</h2>
+            <p
+              class="mb-2 text-[10px] uppercase tracking-[0.14em] text-[#756D65]"
+              id="checkout-item-count"
+            ></p>
+            <div
+              class="divide-y divide-[#E5DFD7]"
+              id="checkout-order-items"
+            ></div>
+            <div
+              class="mt-5 flex items-center justify-between border-t border-[#E5DFD7] pt-4 text-[13px]"
+            >
+              <span>Standard delivery</span>
+              <strong class="font-normal">PHP 100.00</strong>
+            </div>
+            <div
+              class="mt-3 flex items-center justify-between border-t border-[#E5DFD7] pt-4 text-[13px]"
+            >
+              <span>Total</span>
+              <strong class="font-medium" id="checkout-total"></strong>
+            </div>
+            <p class="mt-3 text-[11px] leading-5 text-[#756D65]">
+              Includes the standard delivery fee.
+            </p>
+          </aside>
+        </div>
+        <section
+          class="mt-10 hidden border border-[#DED9D1] bg-white p-6 md:p-10"
+          id="checkout-confirmation"
+          role="status"
+          aria-live="polite"
+        >
+          <p class="text-[10px] uppercase tracking-[0.2em] text-[#695C50]">
+            Order received
+          </p>
+          <h2 class="mt-2 font-editorial text-3xl">
+            Thank you for your order.
+          </h2>
+          <p
+            class="mt-3 text-[13px] text-[#756D65]"
+            id="checkout-confirmation-reference"
+          ></p>
+          <p class="mt-2 text-[13px] text-[#756D65]">
+            Payment is due in cash when your order is delivered. Our atelier
+            will follow up using the contact details provided.
+          </p>
+          <a
+            class="mt-6 inline-block bg-[#0C0907] px-6 py-4 text-[10px] uppercase tracking-[0.18em] text-white"
+            href="#catalog"
+            >Continue shopping</a
+          >
+        </section>
+      </div>
+    </section>
+    <div
+      class="shop-image-viewer"
+      id="shop-image-viewer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Full-size product image"
+      hidden
+    >
+      <button
+        class="shop-image-viewer-close"
+        data-image-viewer-close
+        type="button"
+        aria-label="Close full-size image"
+      >
+        &times;
+      </button>
+      <img id="shop-image-viewer-image" alt="" />
+    </div>
+    <section class="shop-newsletter" data-spa-view="home">
+      <div
+        class="mx-auto flex max-w-[1320px] flex-col gap-7 px-6 py-12 md:flex-row md:items-center md:justify-between md:px-10 md:py-14"
+      >
+        <div>
+          <p class="mb-2 text-[10px] uppercase tracking-[0.2em] text-[#695C50]">
+            Letters from the atelier
+          </p>
+          <h2 class="font-editorial text-2xl font-normal text-[#0C0907]">
+            A thoughtful note, now and then.
+          </h2>
+          <p class="mt-2 text-[12px] text-[#695C50]">
+            New collections, atelier stories, and invitations.
+          </p>
+        </div>
+        <form class="flex w-full max-w-lg gap-2" id="shop-newsletter-form">
+          <label class="sr-only" for="shop-newsletter-email"
+            >Email address</label
+          >
+          <input
+            class="min-w-0 flex-1 border border-[#cfc8c0] bg-white px-4 py-3 text-[12px] text-[#1A1A1A] outline-none focus:border-[#0C0907]"
+            id="shop-newsletter-email"
+            type="email"
+            placeholder="Email address"
+            required
+          />
+          <button
+            class="shrink-0 bg-[#0C0907] px-5 py-3 text-[10px] uppercase tracking-[0.14em] text-white transition hover:bg-[#24201D]"
+            type="submit"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section class="hidden" data-spa-view="bag" id="spa-bag-view">
+      <div class="fixed inset-0 z-40 bg-[#0C0907]/10">
+        <div class="absolute inset-0" data-spa-bag-close="true"></div>
+        <aside
+          class="relative ml-auto flex h-full w-full max-w-[420px] flex-col bg-[#faf9f7] border-l border-[#e5dfd7] shadow-[0_0_40px_rgba(12,9,7,0.12)]"
+        >
+          <div
+            class="flex items-center justify-between border-b border-[#e5dfd7] px-6 py-5"
+          >
+            <div>
+              <p class="text-[10px] uppercase tracking-[0.25em] text-[#8b8279]">
+                Cart
+              </p>
+              <h2 class="font-editorial text-2xl">Bag</h2>
+            </div>
+            <button
+              class="flex h-8 w-8 items-center justify-center rounded-full border border-[#d8d1ca] bg-white text-lg text-[#0C0907]"
+              data-spa-bag-close="true"
+              type="button"
+              aria-label="Close shopping bag"
+            >
+              ×
+            </button>
+          </div>
+          <div
+            class="flex-1 overflow-y-auto px-6 py-5"
+            id="spa-bag-items"
+          ></div>
+          <div
+            class="border-t border-[#ded9d1] bg-[#faf9f7] px-6 py-5"
+            id="spa-bag-summary"
+          ></div>
+        </aside>
+      </div>
+    </section>
+    <!-- BEGIN: Footer (Elevated Common Suits Quiet Luxury Style) -->
+    <footer
+      class="bg-[#0C0907] text-[#FAF9F7] pt-20 pb-12 border-t border-neutral-800"
+      data-purpose="site-footer"
+    >
+      <div class="max-w-[1440px] mx-auto px-8">
+        <!-- 4-Column Footer Navigation -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16"
+        >
+          <!-- Col 1: Brand & Atelier Address -->
+          <div>
+            <h3
+              class="font-editorial text-2xl font-normal text-white mb-2 tracking-[0.16em]"
+            >
+              JORJETTEANGEL
+            </h3>
+            <p
+              class="text-[10px] uppercase font-mono tracking-[0.3em] text-[#918779] mb-4"
+            >
+              ATELIER BESPOKE
+            </p>
+            <p class="text-xs text-neutral-400 leading-relaxed pr-6 mb-6">
+              Preserving master Philippine tailoring traditions with modern
+              bespoke execution. Custom barongs, Ready To Wear Garments.
+            </p>
+            <div class="space-y-1.5 text-xs text-neutral-300 font-sans">
+              <p class="font-semibold text-white">Our Atelier Location</p>
+              <p class="text-neutral-400">Sta.Maria, Bualacan, Malolos City</p>
+            </div>
+          </div>
+
+          <!-- Col 2: SHOP -->
+          <div>
+            <h4
+              class="text-[11px] uppercase font-semibold tracking-[0.22em] text-white mb-5"
+            >
+              Collections
+            </h4>
+            <ul class="space-y-2.5 text-xs text-neutral-400 font-sans">
+              <li>
+                <a class="hover:text-white transition" href="#catalog"
+                  >Ready-to-Wear Barongs</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#catalog"
+                  >Ready-to-Wear SchoolUniforms</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#catalog"
+                  >Made to Measure School uniforms</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#catalog"
+                  >Made to Measure Barongs</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#catalog"
+                  >Scouting &amp; Accessories</a
+                >
+              </li>
+            </ul>
+          </div>
+          <!-- Col 3: SERVICES & APPOINTMENTS -->
+          <div>
+            <h4
+              class="text-[11px] uppercase font-semibold tracking-[0.22em] text-white mb-5"
+            >
+              Atelier Services
+            </h4>
+            <ul class="space-y-2.5 text-xs text-neutral-400 font-sans">
+              <li>
+                <a class="hover:text-white transition" href="#bespoke-journey"
+                  >Custom Sizing &amp; Fitting</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#bespoke-journey"
+                  >The 3-Step Bespoke Journey</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#catalog"
+                  >Institutional Bulk Orders</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#bespoke-journey"
+                  >On-Site Executive Measurement</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#"
+                  >Fabric Archive &amp; Swatches</a
+                >
+              </li>
+            </ul>
+          </div>
+          <!-- Col 4: STATUTORY & LEGAL -->
+          <div>
+            <h4
+              class="text-[11px] uppercase font-semibold tracking-[0.22em] text-white mb-5"
+            >
+              Governance &amp; Privacy
+            </h4>
+            <ul class="space-y-2.5 text-xs text-neutral-400 font-sans">
+              <li>
+                <a class="hover:text-white transition" href="#"
+                  >Data Privacy Act (R.A. 10173)</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#"
+                  >Terms of Bespoke Commission</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#"
+                  >Fitting Guarantee &amp; Adjustments</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#"
+                  >National Privacy Commission Seal</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-white transition" href="#"
+                  >Shipping &amp; Secure Courier Guide</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Bottom Bar -->
+        <div
+          class="pt-8 border-t border-neutral-900 flex flex-col md:flex-row items-center justify-between text-xs text-neutral-500 font-light font-semibold tracking-[0.22em]"
+        >
+          <p>
+            © 2025 Jorjetteangel Atelier Bespoke. All rights reserved.
+            Registered Philippine Corporation.
+          </p>
+          <p
+            class="mt-3 md:mt-0 text-[10.5px] font-semibold tracking-[0.22em] text-neutral-400"
+          >
+            Prices in Philippine Peso (PHP ₱) · DTI Registered · NPC Compliance
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- END: Footer -->
+    <script src="../Backend/backend-backend.js"></script>
+    <script src="../Shared/shared-array-algorithms.js"></script>
+    <script src="frontend-app-session.js"></script>
+    <script src="frontend-cart.js"></script>
+    <script src="frontend-e-commerce.js"></script>
+    <script src="frontend-checkout.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+      defer
+    ></script>
+    <script src="frontend-login.js" defer></script>
+  </body>
+</html>

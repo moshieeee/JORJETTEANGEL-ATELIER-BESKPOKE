@@ -1,0 +1,377 @@
+html.embedded-module,
+html.embedded-module body {
+  background: #faf9f7 !important;
+  color: #171513 !important;
+  font-family: Inter, Arial, sans-serif !important;
+}
+
+html.embedded-module main {
+  min-height: 0 !important;
+  padding: 28px clamp(20px, 4vw, 56px) !important;
+}
+
+html.embedded-module .inventory-module {
+  gap: 18px !important;
+  max-width: none !important;
+  min-height: 0 !important;
+}
+
+html.embedded-module #inventory-view h1 {
+  color: #171513 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(28px, 4vw, 40px) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.15 !important;
+}
+
+html.embedded-module .inventory-module .rounded-xl,
+html.embedded-module .inventory-module .rounded-2xl,
+html.embedded-module .inventory-module .rounded-lg,
+html.embedded-module .inventory-module .rounded-md,
+html.embedded-module .inventory-module .rounded-full,
+html.embedded-module #inv-modal > div,
+html.embedded-module #inv-detail-modal > div {
+  border-radius: 0 !important;
+}
+
+html.embedded-module .inventory-module .shadow-sm,
+html.embedded-module #inv-modal > div,
+html.embedded-module #inv-detail-modal > div {
+  box-shadow: none !important;
+}
+
+html.embedded-module .inventory-module .border-slate-200,
+html.embedded-module .inventory-module .border-slate-300,
+html.embedded-module .inventory-module .border-slate-100 {
+  border-color: #ded9d1 !important;
+}
+
+html.embedded-module .inventory-module .bg-white,
+html.embedded-module .inventory-module .bg-slate-50,
+html.embedded-module .inventory-module .bg-slate-50\/80,
+html.embedded-module .inventory-module .bg-slate-100,
+html.embedded-module .inventory-module .bg-\[\#f8faff\] {
+  background-color: #fff !important;
+}
+
+html.embedded-module .inventory-module .text-slate-900,
+html.embedded-module .inventory-module .text-slate-800,
+html.embedded-module .inventory-module .text-slate-700,
+html.embedded-module .inventory-module .text-slate-600 {
+  color: #171513 !important;
+}
+
+html.embedded-module .inventory-module .text-slate-500,
+html.embedded-module .inventory-module .text-slate-400 {
+  color: #756d65 !important;
+}
+
+html.embedded-module .inventory-module .bg-blue-600,
+html.embedded-module .inventory-module .hover\:bg-blue-700:hover,
+html.embedded-module .inventory-module .bg-blue-50,
+html.embedded-module .inventory-module .bg-blue-100 {
+  background-color: #171513 !important;
+}
+
+html.embedded-module .inventory-module .text-blue-700,
+html.embedded-module .inventory-module .text-blue-800 {
+  color: #fff !important;
+}
+
+html.embedded-module #inv-kpi-total-val + div span {
+  background: #f4f1ec !important;
+  color: #4f4942 !important;
+}
+
+html.embedded-module .inventory-module .text-blue-600,
+html.embedded-module .inventory-module .hover\:text-blue-700:hover,
+html.embedded-module .inventory-module .focus\:border-blue-500:focus {
+  color: #171513 !important;
+  border-color: #756d65 !important;
+}
+
+html.embedded-module .inventory-module .hover\:bg-blue-50:hover,
+html.embedded-module .inventory-module .hover\:bg-slate-50:hover,
+html.embedded-module .inventory-module tbody tr:hover {
+  background-color: #faf9f7 !important;
+}
+
+html.embedded-module .inventory-module .bg-amber-100,
+html.embedded-module .inventory-module .bg-amber-50,
+html.embedded-module .inventory-module .bg-amber-200,
+html.embedded-module .inventory-module .bg-amber-400,
+html.embedded-module .inventory-module .bg-amber-500 {
+  background-color: #faf4e6 !important;
+}
+
+html.embedded-module .inventory-module .bg-red-50,
+html.embedded-module .inventory-module .bg-red-500 {
+  background-color: #fbefed !important;
+}
+
+html.embedded-module .inventory-module .bg-emerald-50,
+html.embedded-module .inventory-module .bg-emerald-500 {
+  background-color: #edf5ed !important;
+}
+
+html.embedded-module .inventory-module .text-amber-800,
+html.embedded-module .inventory-module .text-amber-700 {
+  color: #806321 !important;
+}
+
+html.embedded-module .inventory-module .text-red-600,
+html.embedded-module .inventory-module .text-red-700 {
+  color: #9e3f32 !important;
+}
+
+html.embedded-module .inventory-module .text-emerald-700 {
+  color: #42633e !important;
+}
+
+html.embedded-module .inventory-module .border-red-200\/60,
+html.embedded-module .inventory-module .border-amber-200\/60,
+html.embedded-module .inventory-module .border-emerald-200\/60 {
+  border-color: #ded9d1 !important;
+}
+
+html.embedded-module #inventory-table tbody .border-red-200\/60,
+html.embedded-module #inventory-table tbody .border-amber-200\/60,
+html.embedded-module #inventory-table tbody .ring-emerald-600\/20,
+html.embedded-module #inventory-table tbody .ring-red-600\/20,
+html.embedded-module #inventory-table tbody .ring-amber-600\/20 {
+  border-color: #ded9d1 !important;
+  --tw-ring-color: #ded9d1 !important;
+}
+
+html.embedded-module .inventory-module > .grid > div,
+html.embedded-module .inventory-module > div.flex-1 {
+  border-color: #ded9d1 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html.embedded-module .inventory-module > .grid > div {
+  padding: 18px !important;
+}
+
+html.embedded-module #inv-kpi-total-val,
+html.embedded-module #inv-kpi-stockout-count,
+html.embedded-module #inv-kpi-lowstock-count {
+  color: #171513 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 28px !important;
+  font-weight: 400 !important;
+}
+
+html.embedded-module #inventory-table {
+  min-width: 1000px;
+}
+
+html.embedded-module #inventory-table thead {
+  background: #faf9f7 !important;
+  color: #756d65 !important;
+}
+
+html.embedded-module #inventory-table th {
+  border-bottom: 1px solid #ded9d1 !important;
+  color: #756d65 !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.1em !important;
+  padding-bottom: 13px !important;
+  padding-top: 13px !important;
+}
+
+html.embedded-module #inventory-table td {
+  border-bottom: 1px solid #ded9d1 !important;
+  color: #171513 !important;
+  font-size: 11px !important;
+}
+
+html.embedded-module #inventory-table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+html.embedded-module #inventory-table .rounded {
+  border-radius: 0 !important;
+}
+
+html.embedded-module #inv-modal,
+html.embedded-module #inv-detail-modal {
+  background: rgb(23 21 19 / 45%) !important;
+}
+
+html.embedded-module #inv-modal > div,
+html.embedded-module #inv-detail-modal > div {
+  border: 1px solid #ded9d1 !important;
+  background: #fff !important;
+}
+
+.inventory-product-card {
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  width: 100%;
+}
+
+.inventory-product-heading {
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.inventory-product-heading h3 {
+  color: #171513;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.inventory-product-heading #inv-modal-close {
+  border: 1px solid #ded9d1;
+  color: #171513;
+  padding: 6px 8px;
+}
+
+#inv-product-form {
+  display: grid;
+  gap: 15px;
+}
+
+#inv-product-form > div {
+  min-width: 0;
+}
+
+.inventory-field-label {
+  color: #756d65;
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+#inv-product-form input:not([type="file"]),
+#inv-product-form select {
+  background: #fff;
+  border: 1px solid #ded9d1;
+  border-radius: 0;
+  box-shadow: none;
+  color: #171513;
+  min-height: 40px;
+  padding: 9px 10px;
+  width: 100%;
+}
+
+#inv-product-form input[readonly] {
+  background: #faf9f7;
+}
+
+#inv-product-form input[type="file"] {
+  border: 1px solid #ded9d1;
+  border-radius: 0;
+  box-shadow: none;
+  color: #756d65;
+  font-size: 12px;
+  min-height: 40px;
+  padding: 6px;
+  width: 100%;
+}
+
+#inv-product-form input[type="file"]::file-selector-button {
+  background: #faf9f7;
+  border: 1px solid #ded9d1;
+  color: #171513;
+  margin-right: 10px;
+  padding: 6px 10px;
+}
+
+#inv-image-preview {
+  border-radius: 0;
+}
+
+.inventory-product-actions {
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+.inventory-save-button,
+.inventory-cancel-button {
+  border: 1px solid #171513;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 10px 14px;
+  text-transform: uppercase;
+}
+
+.inventory-save-button {
+  background: #171513;
+  color: #fff;
+}
+
+.inventory-cancel-button {
+  background: #fff;
+  color: #171513;
+}
+
+html.embedded-module .inventory-product-card {
+  border: 1px solid #ded9d1;
+  background: #fff;
+}
+
+html.embedded-module #inv-modal h3,
+html.embedded-module #inv-detail-modal h3 {
+  color: #171513 !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-weight: 400 !important;
+}
+
+html.embedded-module #inv-modal input,
+html.embedded-module #inv-modal select,
+html.embedded-module #inv-modal button,
+html.embedded-module #inv-detail-modal button,
+html.embedded-module #inventory-view input,
+html.embedded-module #inventory-view select,
+html.embedded-module #inventory-view button {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html.embedded-module #inv-modal input,
+html.embedded-module #inv-modal select,
+html.embedded-module #inventory-view input,
+html.embedded-module #inventory-view select {
+  border-color: #ded9d1 !important;
+  color: #171513 !important;
+}
+
+html.embedded-module #inv-modal button,
+html.embedded-module #inv-detail-modal button,
+html.embedded-module #inventory-view #inv-btn-add,
+html.embedded-module #inv-pagination-controls button {
+  border-color: #ded9d1 !important;
+}
+
+html.embedded-module #inv-modal #inv-btn-submit,
+html.embedded-module #inventory-view #inv-btn-add,
+html.embedded-module #inv-pagination-controls .bg-blue-600 {
+  background: #171513 !important;
+  color: #fff !important;
+}
+
+html.embedded-module #inv-modal #inv-btn-cancel,
+html.embedded-module #inv-detail-modal #inv-detail-btn-done,
+html.embedded-module #inv-pagination-controls button {
+  background: #fff !important;
+  color: #171513 !important;
+}
+
+@media (max-width: 640px) {
+  html.embedded-module main {
+    padding: 18px 14px !important;
+  }
+
+  html.embedded-module .inventory-module {
+    gap: 14px !important;
+  }
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atelier Admin | Backend</title>
+    <link rel="stylesheet" href="backend-admin.css" />
+    <link rel="stylesheet" href="../modules/modules-system-design.css" />
+  </head>
+  <body data-page="module">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <div class="admin-brand-lockup">
+          <div class="admin-brand">JORJETTEANGEL</div>
+          <div class="admin-subbrand">ATELIER ADMIN</div>
+        </div>
+        <nav class="admin-nav" aria-label="Admin navigation"></nav>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-topbar" id="module-topbar">
+          <div>
+            <div class="admin-kicker" id="module-kicker"></div>
+            <h1 id="module-title"></h1>
+          </div>
+        </header>
+        <iframe
+          class="admin-module-frame"
+          id="admin-module-frame"
+          title="Admin module"
+          hidden
+        ></iframe>
+        <section class="admin-panel" aria-live="polite">
+          <div class="panel-heading">
+            <div>
+              <h2>Coming soon</h2>
+              <p class="status" id="module-description"></p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="backend-backend.js"></script>
+    <script src="backend-admin-header.js"></script>
+  </body>
+</html>

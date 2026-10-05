@@ -1,0 +1,1103 @@
+<!doctype html>
+<html class="h-full bg-slate-100" lang="en">
+  <head>
+    <script src="../Backend/backend-backend.js"></script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="modules-warehouse-route-guard.js"></script>
+    <title>Delivery &amp; Order Release</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              erp: {
+                sidebar: "#070d1e",
+                sidebarHover: "#0e1730",
+                sidebarBorder: "#142044",
+                accentBlue: "#2563eb",
+                canvasBg: "#f4f6fb",
+              },
+            },
+            fontFamily: {
+              sans: [
+                "Inter",
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "Roboto",
+                "sans-serif",
+              ],
+            },
+          },
+        },
+      };
+    </script>
+
+    <link rel="stylesheet" href="modules-delivery-order-release.css" />
+    <link rel="stylesheet" href="modules-system-design.css" />
+    <script>
+      if (new URLSearchParams(window.location.search).has("embedded")) {
+        document.documentElement.classList.add("embedded-module");
+      }
+    </script>
+  </head>
+
+  <body class="h-full font-sans antialiased text-slate-800 overflow-hidden">
+    <div class="flex h-screen w-screen overflow-hidden bg-[#f4f7fb]">
+      <aside
+        class="w-64 flex-shrink-0 flex flex-col bg-[#070d1e] text-slate-300 border-r border-[#142044]"
+      >
+        <div
+          class="px-5 py-4 flex items-center gap-3 border-b border-[#142044]/70"
+        >
+          <div class="brand-logo">JG</div>
+
+          <div class="min-w-0">
+            <div class="text-sm font-semibold text-white truncate">
+              JORJETTEANGEL
+            </div>
+            <div class="text-[11px] text-slate-300/80 truncate">
+              Garments & Mfg. ERP
+            </div>
+          </div>
+        </div>
+
+        <nav class="flex-1 px-2.5 py-4">
+          <div
+            class="px-3 mb-2 text-[10px] uppercase tracking-wider text-slate-500 font-semibold"
+          >
+            Finance & Dispatch
+          </div>
+
+          <button
+            id="deliveryNav"
+            type="button"
+            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-white bg-[#0e1730] border border-[#142044]"
+          >
+            <span class="nav-icon">▣</span>
+            Delivery & Order Release
+          </button>
+        </nav>
+      </aside>
+
+      <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <header
+          class="h-14 bg-white border-b border-slate-200 px-6 flex items-center"
+        >
+          <div>
+            <div class="text-sm font-semibold text-slate-900">
+              Delivery & Order Release
+            </div>
+            <div class="text-[11px] text-slate-500">Fulfillment processing</div>
+          </div>
+        </header>
+
+        <main class="flex-1 min-h-0 overflow-hidden p-6 md:p-8 bg-[#f8faff]">
+          <div class="max-w-5xl mx-auto">
+            <div class="mb-6">
+              <h1 class="text-2xl font-semibold tracking-tight text-slate-900">
+                Delivery & Order Release
+              </h1>
+            </div>
+
+            <section
+              class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden"
+            >
+              <div class="px-5 py-4 border-b border-slate-200">
+                <h2 class="text-sm font-semibold text-slate-900">
+                  Ready to dispatch orders
+                </h2>
+
+                <p class="mt-1 text-xs text-slate-500">
+                  Orders completed by production or available from finished
+                  goods inventory.
+                </p>
+              </div>
+
+              <div class="orders-table-wrap">
+                <table class="orders-table">
+                  <thead>
+                    <tr>
+                      <th>ORDER ID</th>
+                      <th>CUSTOMER</th>
+                      <th>ORDER</th>
+                      <th>FULFILLMENT</th>
+                      <th>STATUS</th>
+                      <th>ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody id="readyOrdersTable"></tbody>
+                </table>
+                <p id="readyOrdersEmpty" class="orders-empty" hidden>
+                  No orders are ready to dispatch.
+                </p>
+              </div>
+            </section>
+
+            <section
+              class="dispatched-orders-panel bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden"
+            >
+              <div class="px-5 py-4 border-b border-slate-200">
+                <h2 class="text-sm font-semibold text-slate-900">
+                  Dispatched Orders
+                </h2>
+                <p class="mt-1 text-xs text-slate-500">
+                  Orders handed off for delivery and awaiting confirmation.
+                </p>
+              </div>
+              <div class="orders-table-wrap">
+                <table class="orders-table">
+                  <thead>
+                    <tr>
+                      <th>ORDER ID</th>
+                      <th>CUSTOMER</th>
+                      <th>ORDER</th>
+                      <th>FULFILLMENT</th>
+                      <th>DISPATCHED</th>
+                      <th>STATUS</th>
+                      <th>ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dispatchedOrdersTable"></tbody>
+                </table>
+                <p id="dispatchedOrdersEmpty" class="orders-empty" hidden>
+                  No orders have been dispatched.
+                </p>
+              </div>
+            </section>
+
+            <section
+              class="completed-orders-panel bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden"
+            >
+              <div class="px-5 py-4 border-b border-slate-200">
+                <h2 class="text-sm font-semibold text-slate-900">
+                  Completed Orders
+                </h2>
+                <p class="mt-1 text-xs text-slate-500">
+                  Orders confirmed as completed after dispatch.
+                </p>
+              </div>
+              <div class="orders-table-wrap">
+                <table class="orders-table">
+                  <thead>
+                    <tr>
+                      <th>ORDER ID</th>
+                      <th>CUSTOMER</th>
+                      <th>ORDER</th>
+                      <th>FULFILLMENT</th>
+                      <th>COMPLETED</th>
+                      <th>STATUS</th>
+                      <th>ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody id="completedOrdersTable"></tbody>
+                </table>
+                <p id="completedOrdersEmpty" class="orders-empty" hidden>
+                  No orders have been completed.
+                </p>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div id="deliveryToast" class="delivery-toast hidden" role="status" aria-live="polite"></div>
+
+    <!-- Order Details -->
+    <div id="orderModal" class="modal hidden">
+      <div class="modal-overlay"></div>
+
+      <div class="modal-wrapper order-modal-wrapper">
+        <div class="modal-box">
+          <div class="modal-header">
+            <div>
+              <div
+                class="text-[10px] uppercase tracking-wider font-semibold text-blue-600"
+              >
+                Order
+              </div>
+
+              <h2
+                id="modalTitle"
+                class="mt-1 text-lg font-semibold text-slate-900"
+              >
+                Order Details
+              </h2>
+            </div>
+
+            <button id="closeModal" type="button" class="close-button">
+              ×
+            </button>
+          </div>
+
+          <div id="modalContent" class="p-5"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Packing Slip -->
+    <div id="slipModal" class="modal hidden">
+      <div class="modal-overlay"></div>
+
+      <div class="modal-wrapper">
+        <div class="modal-box slip-modal-box">
+          <div class="modal-header">
+            <div>
+              <div
+                class="text-[10px] uppercase tracking-wider font-semibold text-blue-600"
+              >
+                Fulfillment
+              </div>
+
+              <h2 class="mt-1 text-lg font-semibold text-slate-900">
+                Packing Slip
+              </h2>
+            </div>
+
+            <button id="closeSlip" type="button" class="close-button">×</button>
+          </div>
+
+          <div id="packingSlip" class="p-5"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var customerOrdersStorageKey = "jorjetteangel-orders";
+      var deliveryOrdersStorageKey = "jorjetteangel-delivery-status";
+      var productCatalogStorageKey = "jorjetteangel-admin-catalog";
+      var orders = [];
+      var deliveryToastTimeout;
+
+      function showDeliveryToast(message, isError) {
+        var toast = document.getElementById("deliveryToast");
+        toast.textContent = message;
+        toast.className =
+          "delivery-toast " +
+          (isError ? "delivery-toast-error" : "delivery-toast-success");
+        window.clearTimeout(deliveryToastTimeout);
+        deliveryToastTimeout = window.setTimeout(function () {
+          toast.classList.add("hidden");
+        }, 5000);
+      }
+
+      function normalizeSize(size) {
+        var normalized = String(size || "").trim().toUpperCase();
+        if (normalized === "SMALL") return "S";
+        if (normalized === "MEDIUM") return "M";
+        if (normalized === "LARGE") return "L";
+        if (normalized === "X-LARGE" || normalized === "EXTRA LARGE") return "XL";
+        return normalized;
+      }
+
+      function getDispatchStockCheck(order) {
+        try {
+          var savedCatalog = window.backendMemoryStorage.getItem(productCatalogStorageKey);
+          var catalog = savedCatalog ? JSON.parse(savedCatalog) : null;
+          if (!catalog || !Array.isArray(catalog.products)) {
+            throw new Error("Finished goods inventory is unavailable.");
+          }
+
+          var issues = [];
+          var requiredByVariant = {};
+          order.items.forEach(function (item) {
+            if (item.finishedStockDeducted) return;
+
+            var quantity = Number(item.quantity);
+            if (
+              !item.productId ||
+              !normalizeSize(item.size) ||
+              !Number.isInteger(quantity) ||
+              quantity < 1
+            ) {
+              issues.push(
+                (item.name || "Order item") +
+                  " has no valid product, size, or quantity in finished goods inventory.",
+              );
+              return;
+            }
+
+            var variantKey =
+              item.productId + "::" + normalizeSize(item.size);
+            if (!requiredByVariant[variantKey]) {
+              requiredByVariant[variantKey] = {
+                name: item.name || "Item",
+                productId: item.productId,
+                size: item.size,
+                quantity: 0,
+              };
+            }
+            requiredByVariant[variantKey].quantity += quantity;
+          });
+
+          Object.keys(requiredByVariant).forEach(function (variantKey) {
+            var required = requiredByVariant[variantKey];
+            var product = catalog.products.find(function (candidate) {
+              return candidate && candidate.id === required.productId;
+            });
+            var stockEntry =
+              product && Array.isArray(product.finishedGoodsStock)
+                ? product.finishedGoodsStock.find(function (entry) {
+                    return (
+                      Array.isArray(entry) &&
+                      normalizeSize(entry[0]) === normalizeSize(required.size)
+                    );
+                  })
+                : null;
+            var available = stockEntry ? Number(stockEntry[1]) : 0;
+            var category = (catalog.categories || []).find(function (candidate) {
+              return product && candidate && candidate.id === product.categoryId;
+            });
+            var sku =
+              "SKU-RTW-" +
+              (category ? category.id : "UNKNOWN") +
+              "-" +
+              normalizeSize(required.size).replace(/[^A-Z0-9]+/g, "");
+
+            if (
+              !product ||
+              !Number.isFinite(available) ||
+              available < required.quantity
+            ) {
+              issues.push(
+                sku +
+                  " (" +
+                  required.name +
+                  ", size " +
+                  required.size +
+                  "): " +
+                  (Number.isFinite(available) ? available : 0) +
+                  " in stock; " +
+                  required.quantity +
+                  " required.",
+              );
+            }
+          });
+
+          return {
+            ok: issues.length === 0,
+            message: issues.join(" "),
+          };
+        } catch (error) {
+          return {
+            ok: false,
+            message:
+              error instanceof Error
+                ? error.message
+                : "Finished goods inventory could not be checked.",
+          };
+        }
+      }
+
+      function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, function (character) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[character];
+        });
+      }
+
+      function loadSavedOrders() {
+        var savedOrders = window.backendMemoryStorage.getItem(customerOrdersStorageKey);
+        var deliveryStates = window.backendMemoryStorage.getItem(deliveryOrdersStorageKey);
+        var deliveryStateById = deliveryStates ? JSON.parse(deliveryStates) : {};
+        if (
+          !deliveryStateById ||
+          typeof deliveryStateById !== "object" ||
+          Array.isArray(deliveryStateById)
+        ) {
+          throw new Error("Saved delivery statuses must be an object.");
+        }
+
+        if (savedOrders === null) {
+          orders = [];
+          return;
+        }
+        var customerOrders = JSON.parse(savedOrders);
+        if (!Array.isArray(customerOrders)) {
+          throw new Error("Saved customer orders must be an array.");
+        }
+
+        orders = customerOrders
+          .filter(function (order) {
+            return order && typeof order === "object";
+          })
+          .map(function (order) {
+            var sourceIndex = customerOrders.indexOf(order);
+            var id = String(
+              order.reference ||
+                order.orderId ||
+                "ORDER-" + (sourceIndex + 1),
+            );
+            var items = Array.isArray(order.items) ? order.items : [];
+            var stages = items.map(function (item) {
+              return String(
+                item && (item.productionStatus || item.productionStage) ||
+                  order.productionStatus ||
+                  "Received",
+              );
+            });
+            var distinctStages = Array.from(new Set(stages));
+            var status = distinctStages.length > 1
+              ? "Mixed production statuses"
+              : distinctStages[0] || "Received";
+            var state = deliveryStateById[id] || {};
+            return {
+              id: id,
+              customer:
+                (order.customer && order.customer.name) ||
+                order.customerName ||
+                "Customer unavailable",
+              type: items
+                .map(function (item) {
+                  return item && (item.name || item.productName || "Item");
+                })
+                .filter(Boolean)
+                .join(", ") || "Order items unavailable",
+              method: "Cash on Delivery",
+              payment: "Cash on Delivery",
+              balance: "Due on delivery",
+              status: status,
+              releaseDate: state.releaseDate || "",
+              fulfillmentStatus: state.status || "",
+              sourceOrderIndex: sourceIndex,
+              completionDate: state.completionDate || "",
+              items: items.map(function (item, itemIndex) {
+                return {
+                  name: item && (item.name || item.productName) || "Item",
+                  productId: item && item.productId || "",
+                  size: item && item.size || "—",
+                  quantity: item && item.quantity != null ? item.quantity : 1,
+                  sourceItemIndex: itemIndex,
+                  finishedStockDeducted: Boolean(item && item.finishedStockDeducted),
+                  productionStatus: String(
+                    item && (item.productionStatus || item.productionStage) ||
+                      order.productionStatus ||
+                      "Received",
+                  ),
+                };
+              }),
+            };
+          });
+      }
+
+      function saveOrder(index) {
+        var saved = window.backendMemoryStorage.getItem(deliveryOrdersStorageKey);
+        var deliveryStateById = saved ? JSON.parse(saved) : {};
+        deliveryStateById[orders[index].id] = {
+          status: orders[index].fulfillmentStatus,
+          releaseDate: orders[index].releaseDate,
+          completionDate: orders[index].completionDate,
+        };
+        window.backendMemoryStorage.setItem(
+          deliveryOrdersStorageKey,
+          JSON.stringify(deliveryStateById),
+        );
+      }
+
+      function getStatusClass(status) {
+        if (/^(completed|ready for delivery)$/i.test(status)) {
+          return "status-badge status-ready";
+        }
+
+        return "status-badge";
+      }
+
+      function isProductionReady(order) {
+        return (
+          order.items.length > 0 &&
+          order.items.every(function (item) {
+            return /^(completed|ready for delivery)$/i.test(
+              item.productionStatus,
+            );
+          })
+        );
+      }
+
+      function currentDateLabel() {
+        return new Intl.DateTimeFormat("en", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }).format(new Date());
+      }
+
+      function renderOrders() {
+        var readyBody = document.getElementById("readyOrdersTable");
+        var dispatchedBody = document.getElementById(
+          "dispatchedOrdersTable",
+        );
+        var completedBody = document.getElementById("completedOrdersTable");
+        var readyCount = 0;
+        var dispatchedCount = 0;
+        var completedCount = 0;
+
+        readyBody.replaceChildren();
+        dispatchedBody.replaceChildren();
+        completedBody.replaceChildren();
+
+        function appendOrderRow(body, order, index, isDispatched, isCompleted) {
+          var row = document.createElement("tr");
+          var values = [
+            order.id,
+            order.customer,
+            order.type,
+            order.method,
+          ];
+
+          values.forEach(function (value) {
+            var cell = document.createElement("td");
+            cell.textContent = value;
+            row.appendChild(cell);
+          });
+
+          if (isDispatched) {
+            var dateCell = document.createElement("td");
+            dateCell.textContent = isCompleted
+              ? order.completionDate || "Date unavailable"
+              : order.releaseDate || "Date unavailable";
+            row.appendChild(dateCell);
+          }
+
+          var statusCell = document.createElement("td");
+          var statusBadge = document.createElement("span");
+          statusBadge.className = getStatusClass(order.status);
+          statusBadge.textContent = order.status;
+          statusCell.appendChild(statusBadge);
+          row.appendChild(statusCell);
+
+          var actionCell = document.createElement("td");
+          var viewButton = document.createElement("button");
+          viewButton.className = "view-button";
+          viewButton.type = "button";
+          viewButton.textContent = "View";
+          viewButton.addEventListener("click", function () {
+            showOrder(index);
+          });
+          actionCell.appendChild(viewButton);
+          row.appendChild(actionCell);
+          body.appendChild(row);
+        }
+
+        orders.forEach(function (order, index) {
+          if (
+            isProductionReady(order) &&
+            !["Dispatched", "Completed", "Delivered"].includes(order.fulfillmentStatus)
+          ) {
+            appendOrderRow(readyBody, order, index, false);
+            readyCount += 1;
+          } else if (order.fulfillmentStatus === "Dispatched") {
+            appendOrderRow(dispatchedBody, order, index, true);
+            dispatchedCount += 1;
+          } else if (
+            ["Completed", "Delivered"].includes(order.fulfillmentStatus)
+          ) {
+            appendOrderRow(completedBody, order, index, true, true);
+            completedCount += 1;
+          }
+        });
+
+        document.getElementById("readyOrdersEmpty").hidden = readyCount > 0;
+        document.getElementById("dispatchedOrdersEmpty").hidden =
+          dispatchedCount > 0;
+        document.getElementById("completedOrdersEmpty").hidden =
+          completedCount > 0;
+      }
+
+      function createViewFunction(index) {
+        return function () {
+          showOrder(index);
+        };
+      }
+
+      function showOrder(index) {
+        var order = orders[index];
+
+        document.getElementById("modalTitle").textContent =
+          order.id + " • " + order.customer;
+
+        var itemHTML = "";
+        var i = 0;
+
+        while (i < order.items.length) {
+          itemHTML =
+            itemHTML +
+            "<tr>" +
+            "<td>" +
+            escapeHTML(order.items[i].name) +
+            "</td>" +
+            "<td>" +
+            escapeHTML(order.items[i].size) +
+            "</td>" +
+            "<td>" +
+            escapeHTML(order.items[i].quantity) +
+            "</td>" +
+            "<td>" +
+            escapeHTML(order.items[i].productionStatus) +
+            "</td>" +
+            "</tr>";
+
+          i = i + 1;
+        }
+
+        var actionHTML = "";
+        var stockCheck = getDispatchStockCheck(order);
+        var stockWarningHTML = "";
+
+        if (
+          isProductionReady(order) &&
+          !["Dispatched", "Delivered"].includes(order.fulfillmentStatus)
+        ) {
+          actionHTML =
+            "<button id='dispatchButton' type='button' class='action-button primary-button'" +
+            (stockCheck.ok
+              ? ""
+              : " disabled title='" + escapeHTML(stockCheck.message) + "'") +
+            ">" +
+            "Mark as Dispatched" +
+            "</button>";
+          if (!stockCheck.ok) {
+            stockWarningHTML =
+              "<p class='stock-warning' role='alert'>" +
+              "Dispatch blocked: " +
+              escapeHTML(stockCheck.message) +
+              "</p>";
+          }
+        }
+
+        if (order.fulfillmentStatus === "Dispatched") {
+          actionHTML =
+            "<button id='completeButton' type='button' class='action-button success-button'>" +
+            "Mark as Complete" +
+            "</button>";
+        }
+
+        if (
+          order.fulfillmentStatus === "Completed" ||
+          order.fulfillmentStatus === "Delivered"
+        ) {
+          actionHTML =
+            "<div class='completed-message'>" +
+            "Fulfillment completed." +
+            "</div>";
+        }
+
+        var content =
+          "<div>" +
+          "<div class='order-detail-header'>" +
+          "<div>" +
+          "<div class='detail-id'>" +
+          escapeHTML(order.id) +
+          "</div>" +
+          "<div class='detail-customer'>" +
+          escapeHTML(order.customer) +
+          "</div>" +
+          "</div>" +
+          "<span class='" +
+          getStatusClass(order.status) +
+          "'>" +
+          escapeHTML(order.status) +
+          "</span>" +
+          "</div>" +
+          "<div class='detail-list'>" +
+          "<div>" +
+          "<span>Order Type</span>" +
+          "<strong>" +
+          escapeHTML(order.type) +
+          "</strong>" +
+          "</div>" +
+          "<div>" +
+          "<span>Fulfillment</span>" +
+          "<strong>" +
+          escapeHTML(order.method) +
+          "</strong>" +
+          "</div>" +
+          "<div>" +
+          "<span>Payment</span>" +
+          "<strong>" +
+          escapeHTML(order.payment) +
+          "</strong>" +
+          "</div>" +
+          "<div>" +
+          "<span>Balance</span>" +
+          "<strong>" +
+          escapeHTML(order.balance) +
+          "</strong>" +
+          "</div>" +
+          "<div>" +
+          "<span>Release Date</span>" +
+          "<strong>" +
+          escapeHTML(order.releaseDate === "" ? "Not yet released" : order.releaseDate) +
+          "</strong>" +
+          "</div>" +
+          "</div>" +
+          "<div class='items-section'>" +
+          "<div class='section-label'>" +
+          "Items" +
+          "</div>" +
+          "<table class='item-table'>" +
+          "<thead>" +
+          "<tr>" +
+          "<th>Item</th>" +
+          "<th>Size</th>" +
+          "<th>Qty</th>" +
+          "<th>Production Status</th>" +
+          "</tr>" +
+          "</thead>" +
+          "<tbody>" +
+          itemHTML +
+          "</tbody>" +
+          "</table>" +
+          "</div>" +
+          stockWarningHTML +
+          "<div class='modal-actions'>" +
+          "<button id='slipButton' type='button' class='action-button'>" +
+          "Generate Packing Slip" +
+          "</button>" +
+          actionHTML +
+          "</div>" +
+          "</div>";
+
+        document.getElementById("modalContent").innerHTML = content;
+
+        document.getElementById("orderModal").className = "modal";
+
+        document
+          .getElementById("slipButton")
+          .addEventListener("click", function () {
+            generateSlip(index);
+          });
+
+        if (
+          isProductionReady(order) &&
+          !["Dispatched", "Delivered"].includes(order.fulfillmentStatus)
+        ) {
+          if (stockCheck.ok) {
+            document
+              .getElementById("dispatchButton")
+              .addEventListener("click", function () {
+                dispatchOrder(index);
+              });
+          }
+        }
+
+        if (order.fulfillmentStatus === "Dispatched") {
+          document
+            .getElementById("completeButton")
+            .addEventListener("click", function () {
+              completeOrder(index);
+            });
+        }
+      }
+
+      function dispatchOrder(index) {
+        var order = orders[index];
+        var stockCheck = getDispatchStockCheck(order);
+        if (!stockCheck.ok) {
+          showDeliveryToast("Dispatch blocked: " + stockCheck.message, true);
+          showOrder(index);
+          return;
+        }
+
+        var priorCatalog = window.backendMemoryStorage.getItem(productCatalogStorageKey);
+        var priorOrders = window.backendMemoryStorage.getItem(customerOrdersStorageKey);
+        var priorDelivery = window.backendMemoryStorage.getItem(deliveryOrdersStorageKey);
+
+        try {
+          var catalog = priorCatalog ? JSON.parse(priorCatalog) : null;
+          var sourceOrders = priorOrders ? JSON.parse(priorOrders) : null;
+          if (
+            !catalog ||
+            !Array.isArray(catalog.products) ||
+            !Array.isArray(sourceOrders)
+          ) {
+            throw new Error("Order or finished goods data is unavailable.");
+          }
+
+          var sourceOrder = sourceOrders[order.sourceOrderIndex];
+          if (!sourceOrder || !Array.isArray(sourceOrder.items)) {
+            throw new Error("The source order is no longer available.");
+          }
+
+          order.items.forEach(function (item) {
+            if (item.finishedStockDeducted) return;
+
+            var sourceItem = sourceOrder.items[item.sourceItemIndex];
+            var product = catalog.products.find(function (candidate) {
+              return candidate && candidate.id === item.productId;
+            });
+            var stockEntry =
+              product && Array.isArray(product.finishedGoodsStock)
+                ? product.finishedGoodsStock.find(function (entry) {
+                    return (
+                      Array.isArray(entry) &&
+                      normalizeSize(entry[0]) === normalizeSize(item.size)
+                    );
+                  })
+                : null;
+            var quantity = Number(item.quantity);
+            var available = stockEntry ? Number(stockEntry[1]) : 0;
+
+            if (
+              !sourceItem ||
+              !stockEntry ||
+              !Number.isInteger(quantity) ||
+              !Number.isFinite(available) ||
+              available < quantity
+            ) {
+              throw new Error(
+                "Finished goods stock changed before dispatch. Refresh the order and verify its size-variant stock."
+              );
+            }
+
+            stockEntry[1] = available - quantity;
+            sourceItem.finishedStockDeducted = true;
+          });
+
+          var orderTotal = Number(sourceOrder.total);
+          if (Number.isFinite(orderTotal) && orderTotal >= 0) {
+            sourceOrder.amountReceived = orderTotal;
+          }
+
+          var deliveryStateById = priorDelivery
+            ? JSON.parse(priorDelivery)
+            : {};
+          if (
+            !deliveryStateById ||
+            typeof deliveryStateById !== "object" ||
+            Array.isArray(deliveryStateById)
+          ) {
+            throw new Error("Saved delivery statuses must be an object.");
+          }
+          deliveryStateById[order.id] = {
+            status: "Dispatched",
+            releaseDate: currentDateLabel(),
+          };
+
+          window.backendMemoryStorage.setItem(productCatalogStorageKey, JSON.stringify(catalog));
+          window.backendMemoryStorage.setItem(customerOrdersStorageKey, JSON.stringify(sourceOrders));
+          window.backendMemoryStorage.setItem(
+            deliveryOrdersStorageKey,
+            JSON.stringify(deliveryStateById),
+          );
+        } catch (error) {
+          try {
+            if (priorCatalog === null) {
+              window.backendMemoryStorage.removeItem(productCatalogStorageKey);
+            } else {
+              window.backendMemoryStorage.setItem(productCatalogStorageKey, priorCatalog);
+            }
+            if (priorOrders === null) {
+              window.backendMemoryStorage.removeItem(customerOrdersStorageKey);
+            } else {
+              window.backendMemoryStorage.setItem(customerOrdersStorageKey, priorOrders);
+            }
+            if (priorDelivery === null) {
+              window.backendMemoryStorage.removeItem(deliveryOrdersStorageKey);
+            } else {
+              window.backendMemoryStorage.setItem(deliveryOrdersStorageKey, priorDelivery);
+            }
+          } catch (rollbackError) {
+            console.error("Could not roll back a failed dispatch.", rollbackError);
+            showDeliveryToast(
+              error.message +
+                " Inventory rollback failed; verify stock records before retrying.",
+              true,
+            );
+            return;
+          }
+          console.error("Could not dispatch order.", error);
+          showDeliveryToast(error.message, true);
+          return;
+        }
+
+        order.fulfillmentStatus = "Dispatched";
+        order.releaseDate = currentDateLabel();
+        order.items.forEach(function (item) {
+          item.finishedStockDeducted = true;
+        });
+        renderOrders();
+        showOrder(index);
+        showDeliveryToast("Order dispatched and finished stock deducted.", false);
+      }
+
+      function completeOrder(index) {
+        orders[index].fulfillmentStatus = "Completed";
+        orders[index].completionDate = currentDateLabel();
+
+        saveOrder(index);
+        renderOrders();
+        showOrder(index);
+        showDeliveryToast("Order marked as completed.", false);
+      }
+
+      function generateSlip(index) {
+        var order = orders[index];
+
+        var itemHTML = "";
+        var i = 0;
+
+        while (i < order.items.length) {
+          itemHTML =
+            itemHTML +
+            "<tr>" +
+            "<td>" +
+            escapeHTML(order.items[i].name) +
+            "</td>" +
+            "<td>" +
+            escapeHTML(order.items[i].size) +
+            "</td>" +
+            "<td>" +
+            escapeHTML(order.items[i].quantity) +
+            "</td>" +
+            "</tr>";
+
+          i = i + 1;
+        }
+
+        var slipHTML =
+          "<div class='slip-paper'>" +
+          "<div class='slip-header'>" +
+          "<div class='slip-company'>" +
+          "JORJETTEANGEL GARMENTS" +
+          "</div>" +
+          "<div class='slip-subtitle'>" +
+          "Garments & Manufacturing" +
+          "</div>" +
+          "<div class='slip-title'>" +
+          "PACKING SLIP" +
+          "</div>" +
+          "</div>" +
+          "<div class='slip-info'>" +
+          "<div>" +
+          "<span>Order ID</span>" +
+          "<strong>" +
+          escapeHTML(order.id) +
+          "</strong>" +
+          "</div>" +
+          "<div>" +
+          "<span>Customer</span>" +
+          "<strong>" +
+          escapeHTML(order.customer) +
+          "</strong>" +
+          "</div>" +
+          "<div>" +
+          "<span>Order Type</span>" +
+          "<strong>" +
+          escapeHTML(order.type) +
+          "</strong>" +
+          "</div>" +
+          "<div>" +
+          "<span>Fulfillment</span>" +
+          "<strong>" +
+          escapeHTML(order.method) +
+          "</strong>" +
+          "</div>" +
+          "</div>" +
+          "<div class='slip-section'>" +
+          "<div class='section-label'>" +
+          "Items" +
+          "</div>" +
+          "<table class='item-table'>" +
+          "<thead>" +
+          "<tr>" +
+          "<th>Item</th>" +
+          "<th>Size</th>" +
+          "<th>Qty</th>" +
+          "</tr>" +
+          "</thead>" +
+          "<tbody>" +
+          itemHTML +
+          "</tbody>" +
+          "</table>" +
+          "</div>" +
+          "<div class='slip-info slip-bottom'>" +
+          "<div>" +
+          "<span>Payment</span>" +
+          "<strong>" +
+          escapeHTML(order.payment) +
+          "</strong>" +
+          "</div>" +
+          "<div>" +
+          "<span>Balance</span>" +
+          "<strong>" +
+          escapeHTML(order.balance) +
+          "</strong>" +
+          "</div>" +
+          "<div>" +
+          "<span>Status</span>" +
+          "<strong>" +
+          escapeHTML(order.status) +
+          "</strong>" +
+          "</div>" +
+          "<div>" +
+          "<span>Prepared By</span>" +
+          "<strong>" +
+          "Eudge" +
+          "</strong>" +
+          "</div>" +
+          "</div>" +
+          "<div class='slip-footer'>" +
+          "Jorjetteangel Garments & Manufacturing" +
+          "</div>" +
+          "</div>";
+
+        document.getElementById("packingSlip").innerHTML = slipHTML;
+
+        document.getElementById("slipModal").className = "modal";
+      }
+
+      document
+        .getElementById("closeModal")
+        .addEventListener("click", function () {
+          document.getElementById("orderModal").className = "modal hidden";
+        });
+
+      document
+        .getElementById("closeSlip")
+        .addEventListener("click", function () {
+          document.getElementById("slipModal").className = "modal hidden";
+        });
+
+      document
+        .getElementById("deliveryNav")
+        .addEventListener("click", function () {});
+
+      function refreshOrders() {
+        try {
+          loadSavedOrders();
+          renderOrders();
+        } catch (error) {
+          console.error("Could not refresh delivery orders.", error);
+          document.getElementById("readyOrdersTable").replaceChildren();
+          document.getElementById("dispatchedOrdersTable").replaceChildren();
+          document.getElementById("readyOrdersEmpty").hidden = false;
+          document.getElementById("dispatchedOrdersEmpty").hidden = false;
+          document.getElementById("readyOrdersEmpty").textContent =
+            "Orders could not be loaded. Check the saved customer order data.";
+        }
+      }
+
+      window.addEventListener("storage", function (event) {
+        if (
+          event.key === null ||
+          event.key === customerOrdersStorageKey ||
+          event.key === deliveryOrdersStorageKey
+        ) {
+          refreshOrders();
+        }
+      });
+
+      refreshOrders();
+    </script>
+  </body>
+</html>

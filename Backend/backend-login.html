@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      if (
+        window.top === window &&
+        new URLSearchParams(window.location.search).get("embedded") !== "1"
+      ) {
+        window.location.replace("../index.html?app=admin");
+      }
+    </script>
+    <title>Atelier Admin | Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="backend-admin.css" />
+    <link rel="stylesheet" href="../modules/modules-system-design.css" />
+  </head>
+  <body class="admin-login-page">
+    <div class="admin-auth-shell">
+      <section class="admin-auth-visual" aria-label="Brand overview">
+        <div class="visual-copy">
+          <div class="eyebrow">Employee Only</div>
+          <h1>Restricted Access</h1>
+          <p>Manage collections, customer records, and business operations.</p>
+        </div>
+      </section>
+
+      <main class="admin-auth-panel">
+        <div class="admin-auth-card" aria-live="polite">
+          <header class="auth-header">
+            <div class="auth-kicker">Secure entry</div>
+            <h2 class="auth-title">Sign in</h2>
+          </header>
+          <div class="auth-body">
+            <section id="admin-login-panel" aria-label="Admin sign in">
+              <form id="admin-login-form" class="form-stack" novalidate>
+                <div>
+                  <label class="field-label" for="admin-email">Email address</label>
+                  <div class="field-wrap">
+                    <input id="admin-email" type="email" autocomplete="email" required />
+                  </div>
+                </div>
+                <div>
+                  <label class="field-label" for="admin-password">Password</label>
+                  <div class="field-wrap">
+                    <input id="admin-password" type="password" autocomplete="current-password" minlength="8" required />
+                    <button class="password-toggle" type="button" data-toggle-password="admin-password" aria-label="Show password">Show</button>
+                  </div>
+                </div>
+                <div class="auth-actions-row">
+                  <label class="remember-check" for="admin-remember">
+                    <input id="admin-remember" type="checkbox" />
+                    <span>Remember me</span>
+                  </label>
+                </div>
+                <div class="dpa-box">
+                  <label class="remember-check" for="admin-dpa-consent">
+                    <input id="admin-dpa-consent" type="checkbox" required />
+                    <span>
+                      I agree to the collection and processing of my personal data in accordance with the
+                      <strong>Republic Act No. 10173 (Philippine Data Privacy Act of 2012)</strong>.
+                    </span>
+                  </label>
+                </div>
+                <button class="primary-button" id="admin-login-button" type="submit">Sign in</button>
+                <div class="status-message" id="admin-login-message" aria-live="polite"></div>
+              </form>
+            </section>
+
+            <section id="admin-otp-panel" class="otp-overlay" aria-label="Email verification" aria-hidden="true">
+              <div class="otp-card">
+                <form id="admin-otp-form" class="otp-content" novalidate>
+                  <svg class="otp-icon" viewBox="0 0 96 76" fill="none" aria-hidden="true">
+                    <rect x="20" y="10" width="62" height="52" rx="4" fill="#EAE1DC" stroke="#695C50" stroke-width="2" />
+                    <path d="M22 15L51 37L80 15" stroke="#695C50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="17" cy="28" r="11" fill="#0C0907" />
+                    <circle cx="17" cy="28" r="4" fill="#FAF9F7" />
+                    <path d="M16 38V55" stroke="#0C0907" stroke-width="5" stroke-linecap="round" />
+                    <rect x="49" y="39" width="42" height="18" rx="4" fill="#FAF9F7" stroke="#695C50" />
+                    <circle cx="59" cy="48" r="2" fill="#0C0907" />
+                    <circle cx="66" cy="48" r="2" fill="#0C0907" />
+                    <circle cx="73" cy="48" r="2" fill="#0C0907" />
+                    <circle cx="80" cy="48" r="2" fill="#0C0907" />
+                  </svg>
+                  <h2 id="admin-otp-title">Verify Your Email Address</h2>
+                  <p id="admin-otp-description">
+                    Enter the 6-digit verification code sent to
+                    <strong id="admin-otp-email"></strong> to finish signing in.
+                  </p>
+                  <label class="sr-only" for="admin-otp-code-1">6-digit verification code</label>
+                  <div class="otp-grid" id="admin-otp-code-inputs">
+                    <input id="admin-otp-code-1" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="1" pattern="[0-9]" aria-label="Verification digit 1" required />
+                    <input id="admin-otp-code-2" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Verification digit 2" required />
+                    <input id="admin-otp-code-3" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Verification digit 3" required />
+                    <input id="admin-otp-code-4" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Verification digit 4" required />
+                    <input id="admin-otp-code-5" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Verification digit 5" required />
+                    <input id="admin-otp-code-6" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Verification digit 6" required />
+                  </div>
+                  <div class="otp-controls">
+                    <div class="status-message" id="admin-otp-message" aria-live="polite"></div>
+                    <button class="primary-button" id="admin-otp-verify" type="submit">Verify and sign in</button>
+                    <button class="otp-retry" id="admin-otp-resend" type="button">Resend code</button>
+                    <button class="otp-retry" id="admin-otp-back" type="button">Back to sign in</button>
+                  </div>
+                </form>
+              </div>
+            </section>
+
+            <section id="admin-setup-panel" class="hidden" aria-label="First-time admin setup">
+              <form id="admin-setup-form" class="form-stack" novalidate>
+                <div class="setup-grid">
+                  <div>
+                    <label class="field-label" for="setup-first-name">First name</label>
+                    <div class="field-wrap"><input id="setup-first-name" type="text" autocomplete="given-name" required /></div>
+                  </div>
+                  <div>
+                    <label class="field-label" for="setup-last-name">Last name</label>
+                    <div class="field-wrap"><input id="setup-last-name" type="text" autocomplete="family-name" required /></div>
+                  </div>
+                </div>
+                <div>
+                  <label class="field-label" for="setup-email">Admin email</label>
+                  <div class="field-wrap"><input id="setup-email" type="email" autocomplete="email" required /></div>
+                </div>
+                <div>
+                  <label class="field-label" for="setup-password">Create password</label>
+                  <div class="field-wrap">
+                    <input id="setup-password" type="password" autocomplete="new-password" minlength="8" required />
+                    <button class="password-toggle" type="button" data-toggle-password="setup-password" aria-label="Show password">Show</button>
+                  </div>
+                </div>
+                <div>
+                  <label class="field-label" for="setup-confirm-password">Confirm password</label>
+                  <div class="field-wrap">
+                    <input id="setup-confirm-password" type="password" autocomplete="new-password" minlength="8" required />
+                    <button class="password-toggle" type="button" data-toggle-password="setup-confirm-password" aria-label="Show password">Show</button>
+                  </div>
+                </div>
+                <div class="dpa-box">
+                  <label class="remember-check" for="setup-dpa-consent">
+                    <input id="setup-dpa-consent" type="checkbox" required />
+                    <span>
+                      I agree to the collection and processing of my personal data in accordance with the
+                      <strong>Republic Act No. 10173 (Philippine Data Privacy Act of 2012)</strong>.
+                    </span>
+                  </label>
+                </div>
+                <button class="primary-button" id="admin-setup-button" type="submit">Create admin account</button>
+                <div class="status-message" id="admin-setup-message" aria-live="polite"></div>
+              </form>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+    <iframe
+      class="admin-app-frame"
+      id="admin-app-frame"
+      title="Atelier admin workspace"
+      hidden
+    ></iframe>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="backend-backend.js"></script>
+    <script src="backend-login-backend.js"></script>
+  </body>
+</html>

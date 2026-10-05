@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script src="../Backend/backend-backend.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>System Settings</title>
+    <link rel="stylesheet" href="modules-system-settings.css" />
+    <link rel="stylesheet" href="modules-system-design.css" />
+    <script>
+      (() => {
+        let session;
+        try {
+          session = JSON.parse(
+            window.backendMemoryStorage.getItem("jorjetteangel-admin-session") || "null",
+          );
+        } catch (error) {
+          console.error("Could not verify access to system settings.", error);
+          window.location.replace("../Backend/backend-login.html");
+          return;
+        }
+        if (!session) {
+          window.location.replace("../Backend/backend-login.html");
+          return;
+        }
+        if (String(session.role || "").trim().toLowerCase() !== "admin") {
+          window.location.replace(
+            "../Backend/backend-e-commerce-admin.html?accessDenied=1",
+          );
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <main class="settings-page">
+      <header class="settings-heading">
+        <div>
+          <h1>Settings</h1>
+        </div>
+      </header>
+
+      <nav class="settings-tabs" role="tablist" aria-label="Settings sections">
+        <button id="tab-general" class="settings-tab active" type="button" role="tab" aria-selected="true" aria-controls="panel-general" data-tab="general">General Info</button>
+        <button id="tab-financial" class="settings-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-financial" data-tab="financial">Financial &amp; Tax</button>
+        <button id="tab-notifications" class="settings-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-notifications" data-tab="notifications">Notifications &amp; Rules</button>
+      </nav>
+
+      <form id="settings-form" novalidate>
+        <section id="panel-general" class="settings-panel" role="tabpanel" aria-labelledby="tab-general" data-panel="general">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">BUSINESS PROFILE</p>
+              <h2>Company information</h2>
+              <p>These details can be used on invoices, purchase orders, and business documents.</p>
+            </div>
+            <span class="panel-index">01 / 03</span>
+          </div>
+          <div class="field-grid">
+            <label class="field wide">
+              <span>Business name</span>
+              <input name="businessName" type="text" maxlength="120" required autocomplete="organization" />
+            </label>
+            <label class="field">
+              <span>Tax ID (TIN)</span>
+              <input name="taxId" type="text" maxlength="40" autocomplete="off" />
+            </label>
+            <label class="field">
+              <span>Contact number</span>
+              <input name="contactNumber" type="tel" maxlength="40" autocomplete="tel" />
+            </label>
+            <label class="field wide">
+              <span>Official email</span>
+              <input name="officialEmail" type="email" maxlength="254" autocomplete="email" />
+            </label>
+          </div>
+          <div class="section-divider"></div>
+          <div class="subsection-heading">
+            <div>
+              <h3>Headquarters address</h3>
+              <p>Used for invoices and purchase orders.</p>
+            </div>
+          </div>
+          <div class="field-grid">
+            <label class="field wide">
+              <span>Street</span>
+              <input name="street" type="text" maxlength="160" autocomplete="street-address" />
+            </label>
+            <label class="field">
+              <span>City / Province</span>
+              <input name="cityProvince" type="text" maxlength="120" />
+            </label>
+            <label class="field">
+              <span>Postal code</span>
+              <input name="postalCode" type="text" maxlength="20" autocomplete="postal-code" />
+            </label>
+          </div>
+        </section>
+
+        <section id="panel-financial" class="settings-panel" role="tabpanel" aria-labelledby="tab-financial" data-panel="financial" hidden>
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">CHECKOUT POLICIES</p>
+              <h2>Financial &amp; tax</h2>
+              <p>Configure tax preferences for the business.</p>
+            </div>
+            <span class="panel-index">02 / 03</span>
+          </div>
+          <div class="settings-card">
+            <div class="card-heading">
+              <div><h3>Taxation rules</h3><p>Tax preferences are saved here; order totals change only after a sales workflow is connected to these settings.</p></div>
+              <label class="switch-field">
+                <input name="vatEnabled" type="checkbox" />
+                <span class="switch-track" aria-hidden="true"></span>
+                <span>Apply VAT to sales</span>
+              </label>
+            </div>
+            <div class="field-grid compact-grid">
+              <label class="field">
+                <span>Standard VAT rate (%)</span>
+                <input name="vatRate" type="number" min="0" max="100" step="0.01" />
+                <small>Enter a percentage from 0 to 100.</small>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section id="panel-notifications" class="settings-panel" role="tabpanel" aria-labelledby="tab-notifications" data-panel="notifications" hidden>
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">ALERT THRESHOLDS</p>
+              <h2>Notifications &amp; system rules</h2>
+              <p>Set when inventory needs attention and tune admin security notifications.</p>
+            </div>
+            <span class="panel-index">03 / 03</span>
+          </div>
+          <div class="settings-card">
+            <div class="card-heading">
+              <div><h3>Inventory thresholds</h3><p>Set the preferred warning levels. Inventory records with their own thresholds may continue to use those values.</p></div>
+            </div>
+            <div class="field-grid compact-grid">
+              <label class="field">
+                <span>Raw materials (SKU-RAW)</span>
+                <div class="input-suffix"><input name="rawMaterialThreshold" type="number" min="0" step="1" /><span>units</span></div>
+              </label>
+              <label class="field">
+                <span>Finished goods (SKU-RTW)</span>
+                <div class="input-suffix"><input name="finishedGoodsThreshold" type="number" min="0" step="1" /><span>units</span></div>
+              </label>
+            </div>
+          </div>
+          <div class="settings-card">
+            <div class="card-heading">
+              <div><h3>Security &amp; audit trail</h3><p>Rules for suspicious activity and administrator alerts.</p></div>
+              <span class="status-chip">ADMIN ONLY</span>
+            </div>
+            <div class="field-grid compact-grid">
+              <label class="field">
+                <span>Flag manual inventory edits over (₱)</span>
+                <input name="inventoryEditAlertValue" type="number" min="0" step="0.01" />
+              </label>
+              <label class="field">
+                <span>Failed login attempts before lockout</span>
+                <input name="failedLoginLimit" type="number" min="1" max="20" step="1" />
+              </label>
+            </div>
+            <label class="check-field">
+              <input name="emailCriticalAlerts" type="checkbox" />
+              <span>Email admin when a critical alert is created</span>
+            </label>
+            <p class="inline-note">Account lockout and email delivery require authentication and email services; saving these preferences alone does not activate those services.</p>
+          </div>
+        </section>
+
+        <footer class="settings-actions">
+          <p id="settings-feedback" class="settings-feedback" role="status" aria-live="polite"></p>
+          <div class="action-buttons">
+            <button id="discard-settings" class="button-secondary" type="button">Discard</button>
+            <button id="save-settings" class="button-primary" type="submit">Save settings</button>
+          </div>
+        </footer>
+      </form>
+    </main>
+    <script src="modules-system-settings.js"></script>
+  </body>
+</html>

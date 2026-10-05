@@ -1,0 +1,31 @@
+.inventory-module {
+  min-height: calc(100vh - 7rem);
+}
+
+#inventory-table tbody tr {
+  transition: background-color 120ms ease;
+}
+
+#inv-modal,
+#inv-detail-modal {
+  overscroll-behavior: contain;
+}
+
+#inv-modal > div,
+#inv-detail-modal > div {
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+#inventory-table tbody img {
+  display: block;
+  height: 2.75rem;
+  width: 2.75rem;
+  object-fit: cover;
+}
+
+@media (max-width: 640px) {
+  .inventory-module {
+    min-height: calc(100vh - 6rem);
+  }
+}

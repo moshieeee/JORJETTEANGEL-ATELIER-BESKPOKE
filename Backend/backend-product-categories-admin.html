@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atelier Admin | Product Categories</title>
+    <link rel="stylesheet" href="backend-admin.css" />
+    <link rel="stylesheet" href="../modules/modules-system-design.css" />
+  </head>
+  <body data-page="categories">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <div class="admin-brand-lockup">
+          <div class="admin-brand">JORJETTEANGEL</div>
+          <div class="admin-subbrand">ATELIER ADMIN</div>
+        </div>
+        <nav class="admin-nav" aria-label="Admin navigation">
+          <a class="admin-nav-home" href="backend-e-commerce-admin.html">Dashboard</a>
+          <details class="admin-nav-group" open>
+            <summary>
+              <span>Product</span>
+            </summary>
+            <div class="admin-nav-submenu">
+              <a href="backend-ready-to-wear-admin.html">Product Management</a>
+              <a class="active" href="backend-product-categories-admin.html">Product Categories</a>
+            </div>
+          </details>
+          <details class="admin-nav-group">
+            <summary>
+              <span>Orders</span>
+            </summary>
+            <div class="admin-nav-submenu">
+              <a href="backend-order-management-admin.html">Order Management</a>
+            </div>
+          </details>
+          <a href="backend-archived-catalog-admin.html">Archived Products</a>
+          <a href="backend-e-commerce-admin.html#customer-accounts">Customer accounts</a>
+          <a href="backend-e-commerce-admin.html#audit-trail">Audit trail</a>
+          <a href="../Front/frontend-e-commerce.html">View storefront</a>
+        </nav>
+        <p class="admin-sidebar-note">
+          Create and organize product categories for the ready-to-wear catalog.
+        </p>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-topbar">
+          <div>
+            <h1>Product Categories</h1>
+          </div>
+        </header>
+
+        <section class="admin-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Categories</h2>
+              <p class="status">Create and manage product categories.</p>
+            </div>
+          </div>
+          <form class="inline-form" id="category-form">
+            <label class="sr-only" for="category-name">Category name</label>
+            <input
+              class="field"
+              id="category-name"
+              placeholder="New category name"
+              required
+            />
+            <input id="category-id" type="hidden" />
+            <button class="button" type="submit">Save category</button>
+            <button
+              class="button button-secondary hidden"
+              id="category-cancel"
+              type="button"
+            >
+              Cancel
+            </button>
+          </form>
+          <p class="status">
+            Archive a category to remove it from active product choices.
+          </p>
+          <div class="customer-table-scroll">
+            <table class="admin-table">
+              <caption class="sr-only">Product categories</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Category ID</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="category-list"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="backend-backend.js"></script>
+    <script src="../Shared/shared-array-algorithms.js"></script>
+    <script src="backend-admin-header.js"></script>
+    <script src="backend-admin.js"></script>
+  </body>
+</html>

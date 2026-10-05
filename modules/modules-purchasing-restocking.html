@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../Backend/backend-backend.js"></script>
+    <script src="modules-warehouse-route-guard.js"></script>
+    <title>Purchasing & Restocking Requests</title>
+    <link rel="stylesheet" href="modules-purchasing-restocking.css" />
+    <link rel="stylesheet" href="modules-system-design.css" />
+    <script>
+      if (new URLSearchParams(window.location.search).has("embedded")) {
+        document.documentElement.classList.add("embedded-module");
+      }
+    </script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="dsa-sidebar">
+        <a class="dsa-brand" href="../../../Base code/base.html">
+          <span class="dsa-brand-logo">JG</span>
+          <span class="dsa-brand-copy"
+            ><span class="dsa-brand-name">JORTANGEL ONLINE SHOP</span
+            ><span class="dsa-brand-subtitle"
+              >Garments &amp; Mfg. ERP</span
+            ></span
+          >
+        </a>
+        <div class="dsa-nav-heading">WORKSPACE</div>
+        <nav class="dsa-navigation" aria-label="Main navigation">
+          <a class="dsa-nav-link" href="../../../Base code/base.html"
+            >Overview</a
+          >
+        </nav>
+        <div class="dsa-nav-heading dsa-modules-heading">MODULES</div>
+        <nav class="dsa-navigation" aria-label="ERP modules">
+          <a class="dsa-nav-link" href="modules-sales-payment-management.html"
+            >Sales &amp; Payment</a
+          >
+          <a class="dsa-nav-link" href="modules-production-management.html"
+            >Production</a
+          >
+          <a class="dsa-nav-link" href="modules-supplier-management.html"
+            >Supplier Management</a
+          >
+          <a
+            class="dsa-nav-link active"
+            href="modules-purchasing-restocking.html"
+            aria-current="page"
+            >Purchasing &amp; Restocking</a
+          >
+        </nav>
+        <div class="dsa-nav-heading dsa-modules-heading">JORTANGEL MODULES</div>
+        <nav class="dsa-navigation" aria-label="Jortangel modules">
+          <a
+            class="dsa-nav-link"
+            href="../../../../../dashboard/Base%20code/base.html"
+            >Dashboard</a
+          >
+          <a
+            class="dsa-nav-link"
+            href="../../../../../BOM/Base%20code/base.html"
+            >BOM</a
+          >
+          <a
+            class="dsa-nav-link"
+            href="../../../../../Bulk%20Order%20Pipeline/Base%20code/base.html"
+            >Bulk Order Pipeline</a
+          >
+          <a
+            class="dsa-nav-link"
+            href="../../../../../Measurement%20Management%202/Base%20code/base.html"
+            >Measurement Management</a
+          >
+        </nav>
+        <div class="dsa-sidebar-footer">
+          <span class="dsa-status-dot"></span>System Online
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="top-header">
+          <div>
+            <h1>Purchasing &amp; Restocking</h1>
+          </div>
+        </header>
+
+        <section class="workspace">
+          <section class="summary-grid" aria-label="Purchase order summary">
+            <div class="summary-card">
+              <p class="summary-label">Total Purchase Orders</p>
+              <strong class="summary-value" id="totalPOs">0</strong>
+            </div>
+            <div class="summary-card">
+              <p class="summary-label">Awaiting Cashier Approval</p>
+              <strong class="summary-value warning" id="pendingPOs">0</strong>
+            </div>
+            <div class="summary-card">
+              <p class="summary-label">Sent to Supplier</p>
+              <strong class="summary-value blue" id="sentPOs">0</strong>
+            </div>
+            <div class="summary-card">
+              <p class="summary-label">Received</p>
+              <strong class="summary-value success" id="receivedPOs">0</strong>
+            </div>
+          </section>
+
+          <section class="po-panel">
+            <div
+              class="po-tabs"
+              role="tablist"
+              aria-label="Purchase order views"
+            >
+              <button
+                id="activePOTab"
+                class="po-tab is-active"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="activePOView"
+              >
+                Active Purchase Order
+              </button>
+              <button
+                id="historyPOTab"
+                class="po-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="historyPOView"
+              >
+                Purchase Order History
+              </button>
+            </div>
+
+            <div class="po-toolbar">
+              <label class="search-box po-search">
+                <span aria-hidden="true">⌕</span>
+                <input
+                  type="search"
+                  id="searchInput"
+                  placeholder="Search by PO-REQ, vendor, or status..."
+                  autocomplete="off"
+                />
+              </label>
+              <button class="btn-primary" id="createPOButton" type="button">
+                + Process Request
+              </button>
+            </div>
+
+            <div
+              id="activePOView"
+              class="po-view"
+              role="tabpanel"
+              aria-labelledby="activePOTab"
+            >
+              <div class="table-container po-table-container">
+                <table class="po-table">
+                  <thead>
+                    <tr>
+                      <th>PO ID</th>
+                      <th>SUPPLIER (ID)</th>
+                      <th>ITEMS ORDERED</th>
+                      <th>DATE</th>
+                      <th class="amount-cell">TOTAL</th>
+                      <th>STATUS</th>
+                      <th class="po-action-heading">ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody id="activePOTableBody"></tbody>
+                </table>
+                <div class="empty-state" id="activeEmptyState">
+                  <div class="empty-title">No active purchase orders</div>
+                  <div class="empty-description">
+                    Create a purchase order request to get started.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="historyPOView"
+              class="po-view"
+              role="tabpanel"
+              aria-labelledby="historyPOTab"
+              hidden
+            >
+              <div class="table-container po-table-container">
+                <table class="po-table">
+                  <thead>
+                    <tr>
+                      <th>PO ID</th>
+                      <th>SUPPLIER (ID)</th>
+                      <th>ITEMS ORDERED</th>
+                      <th>DATE</th>
+                      <th class="amount-cell">TOTAL</th>
+                      <th>STATUS</th>
+                      <th class="po-action-heading">ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody id="historyPOTableBody"></tbody>
+                </table>
+                <div class="empty-state" id="historyEmptyState">
+                  <div class="empty-title">No purchase history</div>
+                  <div class="empty-description">
+                    Received and closed purchase orders appear here.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p id="poCountLabel" class="po-count-label"></p>
+          </section>
+
+          <section
+            class="po-panel material-requests-panel"
+            aria-labelledby="materialRequestsTitle"
+          >
+            <header class="material-requests-heading">
+              <div>
+                <h2 id="materialRequestsTitle">Material Purchase Requests</h2>
+                <p>Low-stock requests submitted from Fabrics &amp; BOM.</p>
+              </div>
+              <button
+                class="btn-secondary"
+                id="refreshMaterialRequests"
+                type="button"
+              >
+                Refresh requests
+              </button>
+            </header>
+            <div class="table-container po-table-container">
+              <table class="po-table material-requests-table">
+                <thead>
+                  <tr>
+                    <th>REQUESTED</th>
+                    <th>MATERIAL</th>
+                    <th>CATEGORY</th>
+                    <th>ON HAND</th>
+                    <th>REQUESTED QTY</th>
+                    <th>SUPPLIER</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="materialRequestsTableBody"></tbody>
+              </table>
+              <div class="empty-state" id="materialRequestsEmptyState">
+                <div class="empty-title">No material purchase requests</div>
+                <div class="empty-description">
+                  Requests submitted from low-stock alerts will appear here.
+                </div>
+              </div>
+              <p
+                class="form-message request-load-error"
+                id="materialRequestsError"
+                role="status"
+                aria-live="polite"
+                hidden
+              >
+                Unable to load material purchase requests.
+              </p>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div
+      class="modal-overlay"
+      id="createPOModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="createPOTitle"
+    >
+      <div class="modal po-modal">
+        <div class="modal-header">
+          <div>
+            <h3 id="createPOTitle">Create Purchase Order Request (PO-REQ)</h3>
+            <p>Build a supplier request and submit it for admin approval.</p>
+          </div>
+          <button
+            class="modal-close"
+            id="closeCreatePOModal"
+            type="button"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+        <form id="createPOForm">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label for="poSupplierSelect">1. Select Supplier</label>
+              <select id="poSupplierSelect" required></select>
+              <small id="poSupplierContact" class="field-hint"
+                >Contact email loads from Supplier Directory.</small
+              >
+            </div>
+            <fieldset class="po-line-items full-width">
+              <legend>2. Add Items to Request</legend>
+              <div id="poItemRows"></div>
+              <button class="btn-secondary" id="addPOItemButton" type="button">
+                + Add Another Material
+              </button>
+            </fieldset>
+            <div class="form-group">
+              <label for="poDeliveryDate">Requested Delivery Date</label>
+              <input id="poDeliveryDate" type="date" required />
+            </div>
+            <div class="form-group">
+              <label for="poRequester">Requested By</label>
+              <input id="poRequester" type="text" value="Admin" required />
+            </div>
+            <div class="po-total-block full-width">
+              <span>Total Requested Budget</span
+              ><strong id="poCalculatedTotal">₱0.00</strong>
+            </div>
+            <div
+              id="createPOMessage"
+              class="form-message full-width"
+              role="status"
+              aria-live="polite"
+            ></div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn-secondary" id="cancelCreatePO" type="button">
+              Cancel
+            </button>
+            <button class="btn-primary" type="submit">
+              Submit for Cashier Approval
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="modal-overlay"
+      id="receivePOModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="receivePOTitle"
+    >
+      <div class="modal po-modal">
+        <div class="modal-header">
+          <div>
+            <h3 id="receivePOTitle">Receive Purchase Order</h3>
+            <p id="receivePOSupplier">Verify physical items received.</p>
+          </div>
+          <button
+            class="modal-close"
+            id="closeReceivePOModal"
+            type="button"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+        <form id="receivePOForm">
+          <div class="receive-content">
+            <p class="receive-po-number" id="receivePOId"></p>
+            <h4>Verify Physical Items Received</h4>
+            <div id="receiveItemRows" class="receive-item-rows"></div>
+            <div class="form-group receipt-upload">
+              <label for="receiptFile">Delivery Receipt / Invoice</label>
+              <input id="receiptFile" type="file" accept="image/*,.pdf" />
+              <span id="receiptFileName" class="field-hint"
+                >Optional at this stage</span
+              >
+            </div>
+            <div id="discrepancyFields" class="form-group hidden">
+              <label for="discrepancyNotes">Discrepancy details</label>
+              <textarea
+                id="discrepancyNotes"
+                rows="3"
+                placeholder="Describe missing, damaged, or incorrect items"
+              ></textarea>
+            </div>
+            <div
+              id="receivePOMessage"
+              class="form-message"
+              role="status"
+              aria-live="polite"
+            ></div>
+          </div>
+          <div class="modal-actions receive-actions">
+            <button class="btn-secondary" id="cancelReceivePO" type="button">
+              Cancel
+            </button>
+            <button
+              class="btn-secondary discrepancy-button"
+              id="reportDiscrepancy"
+              type="button"
+            >
+              Report Discrepancy
+            </button>
+            <button class="btn-primary" id="confirmReceipt" type="button">
+              Confirm Receipt
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- LEGACY REQUEST DETAIL MODALS -->
+
+    <div class="modal-overlay" id="viewModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <h3>Request Details</h3>
+            <p>View procurement requisition information.</p>
+          </div>
+
+          <button class="modal-close" onclick="closeViewModal()">×</button>
+        </div>
+
+        <div class="details-grid">
+          <div class="detail-item">
+            <span>Request ID</span>
+            <strong id="viewRequestID"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Request Date</span>
+            <strong id="viewRequestDate"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Requested By</span>
+            <strong id="viewRequestedBy"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Material ID</span>
+            <strong id="viewMaterialID"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Material Name</span>
+            <strong id="viewMaterialName"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Current Stock</span>
+            <strong id="viewCurrentStock"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Required Quantity</span>
+            <strong id="viewRequiredQuantity"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Shortage Quantity</span>
+            <strong id="viewShortageQuantity"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Supplier ID</span>
+            <strong id="viewSupplierID"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Supplier Name</span>
+            <strong id="viewSupplierName"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Estimated Cost</span>
+            <strong id="viewEstimatedCost"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Status</span>
+            <strong id="viewStatus"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Approved By</span>
+            <strong id="viewApprovedBy"></strong>
+          </div>
+
+          <div class="detail-item">
+            <span>Approval Date</span>
+            <strong id="viewApprovalDate"></strong>
+          </div>
+
+          <div class="detail-item full-width">
+            <span>Reason</span>
+            <strong id="viewReason"></strong>
+          </div>
+
+          <div class="detail-item full-width">
+            <span>Notes</span>
+            <strong id="viewNotes"></strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPDATE MODAL -->
+
+    <div class="modal-overlay" id="updateModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <h3>Update Request</h3>
+            <p>Update the procurement request status and information.</p>
+          </div>
+
+          <button class="modal-close" onclick="closeUpdateModal()">×</button>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Request ID</label>
+            <input type="text" id="updateRequestID" readonly />
+          </div>
+
+          <div class="form-group">
+            <label>Request Date</label>
+            <input type="date" id="updateRequestDate" />
+          </div>
+
+          <div class="form-group">
+            <label>Material ID</label>
+            <input type="text" id="updateMaterialID" />
+          </div>
+
+          <div class="form-group">
+            <label>Material Name</label>
+            <input type="text" id="updateMaterialName" />
+          </div>
+
+          <div class="form-group">
+            <label>Current Stock</label>
+            <input type="text" id="updateCurrentStock" />
+          </div>
+
+          <div class="form-group">
+            <label>Required Quantity</label>
+            <input type="text" id="updateRequiredQuantity" />
+          </div>
+
+          <div class="form-group">
+            <label>Shortage Quantity</label>
+            <input type="text" id="updateShortageQuantity" />
+          </div>
+
+          <div class="form-group">
+            <label>Requested By</label>
+            <input type="text" id="updateRequestedBy" />
+          </div>
+
+          <div class="form-group">
+            <label>Supplier ID</label>
+            <input type="text" id="updateSupplierID" />
+          </div>
+
+          <div class="form-group">
+            <label>Supplier Name</label>
+            <input type="text" id="updateSupplierName" />
+          </div>
+
+          <div class="form-group">
+            <label>Estimated Cost</label>
+            <input type="text" id="updateEstimatedCost" />
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+            <select id="updateStatus">
+              <option value="Pending Approval">Pending Approval</option>
+              <option value="Waiting for Cashier Approval">Waiting for Cashier Approval</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Ordered">Ordered</option>
+              <option value="Received">Received</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Approved By</label>
+            <input type="text" id="updateApprovedBy" />
+          </div>
+
+          <div class="form-group">
+            <label>Approval Date</label>
+            <input type="date" id="updateApprovalDate" />
+          </div>
+
+          <div class="form-group full-width">
+            <label>Reason</label>
+            <textarea id="updateReason"></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Notes</label>
+            <textarea id="updateNotes"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-secondary" onclick="closeUpdateModal()">
+            Cancel
+          </button>
+          <button class="btn-primary" onclick="saveUpdate()">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHIVE REQUEST MODAL -->
+
+    <div class="modal-overlay" id="archiveModal">
+      <div class="archive-modal">
+        <div class="archive-icon">!</div>
+
+        <h3>Archive Request?</h3>
+
+        <p>This will hide the selected procurement request from active lists. You can restore it from the system archive.</p>
+
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancelArchiveButton">
+            Cancel
+          </button>
+          <button class="archive-confirm-btn" id="confirmArchiveButton">
+            Archive Request
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="modules-system-archive.js"></script>
+    <script src="modules-purchasing-restocking.js"></script>
+  </body>
+</html>

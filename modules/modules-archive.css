@@ -1,0 +1,398 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, Arial, sans-serif;
+  background: #f4f1ec;
+  color: #171513;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f4f1ec;
+  margin: 0;
+  min-height: 100vh;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.archive-page {
+  margin: 0 auto;
+  max-width: 1480px;
+  padding: 32px clamp(18px, 4vw, 52px);
+}
+
+.archive-card {
+  background: #fff;
+  border: 1px solid #ded9d1;
+}
+
+.archive-header {
+  align-items: center;
+  border-bottom: 1px dashed #bdb6ac;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 24px;
+}
+
+.archive-eyebrow {
+  color: #756d65;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+}
+
+.archive-header h1,
+.archive-detail-dialog h2 {
+  color: #171513;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 400;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.archive-user {
+  color: #51483f;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.archive-tabs {
+  border-bottom: 1px dashed #bdb6ac;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 15px 24px;
+}
+
+.archive-tab {
+  background: #f8f6f2;
+  border: 1px solid #ded9d1;
+  color: #51483f;
+  font-size: 10px;
+  font-weight: 600;
+  min-height: 34px;
+  padding: 0 13px;
+  text-transform: uppercase;
+}
+
+.archive-tab:hover,
+.archive-tab.active {
+  background: #4c463f;
+  border-color: #4c463f;
+  color: #fff;
+}
+
+.archive-tab[data-archive-type="disabled"]:not(.active) {
+  border-color: #d9b9b5;
+  color: #8a3b31;
+}
+
+.archive-tab:focus-visible {
+  outline: 2px solid #756d65;
+  outline-offset: 2px;
+}
+
+.archive-search {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  padding: 18px 24px 8px;
+}
+
+.archive-search input {
+  background: #fff;
+  border: 1px solid #ded9d1;
+  color: #171513;
+  flex: 1;
+  font-size: 11px;
+  min-height: 38px;
+  min-width: 0;
+  padding: 0 11px;
+}
+
+.archive-search input:focus {
+  border-color: #756d65;
+  outline: 2px solid #ded9d1;
+}
+
+.archive-search button,
+.archive-action {
+  background: #4c463f;
+  border: 1px solid #4c463f;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-height: 34px;
+  padding: 0 13px;
+  text-transform: uppercase;
+}
+
+.archive-search button {
+  min-height: 38px;
+}
+
+.archive-search button:hover,
+.archive-action:hover {
+  background: #332f2b;
+}
+
+.archive-count {
+  color: #756d65;
+  font-size: 10px;
+  margin: 0;
+  padding: 4px 24px 11px;
+}
+
+.archive-error {
+  color: #9a302a;
+  font-size: 11px;
+  margin: 0 24px 12px;
+}
+
+.archive-error[hidden] {
+  display: none;
+}
+
+.archive-table-wrap {
+  overflow-x: auto;
+}
+
+.archive-category-section {
+  border-top: 1px dashed #bdb6ac;
+  margin-top: 8px;
+}
+
+.archive-category-header {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 24px 0;
+}
+
+.archive-category-header h2 {
+  color: #171513;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.archive-category-header .archive-count {
+  padding: 0;
+}
+
+.archive-table {
+  border-collapse: collapse;
+  min-width: 680px;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.archive-table th {
+  background: #f8f6f2;
+  border-bottom: 1px dashed #bdb6ac;
+  color: #51483f;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 13px 16px;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.archive-table td {
+  border-bottom: 1px solid #e7e1d9;
+  color: #332f2b;
+  font-size: 11px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  padding: 14px 16px;
+  vertical-align: top;
+}
+
+.archive-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.archive-table tbody tr:hover {
+  background: #faf9f7;
+}
+
+.archive-table th:first-child,
+.archive-table td:first-child {
+  width: 23%;
+}
+
+.archive-table th:nth-child(2),
+.archive-table td:nth-child(2) {
+  width: 44%;
+}
+
+.archive-table th:nth-child(3),
+.archive-table td:nth-child(3) {
+  width: 20%;
+}
+
+.archive-table th:last-child,
+.archive-table td:last-child {
+  text-align: right;
+  width: 13%;
+}
+
+.archive-id {
+  color: #171513;
+  font-weight: 700;
+}
+
+.archive-detail {
+  color: #756d65;
+  display: block;
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+.archive-action {
+  min-height: 28px;
+  padding: 0 9px;
+}
+
+.archive-empty {
+  color: #756d65;
+  font-size: 11px;
+  padding: 22px 24px;
+  text-align: center;
+}
+
+.archive-empty[hidden] {
+  display: none;
+}
+
+.sr-only {
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.archive-detail-dialog {
+  border: 1px solid #ded9d1;
+  color: #171513;
+  max-width: min(580px, calc(100vw - 30px));
+  padding: 0;
+  width: 100%;
+}
+
+.archive-detail-dialog::backdrop {
+  background: rgb(23 21 19 / 45%);
+}
+
+.archive-detail-dialog > header {
+  align-items: center;
+  border-bottom: 1px solid #ded9d1;
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 22px;
+}
+
+.archive-detail-dialog h2 {
+  font-size: 18px;
+}
+
+.archive-close {
+  background: #f8f6f2;
+  border: 1px solid #ded9d1;
+  color: #51483f;
+  font-size: 20px;
+  height: 32px;
+  line-height: 1;
+  width: 32px;
+}
+
+.archive-detail-body {
+  padding: 16px 22px 22px;
+}
+
+.archive-detail-body dl {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.archive-detail-body dl div {
+  align-items: start;
+  border-bottom: 1px solid #e7e1d9;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 140px 1fr;
+  padding: 10px 0;
+}
+
+.archive-detail-body dt {
+  color: #756d65;
+  font-size: 10px;
+}
+
+.archive-detail-body dd {
+  font-size: 11px;
+  font-weight: 600;
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.archive-detail-body h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 18px 0 8px;
+}
+
+.archive-detail-body ul {
+  color: #51483f;
+  font-size: 11px;
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 20px;
+}
+
+@media (max-width: 600px) {
+  .archive-page {
+    padding: 16px 10px;
+  }
+
+  .archive-header,
+  .archive-tabs {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .archive-search {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .archive-count {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .archive-tab {
+    flex: 1 1 auto;
+  }
+}

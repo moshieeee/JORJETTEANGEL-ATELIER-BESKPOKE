@@ -1,0 +1,374 @@
+html.embedded-module,
+html.embedded-module body {
+    background: #faf9f7;
+    color: #171513;
+    font-family: Inter, Arial, sans-serif;
+}
+
+html.embedded-module .main-content {
+    background: #faf9f7;
+    color: #171513;
+    padding: 34px clamp(24px, 5vw, 72px);
+}
+
+html.embedded-module .top-header {
+    background: transparent;
+    border-bottom: 1px solid #ded9d1;
+    margin-bottom: 22px;
+    padding: 0 0 22px;
+}
+
+html.embedded-module .production-kicker {
+    color: #756d65;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+html.embedded-module .top-header h1,
+html.embedded-module .panel-header h2,
+html.embedded-module .summary-card h2,
+html.embedded-module .modal h2,
+html.embedded-module .confirm-modal h2 {
+    color: #171513;
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+}
+
+html.embedded-module .top-header h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    margin: 7px 0 0;
+}
+
+html.embedded-module .top-header p,
+html.embedded-module .panel-header p {
+    color: #756d65;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+html.embedded-module .summary-cards {
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+html.embedded-module .summary-card,
+html.embedded-module .content-panel {
+    background: #fff;
+    border: 1px solid #ded9d1;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+html.embedded-module .summary-card {
+    gap: 13px;
+    min-width: 0;
+    padding: 18px;
+}
+
+html.embedded-module .card-icon {
+    border-radius: 0;
+    flex: 0 0 42px;
+    height: 42px;
+    width: 42px;
+}
+
+html.embedded-module .card-icon.blue,
+html.embedded-module .card-icon.green,
+html.embedded-module .card-icon.amber {
+    background: #f4f1ec;
+    color: #171513;
+}
+
+html.embedded-module .summary-card p {
+    color: #756d65;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+html.embedded-module .summary-card h2 {
+    font-size: 28px;
+}
+
+html.embedded-module .panel-header {
+    border-bottom: 1px solid #ded9d1;
+    padding: 20px 22px;
+}
+
+html.embedded-module .panel-header h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+html.embedded-module .toolbar {
+    align-items: center;
+    border-bottom: 1px solid #ded9d1;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 16px 22px;
+}
+
+html.embedded-module .search-box {
+    background: #fff;
+    border: 1px solid #ded9d1;
+    border-radius: 0;
+    flex: 1 1 280px;
+    max-width: none;
+}
+
+html.embedded-module .search-box span {
+    color: #756d65;
+}
+
+html.embedded-module .search-box input {
+    color: #171513;
+    font-size: 12px;
+}
+
+html.embedded-module .toolbar select,
+html.embedded-module .form-group input,
+html.embedded-module .form-group select,
+html.embedded-module .form-group textarea {
+    background: #fff;
+    border: 1px solid #ded9d1;
+    border-radius: 0;
+    color: #171513;
+    font-size: 12px;
+    min-height: 40px;
+}
+
+html.embedded-module .toolbar select {
+    flex: 0 1 190px;
+    min-width: 150px;
+}
+
+html.embedded-module .table-container {
+    scrollbar-color: #bdb4aa #f4f1ec;
+    scrollbar-width: thin;
+}
+
+html.embedded-module table {
+    min-width: 840px;
+}
+
+html.embedded-module thead {
+    background: #faf9f7;
+}
+
+html.embedded-module th {
+    border-bottom: 1px solid #ded9d1;
+    color: #756d65;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    padding: 13px 16px;
+}
+
+html.embedded-module td {
+    border-bottom: 1px solid #ded9d1;
+    color: #171513;
+    font-size: 11px;
+    padding: 14px 16px;
+}
+
+html.embedded-module tbody tr:hover {
+    background: #faf9f7;
+}
+
+html.embedded-module .production-id {
+    color: #171513;
+    font-weight: 600;
+}
+
+html.embedded-module .status {
+    border-radius: 0;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    padding: 5px 8px;
+}
+
+html.embedded-module .status.pending {
+    background: #f4f1ec;
+    color: #756d65;
+}
+
+html.embedded-module .status.production {
+    background: #e9e4dd;
+    color: #171513;
+}
+
+html.embedded-module .status.completed {
+    background: #e9e4dd;
+    color: #3b3732;
+}
+
+html.embedded-module .status.ready {
+    background: #f4f1ec;
+    color: #3b3732;
+}
+
+html.embedded-module .action-btn,
+html.embedded-module .primary-btn,
+html.embedded-module .secondary-btn,
+html.embedded-module .danger-btn {
+    border-radius: 0;
+    font-family: inherit;
+}
+
+html.embedded-module .action-btn {
+    border-color: #ded9d1;
+    color: #171513;
+}
+
+html.embedded-module .action-btn:hover,
+html.embedded-module .secondary-btn:hover {
+    background: #f4f1ec;
+}
+
+html.embedded-module .action-btn.delete,
+html.embedded-module .danger-btn {
+    color: #9e3f32;
+}
+
+html.embedded-module .primary-btn {
+    background: #171513;
+}
+
+html.embedded-module .primary-btn:hover {
+    background: #3b3732;
+}
+
+html.embedded-module .secondary-btn {
+    background: #fff;
+    border-color: #ded9d1;
+    color: #171513;
+}
+
+html.embedded-module .danger-btn {
+    background: #fff;
+    border: 1px solid #9e3f32;
+}
+
+html.embedded-module .empty-message {
+    color: #756d65;
+}
+
+html.embedded-module .modal-overlay {
+    background: rgb(23 21 19 / 58%);
+}
+
+html.embedded-module .modal,
+html.embedded-module .confirm-modal {
+    background: #faf9f7;
+    border: 1px solid #ded9d1;
+    border-radius: 0;
+    box-shadow: 0 20px 50px rgb(23 21 19 / 18%);
+}
+
+html.embedded-module .modal-header,
+html.embedded-module .modal-footer {
+    border-color: #ded9d1;
+}
+
+html.embedded-module .modal-header h2,
+html.embedded-module .confirm-modal h2 {
+    font-size: 24px;
+}
+
+html.embedded-module .modal-header p,
+html.embedded-module .confirm-modal p {
+    color: #756d65;
+}
+
+html.embedded-module .close-btn {
+    color: #756d65;
+}
+
+html.embedded-module .view-item,
+html.embedded-module .info-row {
+    background: #fff;
+    border: 1px solid #ded9d1;
+    border-radius: 0;
+}
+
+html.embedded-module .view-item span,
+html.embedded-module .info-row span {
+    color: #756d65;
+}
+
+html.embedded-module .view-item strong,
+html.embedded-module .info-row strong,
+html.embedded-module .form-group label {
+    color: #171513;
+}
+
+html.embedded-module .form-group input:focus,
+html.embedded-module .form-group select:focus,
+html.embedded-module .form-group textarea:focus {
+    border-color: #756d65;
+}
+
+html.embedded-module .confirm-icon {
+    background: #f4f1ec;
+    border-radius: 0;
+    color: #9e3f32;
+}
+
+html.embedded-module ::-webkit-scrollbar-track {
+    background: #f4f1ec;
+}
+
+html.embedded-module ::-webkit-scrollbar-thumb {
+    background: #bdb4aa;
+}
+
+@media (min-width: 701px) {
+    html.embedded-module .summary-cards {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    html.embedded-module .main-content {
+        padding: 24px 18px;
+    }
+
+    html.embedded-module .summary-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    html.embedded-module .summary-card {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 9px;
+        padding: 13px;
+    }
+
+    html.embedded-module .card-icon {
+        height: 34px;
+        width: 34px;
+        flex-basis: 34px;
+    }
+
+    html.embedded-module .summary-card h2 {
+        font-size: 24px;
+    }
+
+    html.embedded-module .panel-header,
+    html.embedded-module .toolbar {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    html.embedded-module .toolbar select {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    html.embedded-module .view-grid,
+    html.embedded-module .update-information {
+        grid-template-columns: 1fr;
+    }
+}

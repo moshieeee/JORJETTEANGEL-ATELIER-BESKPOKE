@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Atelier Admin | Audit Trail</title>
+    <link rel="stylesheet" href="modules-audit-trail.css" />
+    <link rel="stylesheet" href="modules-system-design.css" />
+    <script>
+      if (new URLSearchParams(window.location.search).has("embedded")) {
+        document.documentElement.classList.add("embedded-module");
+      }
+    </script>
+    <script src="../Backend/backend-backend.js"></script>
+    <script src="modules-warehouse-route-guard.js"></script>
+    <script src="modules-audit-trail.js" defer></script>
+  </head>
+  <body>
+    <main class="audit-workspace">
+      <section class="security-log" aria-labelledby="audit-heading">
+        <header class="log-header">
+          <h1 id="audit-heading">AUDIT TRAIL &amp; SECURITY LOGS</h1>
+        </header>
+
+        <div class="log-controls" aria-label="Audit log filters">
+          <label class="filter-control">
+            <span class="visually-hidden">Filter by user</span>
+            <select id="userFilter" aria-label="Filter by user">
+              <option value="">Filter by User ▼</option>
+            </select>
+          </label>
+          <label class="filter-control">
+            <span class="visually-hidden">Filter by module</span>
+            <select id="moduleFilter" aria-label="Filter by module">
+              <option value="">Filter by Module ▼</option>
+            </select>
+          </label>
+          <button
+            class="alerts-button"
+            id="alertsButton"
+            type="button"
+            aria-pressed="false"
+          >
+            <span aria-hidden="true">⚠</span>
+            <span id="alertsLabel">ALERTS</span>
+            <span class="alert-count" id="alertCount">0</span>
+          </button>
+        </div>
+
+        <div class="search-row">
+          <label class="visually-hidden" for="searchInput">
+            Search by target ID or keyword
+          </label>
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search by Target ID or Keyword..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="log-table-scroll">
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th scope="col">TIMESTAMP</th>
+                <th scope="col">USER (ROLE)</th>
+                <th scope="col">ACTION &amp; TARGET ID</th>
+                <th scope="col">SEVERITY</th>
+              </tr>
+            </thead>
+            <tbody id="audit-table-body"></tbody>
+          </table>
+          <p id="noResult" class="empty-state" hidden>
+            No security log entries found.
+          </p>
+        </div>
+
+        <div id="audit-error" class="audit-error" role="alert" hidden></div>
+      </section>
+    </main>
+  </body>
+</html>

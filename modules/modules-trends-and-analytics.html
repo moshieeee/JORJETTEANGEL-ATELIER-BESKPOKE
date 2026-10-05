@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trends &amp; Analytics</title>
+    <link rel="stylesheet" href="modules-trends-and-analytics.css" />
+    <link rel="stylesheet" href="modules-system-design.css" />
+    <script>
+      if (new URLSearchParams(window.location.search).has("embedded")) {
+        document.documentElement.classList.add("embedded-module");
+      }
+    </script>
+    <script src="../Backend/backend-backend.js"></script>
+    <script src="modules-warehouse-route-guard.js"></script>
+  </head>
+  <body>
+    <main class="analytics-workspace" id="trends-and-analytics">
+      <header class="analytics-heading">
+        <div>
+          <h1>Trends &amp; Analytics</h1>
+        </div>
+        <div class="analytics-controls">
+          <label for="dateRange">Reporting period</label>
+          <select id="dateRange">
+            <option value="month">This Month</option>
+            <option value="previous-month">Last Month</option>
+            <option value="year">This Year</option>
+          </select>
+          <button id="exportButton" type="button">Export Report</button>
+        </div>
+      </header>
+
+      <p class="analytics-data-notice" id="analytics-data-notice" role="status" hidden></p>
+
+      <section class="metric-grid" aria-label="Sales performance summary">
+        <article class="metric-card">
+          <span class="metric-label">Sales Revenue</span>
+          <strong class="metric-value" id="totalRevenue">—</strong>
+          <span class="metric-note" id="revenue-period-note">Selected period</span>
+        </article>
+        <article class="metric-card">
+          <span class="metric-label">Orders Received</span>
+          <strong class="metric-value" id="ordersProcessed">—</strong>
+          <span class="metric-note" id="orders-period-note">Selected period</span>
+        </article>
+        <article class="metric-card">
+          <span class="metric-label">Units Ordered</span>
+          <strong class="metric-value" id="unitsSold">—</strong>
+          <span class="metric-note">Across all order lines</span>
+        </article>
+        <article class="metric-card">
+          <span class="metric-label">Peak Order Month</span>
+          <strong class="metric-value metric-value-small" id="peak-order-month">—</strong>
+          <span class="metric-note" id="peak-order-count">No order history</span>
+        </article>
+      </section>
+
+      <section class="analytics-grid sales-grid" aria-label="Monthly sales and order performance">
+        <article class="analytics-panel sales-panel">
+          <header class="panel-heading">
+            <div>
+              <p class="panel-kicker">Sales performance</p>
+              <h2>Monthly Sales</h2>
+              <p class="panel-subtitle">Revenue by order date over the last 12 months</p>
+            </div>
+            <strong class="panel-stat" id="sales-total-period">—</strong>
+          </header>
+          <div class="chart-shell">
+            <div class="chart-values" id="sales-chart-values" aria-hidden="true"></div>
+            <div class="monthly-chart" id="sales-chart" role="img" aria-label="Monthly sales revenue"></div>
+          </div>
+        </article>
+        <article class="analytics-panel">
+          <header class="panel-heading">
+            <div>
+              <p class="panel-kicker">Order summary</p>
+              <h2>Peak Order Months</h2>
+              <p class="panel-subtitle">Months ranked by orders received</p>
+            </div>
+          </header>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr><th>Rank</th><th>Month</th><th>Orders</th><th>Sales</th></tr>
+              </thead>
+              <tbody id="peak-months-body"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="analytics-grid secondary-grid" aria-label="Sales breakdown">
+        <article class="analytics-panel">
+          <header class="panel-heading">
+            <div>
+              <p class="panel-kicker">Product performance</p>
+              <h2>Sales by Product</h2>
+              <p class="panel-subtitle">Revenue contribution during the selected period</p>
+            </div>
+          </header>
+          <div class="product-sales-list" id="sales-by-product"></div>
+        </article>
+        <article class="analytics-panel">
+          <header class="panel-heading">
+            <div>
+              <p class="panel-kicker">Cash on delivery</p>
+              <h2>Financial Overview</h2>
+              <p class="panel-subtitle">Order totals and recorded collections</p>
+            </div>
+          </header>
+          <div class="financial-list" id="financial-overview"></div>
+        </article>
+      </section>
+
+      <section class="analytics-panel material-panel">
+        <header class="panel-heading">
+          <div>
+            <p class="panel-kicker">Fabrics &amp; BOM</p>
+            <h2>Material Consumption &amp; Trends</h2>
+            <p class="panel-subtitle">
+              Estimated use is calculated from saved BOM recipes and orders in the last 90 days.
+            </p>
+          </div>
+        </header>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Raw material</th>
+                <th>90-day use</th>
+                <th>Avg. monthly use</th>
+                <th>Current stock</th>
+                <th>Months remaining</th>
+                <th>Next-month recommendation</th>
+              </tr>
+            </thead>
+            <tbody id="material-consumption-body"></tbody>
+          </table>
+        </div>
+        <p class="table-note" id="material-data-note"></p>
+      </section>
+
+      <section class="analytics-panel bottleneck-panel">
+        <header class="panel-heading">
+          <div>
+            <p class="panel-kicker">Custom order production</p>
+            <h2>Production Bottlenecks</h2>
+            <p class="panel-subtitle">
+              Turnaround and shipment status based on custom-made orders.
+            </p>
+          </div>
+        </header>
+        <div class="bottleneck-metrics">
+          <article class="metric-card">
+            <span class="metric-label">Average Turnaround</span>
+            <strong class="metric-value" id="average-turnaround">—</strong>
+            <span class="metric-note">Order received to production completion</span>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Custom Orders Shipped</span>
+            <strong class="metric-value" id="custom-shipment-rate">—</strong>
+            <span class="metric-note" id="custom-shipment-count">No shipment history</span>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Current Backlog</span>
+            <strong class="metric-value" id="custom-backlog-count">—</strong>
+            <span class="metric-note">Open custom order lines</span>
+          </article>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Production stage</th><th>Custom order lines</th><th>Share of backlog</th></tr>
+            </thead>
+            <tbody id="production-backlog-body"></tbody>
+          </table>
+        </div>
+        <p class="table-note" id="production-data-note"></p>
+      </section>
+
+      <p class="export-message" id="exportMessage" role="status" hidden>
+        Report exported.
+      </p>
+      <dialog class="export-dialog" id="exportDialog" aria-labelledby="export-dialog-title">
+        <form method="dialog" class="export-dialog-content">
+          <div>
+            <p class="panel-kicker">Custom report</p>
+            <h2 id="export-dialog-title">Choose reports to export</h2>
+            <p class="panel-subtitle">Select one or more data sections for your CSV file.</p>
+          </div>
+          <fieldset class="export-options">
+            <label>
+              <input type="checkbox" name="export-section" value="financial" />
+              <span>
+                <strong>Financial &amp; Sales Reports</strong>
+                <small>The Revenue Data</small>
+              </span>
+            </label>
+            <label>
+              <input type="checkbox" name="export-section" value="materials" />
+              <span>
+                <strong>Material Consumption &amp; Inventory Reports</strong>
+                <small>The Supply Chain Data</small>
+              </span>
+            </label>
+            <label>
+              <input type="checkbox" name="export-section" value="atelier" />
+              <span>
+                <strong>Product Performance &amp; Production Metrics</strong>
+                <small>The Atelier Data</small>
+              </span>
+            </label>
+          </fieldset>
+          <p class="export-selection-error" id="export-selection-error" role="alert" hidden>
+            Select at least one report section to export.
+          </p>
+          <div class="export-dialog-actions">
+            <button class="export-cancel" id="cancelExport" type="button">Cancel</button>
+            <button id="confirmExport" type="button">Export Selected</button>
+          </div>
+        </form>
+      </dialog>
+    </main>
+    <script src="modules-trends-and-analytics.js"></script>
+  </body>
+</html>

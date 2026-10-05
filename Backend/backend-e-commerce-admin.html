@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atelier Admin | Dashboard</title>
+    <link rel="stylesheet" href="backend-admin.css" />
+    <link rel="stylesheet" href="../modules/modules-system-design.css" />
+  </head>
+  <body data-page="dashboard">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <div class="admin-brand-lockup">
+          <div class="admin-brand">JORJETTEANGEL</div>
+          <div class="admin-subbrand">ATELIER ADMIN</div>
+        </div>
+
+        <br />
+        <br />
+        <nav class="admin-nav" aria-label="Admin navigation">
+          <a class="admin-nav-home active" href="backend-e-commerce-admin.html"
+            >Dashboard</a
+          >
+          <details class="admin-nav-group" open>
+            <summary>
+              <span>Product</span>
+            </summary>
+            <div class="admin-nav-submenu">
+              <a href="backend-ready-to-wear-admin.html">Product Management</a>
+              <a href="backend-product-categories-admin.html">Product Categories</a>
+            </div>
+          </details>
+          <details class="admin-nav-group">
+            <summary>
+              <span>Orders</span>
+            </summary>
+            <div class="admin-nav-submenu">
+              <a href="backend-order-management-admin.html">Order Management</a>
+            </div>
+          </details>
+          <a href="backend-e-commerce-admin.html?view=archive">Archived</a>
+          <a href="backend-e-commerce-admin.html?view=audit-trail">Audit trail</a>
+          <a href="../Front/frontend-e-commerce.html">View storefront</a>
+        </nav>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-topbar">
+          <div>
+            <h1>Dashboard</h1>
+          </div>
+        </header>
+
+        <section
+          class="report-kpi-grid"
+          id="report-kpi-grid"
+          aria-label="Store performance"
+        >
+          <article class="report-kpi-card tone-blue">
+            <div class="report-kpi-meta">Today's Revenue</div>
+            <div class="report-kpi-value" id="report-order-value">—</div>
+          </article>
+
+          <article class="report-kpi-card tone-amber">
+            <div class="report-kpi-meta">Today's Orders</div>
+            <div class="report-kpi-value" id="report-open-orders">—</div>
+          </article>
+
+          <article class="report-kpi-card tone-green">
+            <div class="report-kpi-meta">Active Products</div>
+            <div class="report-kpi-value" id="report-active-listings">0</div>
+          </article>
+
+          <article class="report-kpi-card tone-violet">
+            <div class="report-kpi-meta">New Customers</div>
+            <div class="report-kpi-value" id="report-customer-count">—</div>
+          </article>
+        </section>
+
+        <section class="report-analytics-grid" aria-label="Store analytics">
+          <article class="report-panel">
+            <header class="report-panel-header">
+              <div>
+                <h2>Revenue and Orders</h2>
+              </div>
+              <span class="report-panel-badge">Last 7 days</span>
+            </header>
+            <div
+              class="report-chart"
+              id="report-sales-chart"
+              role="img"
+              aria-label="Order totals for the last seven days"
+            ></div>
+          </article>
+
+          <article class="report-panel">
+            <header class="report-panel-header">
+              <div>
+                <div class="report-panel-kicker">Store activity</div>
+                <h2>Alerts &amp; Notifications</h2>
+              </div>
+            </header>
+            <ul class="report-alert-list" id="report-alert-list"></ul>
+          </article>
+        </section>
+
+        <section class="report-lower-grid" aria-label="Order status">
+          <article class="report-panel">
+            <header class="report-panel-header">
+              <div>
+                <div class="report-panel-kicker">Workflow</div>
+                <h2>Order Status</h2>
+              </div>
+            </header>
+            <div class="report-status-list" id="report-order-status"></div>
+          </article>
+
+        </section>
+
+        <section
+          class="report-summary-grid"
+          id="report-summary-grid"
+          aria-label="Store summaries"
+        >
+          <article class="report-summary-card">
+            <div class="report-summary-label">Catalog snapshot</div>
+            <div
+              class="report-summary-content"
+              id="report-catalog-summary"
+            ></div>
+          </article>
+          <article class="report-summary-card">
+            <div class="report-summary-label">Customer preferences</div>
+            <div
+              class="report-summary-content"
+              id="report-preference-summary"
+            ></div>
+          </article>
+          <article class="report-summary-card">
+            <div class="report-summary-label">Payment methods</div>
+            <div
+              class="report-summary-content"
+              id="report-payment-summary"
+            ></div>
+          </article>
+        </section>
+
+        <iframe
+          id="dashboard-module-frame"
+          class="admin-module-frame"
+          title="Dashboard module"
+          hidden
+        ></iframe>
+      </main>
+    </div>
+    <script src="backend-backend.js"></script>
+    <script src="../Shared/shared-array-algorithms.js"></script>
+    <script src="backend-admin-header.js"></script>
+    <script src="backend-admin.js"></script>
+  </body>
+</html>

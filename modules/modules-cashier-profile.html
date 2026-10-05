@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script src="../Backend/backend-backend.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Personal Settings</title>
+    <link rel="stylesheet" href="modules-system-design.css" />
+    <link rel="stylesheet" href="modules-cashier-profile.css" />
+    <script>
+      if (new URLSearchParams(window.location.search).has("embedded")) {
+        document.documentElement.classList.add("embedded-module");
+      }
+    </script>
+    <script src="modules-warehouse-route-guard.js"></script>
+    <script src="modules-cashier-profile.js" defer></script>
+  </head>
+  <body>
+    <main class="cashier-profile-page">
+      <header>
+        <p class="cashier-profile-eyebrow">Personal settings</p>
+        <h1>My Profile</h1>
+        <p class="cashier-profile-intro">
+          Your account details are read-only. You can update your password below.
+        </p>
+      </header>
+
+      <section class="cashier-profile-card" aria-labelledby="profile-details-heading">
+        <h2 id="profile-details-heading">Account details</h2>
+        <div class="cashier-profile-picture" id="cashier-profile-picture">
+          <img id="profile-picture-preview" alt="Profile picture preview" hidden />
+          <div id="profile-picture-placeholder" aria-hidden="true">JA</div>
+          <div class="cashier-profile-picture-controls">
+            <label class="cashier-profile-field" for="profile-picture-input">
+              <span>Update profile picture</span>
+              <input id="profile-picture-input" type="file" accept="image/*" />
+            </label>
+            <button class="cashier-profile-submit" id="save-profile-picture" type="button">
+              Save picture
+            </button>
+            <p class="cashier-profile-message" id="profile-picture-message" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+        <dl class="cashier-profile-details">
+          <div><dt>Name</dt><dd id="profile-name">Loading…</dd></div>
+          <div><dt>Work email</dt><dd id="profile-email">Loading…</dd></div>
+          <div><dt>Role</dt><dd id="profile-role">Loading…</dd></div>
+          <div><dt>Employee ID</dt><dd id="profile-employee-id">Loading…</dd></div>
+        </dl>
+      </section>
+
+      <form class="cashier-profile-card" id="password-form">
+        <h2>Change password</h2>
+        <label class="cashier-profile-field">
+          <span>Current password</span>
+          <div class="cashier-password-input">
+            <input id="current-password" type="password" autocomplete="current-password" required />
+            <button class="cashier-password-toggle" type="button" data-password-toggle="current-password" data-password-label="current password" aria-label="Show current password">Show</button>
+          </div>
+        </label>
+        <label class="cashier-profile-field">
+          <span>New password</span>
+          <div class="cashier-password-input">
+            <input id="new-password" type="password" autocomplete="new-password" minlength="8" required />
+            <button class="cashier-password-toggle" type="button" data-password-toggle="new-password" data-password-label="new password" aria-label="Show new password">Show</button>
+          </div>
+        </label>
+        <label class="cashier-profile-field">
+          <span>Confirm new password</span>
+          <div class="cashier-password-input">
+            <input id="confirm-password" type="password" autocomplete="new-password" minlength="8" required />
+            <button class="cashier-password-toggle" type="button" data-password-toggle="confirm-password" data-password-label="confirmed password" aria-label="Show confirmed password">Show</button>
+          </div>
+        </label>
+        <p class="cashier-profile-message" id="password-message" role="status" aria-live="polite"></p>
+        <button class="cashier-profile-submit" type="submit">Update password</button>
+      </form>
+    </main>
+  </body>
+</html>

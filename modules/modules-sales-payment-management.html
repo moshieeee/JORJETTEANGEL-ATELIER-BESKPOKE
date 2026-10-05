@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales & Payment Management</title>
+    <link rel="stylesheet" href="modules-sales-payment-management.css">
+    <link rel="stylesheet" href="modules-system-design.css">
+    <script>
+        if (new URLSearchParams(window.location.search).has("embedded")) {
+            document.documentElement.classList.add("embedded-module");
+        }
+    </script>
+    <script src="../Backend/backend-backend.js"></script>
+    <script src="modules-warehouse-route-guard.js"></script>
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+        <aside class="dsa-sidebar">
+            <a class="dsa-brand" href="../../../Base code/base.html">
+                <span class="dsa-brand-logo">JG</span>
+                <span class="dsa-brand-copy"><span class="dsa-brand-name">JORTANGEL ONLINE SHOP</span><span class="dsa-brand-subtitle">Garments &amp; Mfg. ERP</span></span>
+            </a>
+            <div class="dsa-nav-heading">WORKSPACE</div>
+            <nav class="dsa-navigation" aria-label="Main navigation">
+                <a class="dsa-nav-link" href="../../../Base code/base.html">Overview</a>
+            </nav>
+            <div class="dsa-nav-heading dsa-modules-heading">MODULES</div>
+            <nav class="dsa-navigation" aria-label="ERP modules">
+                <a class="dsa-nav-link active" href="modules-sales-payment-management.html" aria-current="page">Sales &amp; Payment</a>
+                <a class="dsa-nav-link" href="modules-production-management.html">Production</a>
+                <a class="dsa-nav-link" href="modules-supplier-management.html">Supplier Management</a>
+                <a class="dsa-nav-link" href="modules-purchasing-restocking.html">Purchasing &amp; Restocking</a>
+            </nav>
+            <div class="dsa-nav-heading dsa-modules-heading">JORTANGEL MODULES</div>
+            <nav class="dsa-navigation" aria-label="Jortangel modules">
+                <a class="dsa-nav-link" href="../../../../../dashboard/Base%20code/base.html">Dashboard</a>
+                <a class="dsa-nav-link" href="../../../../../BOM/Base%20code/base.html">BOM</a>
+                <a class="dsa-nav-link" href="../../../../../Bulk%20Order%20Pipeline/Base%20code/base.html">Bulk Order Pipeline</a>
+                <a class="dsa-nav-link" href="../../../../../Measurement%20Management%202/Base%20code/base.html">Measurement Management</a>
+            </nav>
+            <div class="dsa-sidebar-footer"><span class="dsa-status-dot"></span>System Online</div>
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <div
+                id="errorMessage"
+                class="error-banner"
+                role="alert"
+                hidden
+            ></div>
+
+            <header class="top-header">
+
+                <div>
+                    <h1>Sales &amp; Payment Management</h1>
+                </div>
+
+            </header>
+
+
+            <!-- SUMMARY CARDS -->
+            <section class="summary-cards">
+
+                <div class="summary-card">
+
+                    <div class="card-icon blue">
+                        ₱
+                    </div>
+
+                    <div>
+                        <p>Incoming Revenue</p>
+                        <h2 id="totalRevenue">₱0.00</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="card-icon green">
+                        ✓
+                    </div>
+
+                    <div>
+                        <p>Paid</p>
+                        <h2 id="paidCount">0</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="card-icon red">
+                        !
+                    </div>
+
+                    <div>
+                        <p>Unpaid</p>
+                        <h2 id="unpaidCount">0</h2>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PAYMENT RECORDS -->
+            <section class="content-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Cash on Delivery Payment Records</h2>
+
+                        <p>
+                            Monitor COD collections and payment status from connected order and delivery modules.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- TOOLBAR -->
+                <div class="toolbar">
+
+                    <div class="search-box">
+
+                        <span>⌕</span>
+
+                        <input
+                            type="text"
+                            id="searchPayment"
+                            placeholder="Search payment, order, or customer..."
+                        >
+
+                    </div>
+
+
+                    <select id="statusFilter">
+
+                        <option value="All">
+                            All Status
+                        </option>
+
+                        <option value="Paid">
+                            Paid
+                        </option>
+
+                        <option value="Unpaid">
+                            Unpaid
+                        </option>
+
+                    </select>
+
+
+                    <select id="sourceFilter">
+
+                        <option value="All">
+                            All Sources
+                        </option>
+
+                        <option value="Custom Order">
+                            Custom Order
+                        </option>
+
+                        <option value="COD">
+                            COD (Cash on Delivery)
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- TABLE -->
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Source</th>
+                                <th>Total Amount</th>
+                                <th>Amount Collected</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="paymentTableBody"></tbody>
+
+                    </table>
+
+
+                    <div
+                        id="emptyMessage"
+                        class="empty-message"
+                    >
+                        No payment records found.
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- VIEW PAYMENT MODAL -->
+    <div
+        class="modal-overlay"
+        id="viewModal"
+    >
+
+        <div class="modal view-modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>Payment Record</h2>
+
+                    <p>
+                        Details received from connected modules.
+                    </p>
+
+                </div>
+
+                <button
+                    class="close-btn"
+                    id="closeViewModal"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="view-grid">
+
+                <div class="view-item">
+                    <span>Transaction ID</span>
+                    <strong id="viewPaymentId">-</strong>
+                </div>
+
+                <div class="view-item">
+                    <span>Order ID</span>
+                    <strong id="viewOrderId">-</strong>
+                </div>
+
+                <div class="view-item">
+                    <span>Customer ID</span>
+                    <strong id="viewCustomerId">-</strong>
+                </div>
+
+                <div class="view-item">
+                    <span>Customer Name</span>
+                    <strong id="viewCustomerName">-</strong>
+                </div>
+
+                <div class="view-item">
+                    <span>Order Type</span>
+                    <strong id="viewOrderType">-</strong>
+                </div>
+
+                <div class="view-item">
+                    <span>Payment Source</span>
+                    <strong id="viewSource">-</strong>
+                </div>
+
+                <div class="view-item">
+                    <span>Total Amount</span>
+                    <strong id="viewTotalAmount">-</strong>
+                </div>
+
+                <div class="view-item">
+                    <span>Amount Collected</span>
+                    <strong id="viewAmountReceived">-</strong>
+                </div>
+
+                <div class="view-item">
+                    <span>Remaining Balance</span>
+                    <strong id="viewRemainingBalance">-</strong>
+                </div>
+
+                <div class="view-item">
+                    <span>Payment Method</span>
+                    <strong id="viewPaymentMethod">-</strong>
+                </div>
+
+                <div class="view-item">
+                    <span>Payment Status</span>
+                    <strong id="viewPaymentStatus">-</strong>
+                </div>
+
+                <div class="view-item">
+                    <span>Payment Date</span>
+                    <strong id="viewPaymentDate">-</strong>
+                </div>
+
+                <div class="view-item full-width">
+                    <span>Notes</span>
+                    <strong id="viewNotes">-</strong>
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    class="secondary-btn"
+                    id="closeViewButton"
+                >
+                    Close
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- UPDATE PAYMENT MODAL -->
+    <div
+        class="modal-overlay"
+        id="updateModal"
+    >
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>Update Payment</h2>
+
+                    <p>
+                        Record the amount collected for this COD order.
+                    </p>
+
+                </div>
+
+                <button
+                    class="close-btn"
+                    id="closeUpdateModal"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="update-information">
+
+                <div class="info-row">
+                    <span>Transaction ID</span>
+                    <strong id="updatePaymentId">-</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Order ID</span>
+                    <strong id="updateOrderId">-</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Customer</span>
+                    <strong id="updateCustomerName">-</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Total Amount</span>
+                    <strong id="updateTotalAmount">₱0.00</strong>
+                </div>
+
+            </div>
+
+
+            <div class="update-form">
+
+                <div class="form-group">
+
+                    <label>
+                        Amount Collected
+                    </label>
+
+                    <input
+                        type="text"
+                        id="updateAmountReceived"
+                        placeholder="Enter amount received"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Remaining Balance
+                    </label>
+
+                    <input
+                        type="text"
+                        id="updateRemainingBalance"
+                        value="₱0.00"
+                        readonly
+                    >
+
+                </div>
+
+
+                <div
+                    id="updateMessage"
+                    class="form-message"
+                ></div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    class="secondary-btn"
+                    id="cancelUpdateButton"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    class="primary-btn"
+                    id="saveUpdateButton"
+                >
+                    Save Update
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ARCHIVE CONFIRMATION -->
+    <div
+        class="modal-overlay"
+        id="deleteModal"
+    >
+
+        <div class="confirm-modal">
+
+            <div class="confirm-icon">
+                !
+            </div>
+
+            <h2>
+                Archive Payment?
+            </h2>
+
+            <p>
+                This payment record will be hidden from the active list and can
+                be restored later from System &amp; Security &gt; Archive.
+            </p>
+
+
+            <div class="modal-footer">
+
+                <button
+                    class="secondary-btn"
+                    id="cancelDeleteButton"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    class="archive-confirm-btn"
+                    id="confirmDeleteButton"
+                >
+                    Archive
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="modules-system-archive.js"></script>
+    <script src="modules-sales-payment-management.js"></script>
+
+</body>
+
+</html>

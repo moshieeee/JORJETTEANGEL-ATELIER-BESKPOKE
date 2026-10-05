@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atelier Admin | Order Management</title>
+    <link rel="stylesheet" href="backend-admin.css" />
+    <link rel="stylesheet" href="../modules/modules-system-design.css" />
+  </head>
+  <body data-page="orders">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <div class="admin-brand-lockup">
+          <div class="admin-brand">JORJETTEANGEL</div>
+          <div class="admin-subbrand">ATELIER ADMIN</div>
+        </div>
+        <nav class="admin-nav" aria-label="Admin navigation">
+          <a class="admin-nav-home" href="backend-e-commerce-admin.html">Dashboard</a>
+          <details class="admin-nav-group">
+            <summary>
+              <span>Product</span>
+            </summary>
+            <div class="admin-nav-submenu">
+              <a href="backend-ready-to-wear-admin.html">Product Management</a>
+              <a href="backend-product-categories-admin.html">Product Categories</a>
+            </div>
+          </details>
+          <details class="admin-nav-group" open>
+            <summary>
+              <span>Orders</span>
+            </summary>
+            <div class="admin-nav-submenu">
+              <a class="active" href="backend-order-management-admin.html">Order Management</a>
+            </div>
+          </details>
+          <a href="backend-archived-catalog-admin.html">Archived Products</a>
+          <a href="backend-e-commerce-admin.html#customer-accounts">Customer accounts</a>
+          <a href="backend-e-commerce-admin.html#audit-trail">Audit trail</a>
+          <a href="../Front/frontend-e-commerce.html">View storefront</a>
+        </nav>
+        <p class="admin-sidebar-note">
+          Review orders submitted through the storefront.
+        </p>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-topbar">
+          <div>
+            <h1>Order Management</h1>
+          </div>
+        </header>
+
+        <section class="admin-panel incoming-orders-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Incoming orders</h2>
+              <p class="status" id="incoming-orders-count">
+                Orders placed through the storefront
+              </p>
+            </div>
+          </div>
+          <div class="order-counts" aria-label="Pending order counts">
+            <div class="order-count-card">
+              <span>Pending RTW</span>
+              <strong id="pending-rtw-count">0</strong>
+            </div>
+            <div class="order-count-card">
+              <span>Pending Custom</span>
+              <strong id="pending-custom-count">0</strong>
+            </div>
+            <div class="order-count-card">
+              <span>Bulk</span>
+              <strong id="bulk-order-count">0</strong>
+            </div>
+          </div>
+          <div class="orders-toolbar">
+            <div class="order-tabs" role="tablist" aria-label="Order type">
+              <button class="order-tab active" id="orders-tab-rtw" type="button" role="tab" aria-selected="true" data-order-type="rtw">RTW Orders</button>
+              <button class="order-tab" id="orders-tab-custom" type="button" role="tab" aria-selected="false" data-order-type="custom">Custom</button>
+              <button class="order-tab" id="orders-tab-bulk" type="button" role="tab" aria-selected="false" data-order-type="bulk">Bulk</button>
+            </div>
+            <label class="orders-search">
+              <span aria-hidden="true">⌕</span>
+              <input id="orders-search" type="search" placeholder="Search by order ID, customer, or transaction ID…" autocomplete="off">
+            </label>
+          </div>
+          <div class="customer-table-scroll">
+            <table class="admin-table incoming-orders-table">
+              <caption class="sr-only">Orders received from the storefront</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Order ID</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col" id="orders-items-heading">Items (SKU)</th>
+                  <th scope="col" id="orders-total-heading">Total</th>
+                  <th scope="col" id="orders-status-heading">Status</th>
+                </tr>
+              </thead>
+              <tbody id="incoming-orders-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="order-detail-overlay" id="order-detail-overlay" hidden>
+      <section class="order-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="order-detail-title">
+        <header class="order-detail-header">
+          <h2 id="order-detail-title">Order details</h2>
+          <button class="order-detail-close" id="close-order-detail" type="button" aria-label="Close order details">×</button>
+        </header>
+        <div class="order-detail-body" id="order-detail-body"></div>
+      </section>
+    </div>
+    <script src="backend-backend.js"></script>
+    <script src="../Shared/shared-array-algorithms.js"></script>
+    <script src="backend-admin-header.js"></script>
+    <script src="backend-admin.js"></script>
+  </body>
+</html>
